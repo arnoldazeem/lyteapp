@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LyteApp</string>
+
+    <string name="facebook_app_id">265138853947580</string>
 </resources>

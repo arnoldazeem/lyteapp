@@ -3,30 +3,12 @@
 
     <item
         is-multidex="false"
-        jar="/home/adaboo/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jar="/home/adaboo/.android/build-cache/7e52ff665cd3cd1ef54dff843c6b9ce57a90c90b/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_4595e26e6ba76fb45f913b98f703f516567b3e4c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/adaboo/.android/build-cache/221ee137f56a83fa7a23c1b3251c1cf48d37176d/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
-        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_c24c74e7013dcc9f2a1404e9ce2a4014b572640a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/adaboo/.android/build-cache/753a60a1a0ab516b7f6cd3237021d362485c58c6/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
-        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_bacfd6eb62507fb3d59e6201b0c996569a82a7a5.jar" />
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_bcd5a7512073d2fd71393a027463332d14ab9232.jar" />
     </item>
     <item
         is-multidex="false"
@@ -39,12 +21,39 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/adaboo/.android/build-cache/3f6a3d6ff33e05b6f2abe406651e9adc92b02f47/output/jars/classes.jar"
+        jar="/home/adaboo/.android/build-cache/97d7fefd7fa002cc185571a5fd7bee7ac233bac7/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_ab254a2122fc75cd28c080d759f81c0ece249e6b.jar" />
+        sha1="2d1eaa9e0b98f8fc4c2b989d9b30d4f1480648ac">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_b830c0076fd992230495ff35262338111632dc80.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/9c2a2c2f37bf058cd112f1b3130f944ae46d5bb0/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_9eee9c0808a771daaceb702c7e9f6f658da73ec8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/221ee137f56a83fa7a23c1b3251c1cf48d37176d/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_c24c74e7013dcc9f2a1404e9ce2a4014b572640a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/support-annotations-25.2.0_9d22fbed470d01a0eb311802e98595160d9f749a.jar" />
     </item>
     <item
         is-multidex="false"
@@ -57,30 +66,93 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/adaboo/.android/build-cache/5c8e133eed225d5dcc8a0dcaa885f9ebc274b069/output/jars/classes.jar"
+        jar="/home/adaboo/.android/build-cache/02ce5f1f17bde015b51d9ef14712737367d81ea4/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
-        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_1764928a065e2c570220559248fe7b96f1a21760.jar" />
+        sha1="7cb8f70e66bdc25ee66ab8351a4e7214b6517aa8">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_0df61f93e9c660a74d84d1e78a27900c29efe318.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/adaboo/.android/build-cache/de2c2d8d175ad60908d716d5f616ab171695de00/output/jars/classes.jar"
+        jar="/home/adaboo/.android/build-cache/0b15e19e185ec3644a403bc804197edd32b0b08b/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
-        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_6cc3d59e9736df747a9d7bc329e999bc229f48d3.jar" />
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_28a0c07f0df11e5ac8f10622aaeeeded225c8577.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/adaboo/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jar="/home/adaboo/.android/build-cache/4de5ee231d5c0966624c86203ec1de7fc43845c8/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
-        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_66d72550c98e0568ff03ce76db08b59524e09db2.jar" />
+        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_669c6bf5a4b9eedae88cccb27d8d6b087c0d3f56.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/98ec5127dbc0328dc92e65004142ba76c3d9c105/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_5711fe3e6961180f1c33d03097308cbc11421066.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/56101cb3d5c784272a82e7b99146e7d76eb3b4cc/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_36330bf71e44ef6360fc3ed6bb377a702fc0ec8e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/7201d6a47ee1dcedd28ac28c202a057a06264a9e/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_ff3fddf9b215f19185c2c61a89b0dc17847a16a2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/ba8cb33e9e8b8ecf87d8eb34bc0cc9eb63995ae5/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_5b0b2d63798fc50d69264a4d096a06cfc8019135.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/3f6a3d6ff33e05b6f2abe406651e9adc92b02f47/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_ab254a2122fc75cd28c080d759f81c0ece249e6b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/ba75357182e059b2578d9ebffe5d6bbf200c82f0/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_f5c4d2deb3d2cc7b6c9b23efcdd8f72379bef9e0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/95fc3921017ab01a18082e77c8b92c07aea1abbf/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_f5be93980786b4eb2c66a0ae43ed7bf3a5a550f9.jar" />
     </item>
     <item
         is-multidex="false"
@@ -102,12 +174,75 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/adaboo/.android/build-cache/98ec5127dbc0328dc92e65004142ba76c3d9c105/output/jars/classes.jar"
+        jar="/home/adaboo/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_5711fe3e6961180f1c33d03097308cbc11421066.jar" />
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/bolts-tasks-1.4.0_d2a85b484e9d8746b62bbbb7ce3c1f70fc87b63d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_4595e26e6ba76fb45f913b98f703f516567b3e4c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/753a60a1a0ab516b7f6cd3237021d362485c58c6/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_bacfd6eb62507fb3d59e6201b0c996569a82a7a5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/5c8e133eed225d5dcc8a0dcaa885f9ebc274b069/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_1764928a065e2c570220559248fe7b96f1a21760.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/de2c2d8d175ad60908d716d5f616ab171695de00/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/classes_6cc3d59e9736df747a9d7bc329e999bc229f48d3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/8ea5060ef0419653c31ae58ebc753e81fd58422b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_f874f66456bfec1aa84deb0f5b875c9191880527.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/home/adaboo/Desktop/LyteApp/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_66d72550c98e0568ff03ce76db08b59524e09db2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/bolts-applinks-1.4.0_365aeb59d609370cb52414583b6588ad41829136.jar" />
     </item>
 
 </items>

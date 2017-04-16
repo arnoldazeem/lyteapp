@@ -7,6 +7,9 @@
     <!-- Footer -->
     <android.support.v4.view.ViewPager
         android:layout_width="fill_parent" android:layout_height="fill_parent"
+        android:layout_marginBottom="2dp"
         android:id="@+id/imageviewPager" />
+
     <include layout="@layout/activity_main"/>
+
 </FrameLayout>
