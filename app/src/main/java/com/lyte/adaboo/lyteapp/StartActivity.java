@@ -71,17 +71,18 @@ public class StartActivity extends AppCompatActivity{
 
                 if(profile != null){
 
-                    Intent main = new Intent(StartActivity.this, MainActivity.class);
+                    Intent main = new Intent(StartActivity.this, HomePage.class);
                     main.putExtra("name", profile.getFirstName());
                     main.putExtra("surname", profile.getLastName());
                     main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
+                    Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_SHORT).show();
                     startActivity(main);
                 };
 
-                Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_SHORT).show();
 
 
-            finish();//<- IMPORTANT
+
+            //finish();//<- IMPORTANT
 
 
 
@@ -114,9 +115,9 @@ public class StartActivity extends AppCompatActivity{
         accessToken = AccessToken.getCurrentAccessToken();
         // If already logged in show the home view
         if (accessToken != null) {//<- IMPORTANT
-            Intent intent = new Intent(HOME_ACTIVITIES);
-            startActivity(intent);
-            finish();//<- IMPORTANT
+            Intent main = new Intent(StartActivity.this, HomePage.class);
+            startActivity(main);
+           // finish();//<- IMPORTANT
         }
 
 

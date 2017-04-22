@@ -2,4 +2,10 @@
     <string name="app_name">LyteApp</string>
 
     <string name="facebook_app_id">265138853947580</string>
-</resources>
+
+
+    <string name="app_intro">This App allows you to buy  &amp;
+        sell from people you already know and gives you access to an online shopping mall with over 1000 shops. </string>
+
+
+    </resources>
