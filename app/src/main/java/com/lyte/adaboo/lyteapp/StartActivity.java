@@ -1,5 +1,6 @@
 package com.lyte.adaboo.lyteapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -8,13 +9,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -30,12 +35,24 @@ public class StartActivity extends AppCompatActivity{
     LoginButton fbLogin;
     CallbackManager callbackManager;
 
+    private AccessToken accessToken;
+    private AccessTokenTracker accessTokenTracker;
+
+    //Intent Actions
+    private static final String HOME_ACTIVITIES = "com.lyte.adaboo.lyteapp";
+    // Request Code
+    private static final int HomePage_REQUEST_CODE = 10;
+    Bundle b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //should be place exactly before setcontentView
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_start);
+
+
+        b = new Bundle();
 
         fbLogin = (LoginButton) findViewById(R.id.fblogin);
 
@@ -46,11 +63,28 @@ public class StartActivity extends AppCompatActivity{
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                Intent intent = new Intent(StartActivity.this, HomePage.class);
-                        startActivity(intent);
+                Log.d("LOGIN_SUCCESS", "Success");
+                fbLogin.setVisibility(View.INVISIBLE); //<- IMPORTANT
 
-                Toast.makeText(StartActivity.this, loginResult.getAccessToken().getUserId() + loginResult.getAccessToken().getToken(),
-                        Toast.LENGTH_LONG).show();
+                Profile profile = Profile.getCurrentProfile();
+
+
+                if(profile != null){
+
+                    Intent main = new Intent(StartActivity.this, MainActivity.class);
+                    main.putExtra("name", profile.getFirstName());
+                    main.putExtra("surname", profile.getLastName());
+                    main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
+                    startActivity(main);
+                };
+
+                Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_SHORT).show();
+
+
+            finish();//<- IMPORTANT
+
+
+
 
 
             }
@@ -66,6 +100,24 @@ public class StartActivity extends AppCompatActivity{
             }
 
         });
+
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+                // Set the access token using
+                // currentAccessToken when it's loaded or set.
+            }
+        };
+        // If the access token is available already assign it.
+        accessToken = AccessToken.getCurrentAccessToken();
+        // If already logged in show the home view
+        if (accessToken != null) {//<- IMPORTANT
+            Intent intent = new Intent(HOME_ACTIVITIES);
+            startActivity(intent);
+            finish();//<- IMPORTANT
+        }
 
 
 
@@ -98,6 +150,22 @@ public class StartActivity extends AppCompatActivity{
 
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        Log.e("data",data.toString());
+        try {
+
+        if (requestCode == HomePage_REQUEST_CODE  && resultCode  == RESULT_OK) {
+
+            String result = data.getStringExtra("result");
+
+            String requiredValue = data.getStringExtra("Key");
+        }
+    } catch (Exception ex) {
+
+            Log.e("data",ex.toString());
+
+    }
+
+
+
+
     }
 }

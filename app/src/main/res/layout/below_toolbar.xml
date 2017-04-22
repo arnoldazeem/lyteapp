@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="20dp"
-        android:src="@android:drawable/ic_menu_home" />
+        android:src="@drawable/ic_home" />
 
     <ImageView
         android:id="@+id/iv_back1"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp"
-        android:src="@android:drawable/ic_menu_allfriends" />
+        android:src="@drawable/ic_menu_allfriends" />
 
     <ImageView
         android:id="@+id/iv_back2"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp"
-        android:src="@android:drawable/ic_menu_star"  />
+        android:src="@drawable/ic_star"  />
 
     <ImageView
         android:id="@+id/iv_back3"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp"
-        android:src="@android:drawable/ic_menu_save" />
+        android:src="@drawable/ic_notifications" />
 
     <ImageView
         android:id="@+id/iv_back"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp"
-        android:src="@android:drawable/ic_menu_preferences" />
+        android:src="@drawable/ic_settings" />
 
 
 
