@@ -6,6 +6,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -16,7 +17,7 @@ import android.widget.Toast;
  * Created by adaboo on 4/16/17.
  */
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
     Button peopleyouknow;
     Button shoppingmall;
@@ -36,16 +37,15 @@ public class HomePage extends AppCompatActivity {
 
         buybuttoms = ((LinearLayout) this.findViewById(R.id.appear_buy));
 
-        peopleyouknow.setOnClickListener((View.OnClickListener) this);
+        peopleyouknow.setOnClickListener(this);
 
-        shoppingmall.setOnClickListener((View.OnClickListener) this);
+        shoppingmall.setOnClickListener(this);
 
-        buy.setOnClickListener((View.OnClickListener) this);
+        buy.setOnClickListener(this);
 
         Bundle extras = getIntent().getExtras();
-        
-        if (extras != null) {
 
+        if (extras != null) {
 
             Bundle inBundle = getIntent().getExtras();
             String name = inBundle.get("name").toString();
@@ -62,6 +62,12 @@ public class HomePage extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.ppl_know:
                 /** Start a new Activity MyCards.java */
+
+                //Intent main = new Intent(HomePage.this, facebooklogin_example.class);
+                // main.putExtra("name", profile.getFirstName());
+                // main.putExtra("surname", profile.getLastName());
+                // main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
+                //startActivity(main);
 
                 break;
             case R.id.mall:
@@ -80,6 +86,9 @@ public class HomePage extends AppCompatActivity {
         }
 
 
+
     }
+
+
 
 }

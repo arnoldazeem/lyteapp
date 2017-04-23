@@ -13,14 +13,29 @@
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
+        <provider  android:authorities="com.facebook.app.FacebookContentProvider"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
         <uses-permission android:name="android.permission.INTERNET"/>
 
-        <activity android:name=".StartActivity">
+        <activity android:name=".show_progress">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".GraphApiTry"
+
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+
+
+        <activity android:name=".StartActivity"
+
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
 

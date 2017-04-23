@@ -3,6 +3,7 @@ package com.lyte.adaboo.lyteapp;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -28,6 +29,12 @@ public class BuyPage extends AppCompatActivity {
             String imageUrl = inBundle.get("imageUrl").toString();
 
             Toast.makeText(BuyPage.this, name + surname + imageUrl, Toast.LENGTH_LONG).show();
+
+
+            TextView nameView = (TextView)findViewById(R.id.nameAndSurname);
+            nameView.setText("" + name + " " + surname);
+
+            new DownloadImage((ImageView)findViewById(R.id.profileImage)).execute(imageUrl);
         }
 
     }

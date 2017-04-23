@@ -20,6 +20,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -33,92 +34,65 @@ import java.security.NoSuchAlgorithmException;
 public class StartActivity extends AppCompatActivity{
 
     LoginButton fbLogin;
-    CallbackManager callbackManager;
+
+    private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
 
     private AccessToken accessToken;
-    private AccessTokenTracker accessTokenTracker;
 
     //Intent Actions
     private static final String HOME_ACTIVITIES = "com.lyte.adaboo.lyteapp";
     // Request Code
     private static final int HomePage_REQUEST_CODE = 10;
-    Bundle b;
+
+
+
+    private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            Profile profile = Profile.getCurrentProfile();
+            nextActivity(profile);
+        }
+        @Override
+        public void onCancel() {        }
+        @Override
+        public void onError(FacebookException e) {
+
+        }
+    };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //should be place exactly before setcontentView
-        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_start);
 
-
-        b = new Bundle();
-
-        fbLogin = (LoginButton) findViewById(R.id.fblogin);
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         callbackManager = CallbackManager.Factory.create();
 
-        fbLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-                Log.d("LOGIN_SUCCESS", "Success");
-                fbLogin.setVisibility(View.INVISIBLE); //<- IMPORTANT
-
-                Profile profile = Profile.getCurrentProfile();
-
-
-                if(profile != null){
-
-                    Intent main = new Intent(StartActivity.this, HomePage.class);
-                    main.putExtra("name", profile.getFirstName());
-                    main.putExtra("surname", profile.getLastName());
-                    main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
-                    Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_SHORT).show();
-                    startActivity(main);
-                };
-
-
-
-
-            //finish();//<- IMPORTANT
-
-
-
-
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-
-        });
-
         accessTokenTracker = new AccessTokenTracker() {
+
             @Override
-            protected void onCurrentAccessTokenChanged(
-                    AccessToken oldAccessToken,
-                    AccessToken currentAccessToken) {
-                // Set the access token using
-                // currentAccessToken when it's loaded or set.
+            protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
+
             }
         };
-        // If the access token is available already assign it.
-        accessToken = AccessToken.getCurrentAccessToken();
-        // If already logged in show the home view
-        if (accessToken != null) {//<- IMPORTANT
-            Intent main = new Intent(StartActivity.this, HomePage.class);
-            startActivity(main);
-           // finish();//<- IMPORTANT
-        }
+
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
+                nextActivity(newProfile);
+
+            }
+        };
+        accessTokenTracker.startTracking();
+        profileTracker.startTracking();
+
 
 
 
@@ -142,31 +116,75 @@ public class StartActivity extends AppCompatActivity{
 
          */
 
+
+
+        LoginButton loginButton = (LoginButton)findViewById(R.id.login_button);
+        callback = new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = loginResult.getAccessToken();
+                Profile profile = Profile.getCurrentProfile();
+                nextActivity(profile);
+                Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_SHORT).show();    }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+            }
+        };
+        loginButton.setReadPermissions("user_friends");
+        loginButton.registerCallback(callbackManager, callback);
+
     }
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onResume() {
+        super.onResume();
+        //Facebook login
+        Profile profile = Profile.getCurrentProfile();
+        nextActivity(profile);
+    }
 
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+    @Override
+    protected void onPause() {
 
-        try {
+        super.onPause();
+    }
 
-        if (requestCode == HomePage_REQUEST_CODE  && resultCode  == RESULT_OK) {
+    protected void onStop() {
+        super.onStop();
+        //Facebook login
+        accessTokenTracker.stopTracking();
+        profileTracker.stopTracking();
+    }
 
-            String result = data.getStringExtra("result");
+    @Override
+    protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
+        super.onActivityResult(requestCode, responseCode, intent);
+        //Facebook login
+       // callbackManager.onActivityResult(requestCode, responseCode, intent);
 
-            String requiredValue = data.getStringExtra("Key");
+        if (callbackManager.onActivityResult(requestCode, responseCode, intent)) {
+            return;
         }
-    } catch (Exception ex) {
-
-            Log.e("data",ex.toString());
-
     }
 
 
+    private void nextActivity(Profile profile){
 
+        //Toast.makeText(getApplicationContext(), profile.getFirstName() + "", Toast.LENGTH_SHORT).show();
 
+        if(profile != null){
+            Intent main = new Intent(StartActivity.this, BuyPage.class);
+            main.putExtra("name", profile.getFirstName());
+            main.putExtra("surname", profile.getLastName());
+            main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
+            startActivity(main);
+        }
     }
+
 }

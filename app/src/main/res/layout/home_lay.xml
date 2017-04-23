@@ -46,7 +46,10 @@
         android:layout_below="@+id/top">
 
         <EditText
-            android:inputType="none"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,7 +136,7 @@
                 android:background="@drawable/round_corner" >
 
 
-                <TextView
+                <Button
                     android:visibility="visible"
                     android:id="@+id/client_sell"
                     android:text="SELL"
