@@ -35,6 +35,7 @@ public class BuyPage extends AppCompatActivity {
             nameView.setText("" + name + " " + surname);
 
             new DownloadImage((ImageView)findViewById(R.id.profileImage)).execute(imageUrl);
+          //  new BuyPage().DownloadImage((ImageView)findViewById(R.id.profileImage)).execute(imageUrl);
         }
 
     }
