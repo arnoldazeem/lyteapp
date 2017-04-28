@@ -1,11 +1,17 @@
 package com.lyte.adaboo.lyteapp;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.HashMap;
 
 /**
  * Created by adaboo on 4/22/17.
@@ -19,46 +25,43 @@ public class BuyPage extends AppCompatActivity {
     String imageUrl;
     int surname;
 
+    Button logout;
+
+    SessionManager session;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends_layout);
 
-       // new DownloadImage((ImageView)findViewById(R.id.profileImage)).execute(imageUrl);
+        logout = (Button) findViewById(R.id.logout);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
+
+        HashMap<String, String> user = session.getUserDetails();
+        // name
+        String name = user.get(SessionManager.KEY_NAME);
+        // image
+        String imageUrl = user.get(SessionManager.KEY_IMAGEURL);
+
+        new DownloadImage((ImageView) findViewById(R.id.profileImage)).execute(imageUrl);
+
+       // Toast.makeText(BuyPage.this, name  + imageUrl, Toast.LENGTH_LONG).show();
 
 
-            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 
-            String restoredText = prefs.getString("text", null);
+        logout.setOnClickListener(new View.OnClickListener() {
 
-            if (restoredText != null) {
-                name = prefs.getString("name", "No name defined");//"No name defined" is the default value.
-                imageUrl = prefs.getString("imageUrl", "url");//"No name defined" is the default value.
-                surname = prefs.getInt("surname", 0); //0 is the default value.
+            @Override
+            public void onClick(View arg0) {
+
+                session.logoutUser();
+
             }
 
-            //Bundle inBundle = getIntent().getExtras();
-            //String name = inBundle.get("name").toString();
-           // String surname = inBundle.get("surname").toString();
-           // String imageUrl = inBundle.get("imageUrl").toString();
+        });
 
-            //editor.clear();
-            //editor.commit(); // commit changes
-
-            new DownloadImage((ImageView)findViewById(R.id.profileImage)).execute(imageUrl);
-
-            Toast.makeText(BuyPage.this, name + surname + imageUrl, Toast.LENGTH_LONG).show();
-
-
-            TextView nameView = (TextView)findViewById(R.id.nameAndSurname);
-            nameView.setText("" + name + " " + surname);
-
-
-          //  new BuyPage().DownloadImage((ImageView)findViewById(R.id.profileImage)).execute(imageUrl);
-        }
 
     }
 

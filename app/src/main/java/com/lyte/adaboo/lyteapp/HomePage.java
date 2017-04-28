@@ -1,5 +1,6 @@
 package com.lyte.adaboo.lyteapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -23,6 +24,8 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     Button shoppingmall;
     Button buy;
     LinearLayout buybuttoms;
+    private ProgressDialog progressDialog;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,9 +81,17 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             case R.id.client_buy:
                 /** AlerDialog when click on Exit */
 
+                progressDialog = new ProgressDialog(HomePage.this);
+                progressDialog.setMessage("Loading......");
+                progressDialog.show();
+
                 buybuttoms.setVisibility(View.VISIBLE);
 
                 buy.setVisibility(View.INVISIBLE);
+
+
+                progressDialog.dismiss();
+
 
                 break;
         }

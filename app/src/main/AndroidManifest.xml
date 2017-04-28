@@ -30,8 +30,7 @@
         </activity>
 
         <activity android:name=".GraphApiTry"
-
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
 
 
