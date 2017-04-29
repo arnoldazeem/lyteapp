@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:weightSum="1">
 
 
@@ -17,23 +18,12 @@
         android:orientation="horizontal"
         tools:ignore="ObsoleteLayoutParam">
 
-            <TextView
-                android:id="@+id/ly"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LYTE"
-                android:textAllCaps="true"
-                android:textColor="#006600"
-                android:textSize="35sp" />
+                android:src="@drawable/lyteapp"
+                android:layout_margin="2dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/ly"
-                android:text="APP"
-                android:textAllCaps="true"
-                android:textColor="#FF0000"
-                android:textSize="35sp" />
     </RelativeLayout>
 
 
@@ -81,14 +71,12 @@
             android:background="@drawable/round_corner" >
 
 
-            <Button
+            <ImageButton
                 android:visibility="visible"
                 android:id="@+id/client_buy"
-                android:text="BUY"
+                android:background="@drawable/buy"
                 android:clickable="true"
                 android:layout_centerInParent="true"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="50sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -129,7 +117,6 @@
                 android:id="@+id/buy"
                 android:layout_width="160dp"
                 android:layout_height="280dp"
-                android:text="BUY"
                 android:layout_toRightOf="@+id/buy_lay"
                 android:orientation="vertical"
                 android:textColor="@android:color/holo_red_dark"
@@ -139,11 +126,10 @@
                 <Button
                     android:visibility="visible"
                     android:id="@+id/client_sell"
-                    android:text="SELL"
                     android:clickable="true"
+                    android:layout_margin="2dp"
                     android:layout_centerInParent="true"
-                    android:textColor="@android:color/holo_red_dark"
-                    android:textSize="50sp"
+                    android:background="@drawable/sell"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

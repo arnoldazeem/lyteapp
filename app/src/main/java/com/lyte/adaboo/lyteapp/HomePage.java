@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
     Button peopleyouknow;
     Button shoppingmall;
-    Button buy;
+    ImageButton buy;
     LinearLayout buybuttoms;
     private ProgressDialog progressDialog;
 
@@ -36,7 +37,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
         shoppingmall = ((Button) this.findViewById(R.id.mall));
 
-        buy = ((Button) this.findViewById(R.id.client_buy));
+        buy = ((ImageButton) this.findViewById(R.id.client_buy));
 
         buybuttoms = ((LinearLayout) this.findViewById(R.id.appear_buy));
 

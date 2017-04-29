@@ -66,6 +66,8 @@ public class GraphApiTry extends FragmentActivity {
     JSONObject data;
     String rawName;
 
+
+
     private LoginManager loginManager;
 
     private ProgressDialog progressDialog;
@@ -76,7 +78,9 @@ public class GraphApiTry extends FragmentActivity {
 
         FacebookSdk.sdkInitialize(this);
 
-        loginManager = LoginManager.getInstance();
+        callbackManager = CallbackManager.Factory.create();
+
+        //loginManager = LoginManager.getInstance();
 
         setContentView(R.layout.activity_start);
 
@@ -98,34 +102,23 @@ public class GraphApiTry extends FragmentActivity {
 
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setHeight(100);
-        loginButton.setTextColor(Color.WHITE);
-        loginButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-        loginButton.setCompoundDrawablePadding(0);
-        //loginButton.setReadPermissions("user_friends");
+        //loginButton.setHeight(100);
+       // loginButton.setTextColor(Color.WHITE);
+       // loginButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+       // loginButton.setCompoundDrawablePadding(0);
+        loginButton.setReadPermissions("user_friends");
 
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // Call private method
-                onFblogin();
-            }
-        });
 
-    }
+        //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("user_friends","public_profile"));
 
-    private void onFblogin()   {
-
-        callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("user_friends","public_profile"));
-
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
+                loginButton.setVisibility(View.INVISIBLE);
+                //loginButton.setVisibility(View.GONE);
                 OnDone(loginResult);
 
             }
@@ -144,10 +137,8 @@ public class GraphApiTry extends FragmentActivity {
 
 
 
+
     }
-
-
-
 
 
 
@@ -228,6 +219,8 @@ public class GraphApiTry extends FragmentActivity {
                                             Intent main = new Intent(GraphApiTry.this, BuyPage.class);
                                             //main.putExtra("name_of_extra", byteArray);
                                             startActivity(main);
+
+                                            finish();
 
                                         }
                                     }.start();
@@ -351,9 +344,10 @@ public class GraphApiTry extends FragmentActivity {
                     session.createLoginSession(userId, name , profilePicture.toString());
 
                     Intent main = new Intent(GraphApiTry.this, BuyPage.class);
-
-                    startActivity(main);
+                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     finish();
+                    startActivity(main);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -388,8 +382,11 @@ public class GraphApiTry extends FragmentActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
-        super.onActivityResult(requestCode, responseCode, intent);
-        callbackManager.onActivityResult(requestCode, responseCode, intent);
+    protected void onActivityResult(int requestCode, int responseCode, Intent data) {
+        //super.onActivityResult(requestCode, responseCode, data);
+        callbackManager.onActivityResult(requestCode, responseCode, data);
+
+
+
     }
 }
