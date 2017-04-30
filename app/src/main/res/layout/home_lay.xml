@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:weightSum="1">
+    android:background="#ffffff">
 
 
     <RelativeLayout
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="2dp"
+        android:layout_margin="3dp"
         android:gravity="center"
         android:orientation="horizontal"
         tools:ignore="ObsoleteLayoutParam">
@@ -30,22 +29,20 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:id="@+id/want"
-        android:layout_margin="2dp"
+        android:layout_margin="3dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_below="@+id/top">
 
-        <EditText
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
+        <TextView
+            android:gravity="center"
             android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text= "   I WANT TO  "
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text= "I WANT TO"
+            android:id="@+id/want_to"
             android:textColor="@android:color/white"
-            android:background="@drawable/green_shape"
+            android:background="@drawable/green_want"
             android:layout_marginLeft="50dp"
             android:layout_marginStart="50dp" />
 
@@ -54,10 +51,10 @@
 
 
     <RelativeLayout
-        android:layout_margin="2dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
@@ -167,25 +164,36 @@
     </RelativeLayout>
 
 
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/just"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="just family and freinds"
+            android:textAllCaps="true"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
+
             <RelativeLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/just"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="just family and freinds"
-                    android:textAllCaps="true"
-                    android:textColor="#000000"
-                    android:textSize="25sp" />
 
                 <RelativeLayout
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="2dp"
                     android:gravity="bottom"
-                    android:layout_below="@+id/just"
+                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -200,6 +208,9 @@
                 </RelativeLayout>
 
         </RelativeLayout>
+
+
+
 
 
 </LinearLayout>

@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by adaboo on 4/22/17.
  */
@@ -21,12 +23,12 @@ public class BuyPage extends AppCompatActivity {
 
     public static final String MY_PREFS_NAME = "MyPrefsFile";
 
-    String name;
+
     String imageUrl;
     int surname;
 
     Button logout;
-
+    TextView username;
     SessionManager session;
 
     @Override
@@ -34,7 +36,10 @@ public class BuyPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends_layout);
 
+
         logout = (Button) findViewById(R.id.logout);
+
+        username = (TextView) findViewById(R.id.name);
 
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
@@ -45,10 +50,12 @@ public class BuyPage extends AppCompatActivity {
         // image
         String imageUrl = user.get(SessionManager.KEY_IMAGEURL);
 
-        new DownloadImage((ImageView) findViewById(R.id.profileImage)).execute(imageUrl);
+        new DownloadImage((CircleImageView) findViewById(R.id.profileImage)).execute(imageUrl);
 
        // Toast.makeText(BuyPage.this, name  + imageUrl, Toast.LENGTH_LONG).show();
 
+//in your OnCreate() method
+        username.setText(name);
 
 
         logout.setOnClickListener(new View.OnClickListener() {

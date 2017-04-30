@@ -2,6 +2,7 @@ package com.lyte.adaboo.lyteapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -27,6 +28,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     LinearLayout buybuttoms;
     private ProgressDialog progressDialog;
 
+    TextView just,want;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,20 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         buy = ((ImageButton) this.findViewById(R.id.client_buy));
 
         buybuttoms = ((LinearLayout) this.findViewById(R.id.appear_buy));
+
+
+        just = ((TextView) this.findViewById(R.id.just));
+
+        want = ((TextView) this.findViewById(R.id.want_to));
+
+       // Typeface custom_font = Typeface.createFromAsset(getAssets(), "ARCHRISTY.ttf");
+        Typeface custom_font2 = Typeface.createFromAsset(getAssets(), "ARESSENCE.ttf");
+
+
+        just.setTypeface(custom_font2);
+
+        want.setTypeface(custom_font2);
+
 
         peopleyouknow.setOnClickListener(this);
 
