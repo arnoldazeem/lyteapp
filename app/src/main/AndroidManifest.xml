@@ -19,13 +19,16 @@
             android:exported="true"/>
 
 
-
-        <activity android:name=".show_progress">
+        <activity android:name=".splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".show_progress">
+
         </activity>
 
         <activity android:name=".GraphApiTry"

@@ -120,7 +120,7 @@
             android:background="@drawable/round_corner" >
 
 
-            <Button
+            <ImageButton
                 android:visibility="visible"
                 android:id="@+id/client_sell"
                 android:clickable="true"
