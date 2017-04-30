@@ -343,7 +343,7 @@ public class GraphApiTry extends FragmentActivity {
 
                     session.createLoginSession(userId, name , profilePicture.toString());
 
-                    Intent main = new Intent(GraphApiTry.this, BuyPage.class);
+                    Intent main = new Intent(GraphApiTry.this, HomePage.class);
                     main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     finish();
                     startActivity(main);

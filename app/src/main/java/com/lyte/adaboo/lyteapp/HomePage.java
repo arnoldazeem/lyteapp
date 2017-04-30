@@ -83,11 +83,10 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             case R.id.ppl_know:
                 /** Start a new Activity MyCards.java */
 
-                //Intent main = new Intent(HomePage.this, facebooklogin_example.class);
-                // main.putExtra("name", profile.getFirstName());
-                // main.putExtra("surname", profile.getLastName());
-                // main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
-                //startActivity(main);
+                Intent intent = new Intent(HomePage.this,
+                        BuyPage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
 
                 break;
             case R.id.mall:
@@ -106,8 +105,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
                 buy.setVisibility(View.INVISIBLE);
 
-
                 progressDialog.dismiss();
+
+
+
+
 
 
                 break;

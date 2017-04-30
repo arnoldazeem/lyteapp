@@ -61,7 +61,7 @@ public class splash extends Activity {
                         waited += 100;
                     }
                     Intent intent = new Intent(splash.this,
-                            show_progress.class);
+                            GraphApiTry.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     splash.this.finish();
