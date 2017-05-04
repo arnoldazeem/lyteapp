@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import org.json.JSONArray;
+
 public class SessionManager {
     // Shared Preferences
     SharedPreferences pref;
@@ -55,7 +57,7 @@ public class SessionManager {
     /**
      * Create login session
      * */
-    public void createLoginSession(String id, String name, String imageurl){
+    public void createLoginSession(String id, String name, String imageurl, String array){
 
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
@@ -72,7 +74,7 @@ public class SessionManager {
 
 
         // Storing email in pref
-      //  editor.putString(KEY_FRIENDS, friends);
+        editor.putString(KEY_FRIENDS, array);
 
 
         // commit changes
@@ -90,13 +92,13 @@ public class SessionManager {
         user.put(KEY_ID, pref.getString(KEY_ID, null));
 
         // user email id
-        user.put(KEY_SURNAME, pref.getString(KEY_SURNAME ,null));
+        user.put(KEY_IMAGEURL, pref.getString(KEY_IMAGEURL ,null));
 
         // user name
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
 
         // user email id
-        user.put(KEY_IMAGEURL, pref.getString(KEY_IMAGEURL, null));
+        user.put(KEY_FRIENDS, pref.getString(KEY_FRIENDS, null));
 
         // return user
         return user;

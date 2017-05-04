@@ -1,18 +1,15 @@
 package com.lyte.adaboo.lyteapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,18 +18,14 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookRequestError;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
-import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +35,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -50,12 +42,12 @@ import java.util.Arrays;
  * Created by adaboo on 4/23/17.
  */
 
-public class GraphApiTry extends FragmentActivity {
+public class GraphApiTry extends FragmentActivity  {
 
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
-    private LoginButton loginButton;
+    private Button loginButton;
     private String firstName,lastName, name,birthday,gender;
     private URL profilePicture;
     private String userId;
@@ -101,19 +93,16 @@ public class GraphApiTry extends FragmentActivity {
 
 
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton = (Button) findViewById(R.id.login_button);
         //loginButton.setHeight(100);
        // loginButton.setTextColor(Color.WHITE);
        // loginButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
        // loginButton.setCompoundDrawablePadding(0);
-        loginButton.setReadPermissions("user_friends");
+       // loginButton.setReadPermissions("user_friends");
 
+       // LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("user_friends","public_profile"));
 
-
-
-        //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("user_friends","public_profile"));
-
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
@@ -135,11 +124,16 @@ public class GraphApiTry extends FragmentActivity {
         });
 
 
+        loginButton.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(GraphApiTry.this, Arrays.asList("public_profile", "user_friends"));
 
+            }
+        });
 
     }
-
 
 
         /**
@@ -214,7 +208,7 @@ public class GraphApiTry extends FragmentActivity {
                                             profilePic.compress(Bitmap.CompressFormat.PNG, 100, stream);
                                             byte[] byteArray = stream.toByteArray();
 
-                                            session.createLoginSession(userId, name , profilePicture.toString());
+                                            session.createLoginSession(userId, name , profilePicture.toString(),null);
 
                                             Intent main = new Intent(GraphApiTry.this, BuyPage.class);
                                             //main.putExtra("name_of_extra", byteArray);
@@ -261,6 +255,8 @@ public class GraphApiTry extends FragmentActivity {
     //get all friends here
     public void Freinds(){
 
+       // JSONArray array;
+
         GraphRequest request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -269,7 +265,7 @@ public class GraphApiTry extends FragmentActivity {
                                             GraphResponse response) {
 
                         JSONObject newresponse, totlfrndcount;
-                        final JSONArray array;
+
 
                         try {
 
@@ -278,8 +274,9 @@ public class GraphApiTry extends FragmentActivity {
 
                             Log.e("array", newresponse + "");
 
-                             array = newresponse
+                            JSONArray array = newresponse
                                     .getJSONArray("data");
+
                             Log.e("array", array + "");
 
 
@@ -319,46 +316,56 @@ public class GraphApiTry extends FragmentActivity {
 
     public void OnDone(final LoginResult loginResult){
 
-        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                Log.e(TAG,object.toString());
-                Log.e(TAG,response.toString());
+        GraphRequest request = GraphRequest.newMeRequest(
+                loginResult.getAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        Log.i("LoginActivity", response.toString());
 
-                try {
+                        JSONObject newresponse;
+                        JSONArray array;
 
-                    Freinds();
+                        try {
 
-                   /// Toast.makeText(GraphApiTry.this, gethem + " worked", Toast.LENGTH_LONG).show();
+                            newresponse = object
+                                    .getJSONObject("friends");
 
+                            Log.e("array", newresponse + "");
 
-                    userId = object.getString("id");
+                             array = newresponse
+                                    .getJSONArray("data");
 
-                    profilePicture = new URL("https://graph.facebook.com/" + userId + "/picture?width=500&height=500");
-
-
-                    if(object.has("name"))
-                        name = object.getString("name");
-
-
-                    session.createLoginSession(userId, name , profilePicture.toString());
-
-                    Intent main = new Intent(GraphApiTry.this, HomePage.class);
-                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    finish();
-                    startActivity(main);
+                            Log.e("array", array + "");
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }
+                            //JSONArray friends = Freinds();
+
+                            userId = object.getString("id");
+
+                            profilePicture = new URL("https://graph.facebook.com/" + userId + "/picture?width=500&height=500");
+
+                            if(object.has("name"))
+                                name = object.getString("name");
+
+
+                            session.createLoginSession(userId, name , profilePicture.toString(), array.toString());
+
+                            Intent main = new Intent(GraphApiTry.this, HomePage.class);
+                            main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(main);
+                            finish();
+
+
+
+                        }catch (Exception e) {
+
+                        }
+                    }
         });
         //Here we put the requested fields to be returned from the JSONObject
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id, name");
+        parameters.putString("fields", "id,friends, name");
         request.setParameters(parameters);
         request.executeAsync();
     }
@@ -383,7 +390,7 @@ public class GraphApiTry extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int responseCode, Intent data) {
-        //super.onActivityResult(requestCode, responseCode, data);
+        super.onActivityResult(requestCode, responseCode, data);
         callbackManager.onActivityResult(requestCode, responseCode, data);
 
 

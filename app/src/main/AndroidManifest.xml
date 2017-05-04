@@ -32,7 +32,10 @@
         </activity>
 
         <activity android:name=".GraphApiTry"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:launchMode = "singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
 
 
@@ -42,12 +45,16 @@
         </activity>
 
 
-        <activity android:name=".HomePage">
+        <activity android:name=".HomePage"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
 
         </activity>
 
 
-        <activity android:name=".BuyPage">
+        <activity android:name=".BuyPage"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
 
         </activity>
 
