@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -50,6 +51,11 @@ public class BuyPage extends AppCompatActivity {
     CircleImageView image;
     JSONArray newarray;
 
+    Friend_List_Bulk friendBean;
+    ArrayList<Friend_List_Bulk> aryFriendList;
+
+    user_friends_adapter adapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +77,13 @@ public class BuyPage extends AppCompatActivity {
 
         String array = user.get(SessionManager.KEY_FRIENDS);
 
+
+        Picasso.with(this)
+                .load(imageUrl)
+                .placeholder( R.drawable.progress_animation )
+                .into(image);
+
+
         try {
 
             if (TextUtils.isEmpty(array)) {
@@ -80,7 +93,8 @@ public class BuyPage extends AppCompatActivity {
 
                  newarray = new JSONArray(array);
 
-            friendlist(newarray);
+                friendlist(newarray);
+
 
         }catch (JSONException e){
 
@@ -88,18 +102,7 @@ public class BuyPage extends AppCompatActivity {
 
         }
 
-
-
-
-
-        Picasso.with(this)
-                .load(imageUrl)
-                .placeholder( R.drawable.progress_animation )
-                .into(image);
-
-         Toast.makeText(BuyPage.this, array, Toast.LENGTH_LONG).show();
-
-
+        // Toast.makeText(BuyPage.this, array, Toast.LENGTH_LONG).show();
 
        // new DownloadImage((CircleImageView) findViewById(R.id.profileImage)).execute(imageUrl);
        // Toast.makeText(BuyPage.this, name  + imageUrl, Toast.LENGTH_LONG).show();
@@ -121,6 +124,9 @@ public class BuyPage extends AppCompatActivity {
         });
 
 
+
+
+
     }
 
 
@@ -129,21 +135,53 @@ public class BuyPage extends AppCompatActivity {
 
     public void friendlist(JSONArray friendslist){
 
-        ArrayList<String> friends = new ArrayList<String>();
+        ArrayList<Friend_List_Bulk> friends = new ArrayList<Friend_List_Bulk>();
+
 
         try {
 
             for (int l=0; l < friendslist.length(); l++) {
-                friends.add(friendslist.getJSONObject(l).getString("name"));
+
+
+                String name = friendslist.getJSONObject(l).getString("name");
+
+                String userId = friendslist.getJSONObject(l).getString("id");
+
+                URL  profilePicture = new URL("https://graph.facebook.com/" + userId + "/picture?width=500&height=500");
+
+               // Toast.makeText(BuyPage.this,  friendslist.getJSONObject(l).getString("id") , Toast.LENGTH_LONG).show();
+
+               // profilePicture = new URL("https://graph.facebook.com/" + userId + "/picture?width=500&height=500");
+
+
+                friends.add(new Friend_List_Bulk(userId, name,profilePicture.toString()));
+
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }catch (Exception e) {
+
         }
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.freinditem, friends); // simple textview for list item
-        ListView listView = (ListView) findViewById(R.id.listView);
+
+        adapter = new user_friends_adapter(friends, getApplicationContext());
+
+        ListView listView = (ListView) findViewById(R.id.list);
+
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+               // friends dataModel= friends.get(position);
+
+                //Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
+                //        .setAction("No action", null).show();
+            }
+        });
+
 
     }
 
