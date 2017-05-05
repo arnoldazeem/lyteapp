@@ -39,7 +39,7 @@ public class user_friends_adapter extends ArrayAdapter<Friend_List_Bulk> {
     }
 
 
-    @Override
+     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         Friend_List_Bulk dataModel = getItem(position);

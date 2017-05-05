@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -55,6 +57,9 @@ public class BuyPage extends AppCompatActivity {
     ArrayList<Friend_List_Bulk> aryFriendList;
 
     user_friends_adapter adapter;
+
+    private  RecyclerView recyclerView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -164,25 +169,17 @@ public class BuyPage extends AppCompatActivity {
 
         }
 
+        recyclerView = (RecyclerView)findViewById(R.id.rv);
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView
+                .setLayoutManager(new LinearLayoutManager(BuyPage.this, LinearLayoutManager.HORIZONTAL, false));
 
         adapter = new user_friends_adapter(friends, getApplicationContext());
 
-        ListView listView = (ListView) findViewById(R.id.list);
-
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-               // friends dataModel= friends.get(position);
-
-                //Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-                //        .setAction("No action", null).show();
-            }
-        });
-
-
+        user_friend_recycle  adapter = new user_friend_recycle(BuyPage.this, friends);
+        recyclerView.setAdapter(adapter);// set adapter on recyclerview
+        adapter.notifyDataSetChanged();// Notify the adapter
     }
 
 

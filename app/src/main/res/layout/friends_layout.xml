@@ -60,13 +60,11 @@
             android:id="@+id/textView"
             android:layout_centerHorizontal="true" />
 
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="fill_parent"
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="#b5b5b5"
-            android:dividerHeight="1dp"
-            android:listSelector="@drawable/list_selector" />
+            android:scrollbars="none"
+            android:id="@+id/rv" />
 
     </RelativeLayout>
 
@@ -78,9 +76,6 @@
             android:layout_gravity="center_horizontal"
             android:text="Logout"
             android:id="@+id/logout"/>
-
-
-
 
     </LinearLayout>
 
