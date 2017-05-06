@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/img"
+        android:src="@drawable/lyteapp"/>
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/img"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/first"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:text="category"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+                <EditText
+                    android:layout_weight="1"
+                    android:id="@+id/category"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editback"/>
+
+
+            </LinearLayout>
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="30dp"/>
+
+
+        <LinearLayout
+                android:id="@+id/second"
+                android:layout_below="@+id/first"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_below="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description"/>
+
+
+                <EditText
+                    android:layout_width="40dp"
+                    android:layout_weight="1"
+                    android:id="@+id/descrip"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editback"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/third"
+                android:layout_below="@+id/second"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_below="@+id/descrip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price"/>
+
+
+                <EditText
+                    android:layout_weight="1"
+                    android:id="@+id/price"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editback"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_below="@+id/third"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_below="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"/>
+
+
+                <EditText
+                    android:layout_weight="1"
+                    android:id="@+id/quantity"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editback"/>
+
+            </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+<Button
+    android:id="@+id/upload"
+    android:layout_below="@+id/top"
+    android:text="UPLOAD"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+
+
+    <TextView
+        android:id="@+id/prev"
+        android:layout_below="@+id/upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Preview"/>
+
+    <view
+        android:id="@+id/viw"
+        android:layout_below="@+id/prev"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="006600"/>
+
+
+    <RelativeLayout
+        android:layout_below="@+id/viw"
+        android:id="@+id/prev_dem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_prev"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/product_name"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prodcut_price"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/product_qnty"/>
+
+
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_below="@+id/prev_dem"
+        android:text="Submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>
