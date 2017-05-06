@@ -1,5 +1,6 @@
 package com.lyte.adaboo.lyteapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -53,7 +54,6 @@ public class BuyPage extends AppCompatActivity {
     CircleImageView image;
     JSONArray newarray;
 
-    Friend_List_Bulk friendBean;
     ArrayList<Friend_List_Bulk> aryFriendList;
 
     user_friends_adapter adapter;
@@ -65,7 +65,6 @@ public class BuyPage extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends_layout);
-
 
         logout = (Button) findViewById(R.id.logout);
         username = (TextView) findViewById(R.id.name);
@@ -81,7 +80,6 @@ public class BuyPage extends AppCompatActivity {
         String imageUrl = user.get(SessionManager.KEY_IMAGEURL);
 
         String array = user.get(SessionManager.KEY_FRIENDS);
-
 
         Picasso.with(this)
                 .load(imageUrl)
@@ -130,8 +128,27 @@ public class BuyPage extends AppCompatActivity {
 
 
 
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(BuyPage.this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // TODO Handle item click
+
+                        try {
+
+                            String id = newarray.getJSONObject(position).getString("id");
+
+                            Toast.makeText(BuyPage.this, id ,Toast.LENGTH_LONG).show();
+
+                        }catch (Exception ex){
+
+                        }
 
 
+
+
+                    }
+                })
+        );
     }
 
 
@@ -154,11 +171,6 @@ public class BuyPage extends AppCompatActivity {
 
                 URL  profilePicture = new URL("https://graph.facebook.com/" + userId + "/picture?width=500&height=500");
 
-               // Toast.makeText(BuyPage.this,  friendslist.getJSONObject(l).getString("id") , Toast.LENGTH_LONG).show();
-
-               // profilePicture = new URL("https://graph.facebook.com/" + userId + "/picture?width=500&height=500");
-
-
                 friends.add(new Friend_List_Bulk(userId, name,profilePicture.toString()));
 
             }
@@ -169,7 +181,7 @@ public class BuyPage extends AppCompatActivity {
 
         }
 
-        recyclerView = (RecyclerView)findViewById(R.id.rv);
+        recyclerView = (RecyclerView)findViewById(R.id.list);
         recyclerView.setHasFixedSize(true);
 
         recyclerView
@@ -181,29 +193,6 @@ public class BuyPage extends AppCompatActivity {
         recyclerView.setAdapter(adapter);// set adapter on recyclerview
         adapter.notifyDataSetChanged();// Notify the adapter
     }
-
-
-
-    /**
-
-     for (int i = 0; i < newarray.length(); i++) {
-
-     JSONObject res = array.getJSONObject(i);
-
-     Log.e("name frnd",
-     res.getString("name"));
-     Log.e("id frnd", res.getString("id"));
-
-     }
-     totlfrndcount = newresponse
-     .getJSONObject("summary");
-
-
-    //  Log.e("Total fb frnds", totlfrndcount
-    //          .getString("total_count"));
-
-
-        */
 
     }
 
