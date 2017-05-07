@@ -10,4 +10,20 @@
 automatically posted on Facebook</string>
 
 
+    <string name="category_prompt">Choose a Category</string>
+
+    <string-array name="category_arrays">
+        <item> Electronics</item>
+        <item>Clothing</item>
+        <item>Accommodation</item>
+        <item>Stationery</item>
+        <item>Automobile</item>
+    </string-array>
+
+
+
+
+
+
+
 </resources>

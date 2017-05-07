@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -92,22 +93,32 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             case R.id.mall:
                 /** AlerDialog when click on Exit */
 
+                Intent in = new Intent(HomePage.this,
+                        Individual_Sell.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(in);
+
                 break;
 
             case R.id.client_buy:
                 /** AlerDialog when click on Exit */
 
+
+
                 progressDialog = new ProgressDialog(HomePage.this);
                 progressDialog.setMessage("Loading......");
                 progressDialog.show();
 
-                buybuttoms.setVisibility(View.VISIBLE);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
 
-                buy.setVisibility(View.INVISIBLE);
+                        buybuttoms.setVisibility(View.VISIBLE);
 
-                progressDialog.dismiss();
-
-
+                        buy.setVisibility(View.INVISIBLE);
+                        progressDialog.dismiss();
+                    }
+                }, 3000); // 3000 milliseconds delay
 
 
 

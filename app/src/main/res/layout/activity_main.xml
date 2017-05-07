@@ -46,16 +46,19 @@
         android:id="@+id/buttonlayout">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="45dp"
             android:paddingLeft="10dp"
+            android:textColor="#ffffff"
+            android:background="@color/com_facebook_blue"
+            android:text="SIGN IN WITH FACEBOOK"
             android:paddingRight="10dp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:id="@+id/login_button"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:layout_margin="4dp"
+            android:layout_margin="8dp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"/>
 
