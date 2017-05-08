@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Context _context;
-    public static int totalPage = 3;
+    public static int totalPage = 4;
 
     public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -31,8 +31,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 f = new ImageThreeFragment();
                 break;
-        }
-        return f;
+            case 3:
+                f = new ImageFourFragment();
+                break;
+        }        return f;
     }
     @Override
     public int getCount() {

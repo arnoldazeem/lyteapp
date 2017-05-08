@@ -14,6 +14,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -59,7 +61,7 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
-public class Individual_Sell extends Activity implements View.OnClickListener {
+public class Individual_Sell extends Activity implements OnClickListener, AdapterView.OnItemSelectedListener {
 
     EditText password, userName, confirmPassword;
     String passwordString, userNameString, confirmPasswordString;
@@ -69,6 +71,13 @@ public class Individual_Sell extends Activity implements View.OnClickListener {
     ProgressDialog pDialog;
     String url_all_products = "";
     Spinner spinner1;
+    EditText descrip;
+    EditText price;
+    EditText qty;
+    String desc;
+    String amt;
+    String qtny;
+    String cate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +91,22 @@ public class Individual_Sell extends Activity implements View.OnClickListener {
 
         prev = (ImageView) findViewById(R.id.img_prev);
         upload = (Button) findViewById(R.id.upload);
+        spinner1= (Spinner) findViewById(R.id.spinner1);
+
+
+        descrip = (EditText) findViewById(R.id.editText2);
+        price = (EditText) findViewById(R.id.editText3);
+        qty = (EditText) findViewById(R.id.editText4);
+
+       // android:background="@drawable/editback"
+
+        String[] years = {"Electronics","Clothing","Accommodation","Stationery","Automobile"};
+        ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, years );
+        langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spinner1.setAdapter(langAdapter);
+
+        spinner1.setOnItemSelectedListener(this);
+
 
 
 
@@ -102,25 +127,23 @@ public class Individual_Sell extends Activity implements View.OnClickListener {
 
 
             case R.id.submit:
-                userNameString = userName.getText().toString();
-                passwordString = MD5(password.getText().toString());
-                confirmPasswordString = MD5(confirmPassword.getText().toString());
+                desc = descrip.getText().toString();
+                amt = price.getText().toString();
+                qtny = qty.getText().toString();
+              //  passwordString = MD5(password.getText().toString());
 
-                if (userNameString.trim().contentEquals("")) {
-                    Toast.makeText(this, "User Name can not be empty",
+
+                if (desc.trim().contentEquals("")) {
+                    Toast.makeText(this, "Please provide Decription of Item",
                             Toast.LENGTH_LONG).show();
-                } else if (passwordString.contentEquals("")) {
-                    Toast.makeText(this, "Password can not be empty",
+                } else if (amt.contentEquals("")) {
+                    Toast.makeText(this, "Please provide Item Price",
                             Toast.LENGTH_LONG).show();
-                } else if (confirmPasswordString.contentEquals("")) {
-                    Toast.makeText(this, "Confirm your Password", Toast.LENGTH_LONG)
+                } else if (qtny.contentEquals("")) {
+                    Toast.makeText(this, "Please provide Quantity", Toast.LENGTH_LONG)
                             .show();
-                } else if (!passwordString.contentEquals(confirmPasswordString)) {
-                    Toast.makeText(this, "Password does not match",
-                            Toast.LENGTH_LONG).show();
                 } else {
                     doStaff();
-
                 }
                 break;
         }
@@ -225,14 +248,17 @@ public class Individual_Sell extends Activity implements View.OnClickListener {
 
     private void doStaff() {
         // TODO Auto-generated method stub
-        pDialog.setMessage("Registering..");
+        pDialog.setMessage("Submitting Item..");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
 
         Map<String, Object> params = new HashMap<String, Object>();
         aq.progress(pDialog).ajax(
-                StaticVariables.registerUrl + "register&username="
-                        + userNameString + "&password=" + passwordString,
+                StaticVariables.sendItemUrl + "submit&category="
+                        + cate + "&description=" + desc + "&price="
+                        + amt+ "&quantity=" + qtny,
+
+
                 params, JSONObject.class, new AjaxCallback<JSONObject>() {
                     @Override
                     public void callback(String url, JSONObject json,
@@ -248,9 +274,9 @@ public class Individual_Sell extends Activity implements View.OnClickListener {
                                         Individual_Sell.this,
                                         json.getString(StaticVariables.MESSAGE),
                                         Toast.LENGTH_LONG).show();
-                                userName.setText("");
-                                password.setText("");
-                                confirmPassword.setText("");
+                                descrip.setText("");
+                                price.setText("");
+                                qty.setText("");
                             } else {
                                 Toast.makeText(
                                         Individual_Sell.this,
@@ -292,4 +318,21 @@ public class Individual_Sell extends Activity implements View.OnClickListener {
         return null;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        cate = parent.getItemAtPosition(position).toString();
+
+        Toast.makeText(this, "The planet is " +
+                cate, Toast.LENGTH_LONG).show();
+
+
+    }
+
+
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

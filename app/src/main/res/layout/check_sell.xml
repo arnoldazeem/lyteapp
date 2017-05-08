@@ -12,10 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/img"
+        android:layout_marginBottom="5dp"
         android:src="@drawable/lyteapp"/>
 
         <LinearLayout
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:layout_below="@id/img"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -37,16 +38,19 @@
                                 android:padding="2dp"
                                 android:textSize="16sp" />
 
+
                             <Spinner
-                                android:padding="2dp"
                                 android:id="@+id/spinner1"
+                                style="@style/spinnerItemStyle"
                                 android:layout_width="400dp"
                                 android:layout_height="wrap_content"
-                                android:entries="@array/category_arrays"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
                                 android:layout_weight="1"
+                                android:gravity="center"
+                                android:spinnerMode="dropdown"
                                 android:background="@drawable/editback"
-                                android:prompt="@string/category_prompt" />
-
+                                android:prompt="@string/category_prompt"/>
 
                         </LinearLayout>
 
@@ -108,7 +112,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:maxLines="50"
+                   android:maxLines="1"
                     android:textColor="#000000"
                     android:padding="2dp"
                     android:background="@drawable/editback"
@@ -141,7 +145,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:maxLines="50"
+                    android:maxLines="1"
                     android:textColor="#000000"
                     android:padding="2dp"
                     android:background="@drawable/editback"

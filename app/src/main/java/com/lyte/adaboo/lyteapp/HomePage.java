@@ -118,7 +118,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                         buy.setVisibility(View.INVISIBLE);
                         progressDialog.dismiss();
                     }
-                }, 3000); // 3000 milliseconds delay
+                }, 2000); // 3000 milliseconds delay
 
 
 

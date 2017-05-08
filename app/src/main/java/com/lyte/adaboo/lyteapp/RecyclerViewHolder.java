@@ -12,7 +12,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerViewHolder extends RecyclerView.ViewHolder  {
     // View holder for gridview recycler view as we used in listview
-    public TextView name;
+  //  public TextView name;
     public CircleImageView imageview;
 
 
@@ -20,8 +20,8 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder  {
         super(view);
         // Find all views ids
 
-        this.name = (TextView) view
-                .findViewById(R.id.name);
+        //this.name = (TextView) view
+              //  .findViewById(R.id.name);
         this.imageview = (CircleImageView) view
                 .findViewById(R.id.profileImage);
 

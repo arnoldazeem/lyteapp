@@ -1,6 +1,5 @@
 package com.lyte.adaboo.lyteapp;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,9 +10,9 @@ import android.view.ViewGroup;
  * Created by adaboo on 4/13/17.
  */
 
-public class ImageThreeFragment extends Fragment {
+public class ImageFourFragment extends Fragment {
 
-    public ImageThreeFragment() {
+    public ImageFourFragment() {
         // Required empty public constructor
     }
 
@@ -22,7 +21,7 @@ public class ImageThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_image_three, container, false);
+        return inflater.inflate(R.layout.fragment_image_four, container, false);
     }
 
 

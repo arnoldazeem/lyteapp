@@ -16,12 +16,16 @@
         android:layout_margin="5dp"
         android:background="@drawable/silver_back">
 
-        <ImageView android:layout_height="10dp" android:layout_width="10dp"
+        <ImageView
+            android:layout_height="10dp"
+            android:layout_width="10dp"
             android:id="@+id/btn1"
             android:src="@drawable/holo_circle"
             android:layout_gravity="center_vertical" />
 
-        <ImageView android:layout_height="10dp" android:layout_width="10dp"
+        <ImageView
+            android:layout_height="10dp"
+            android:layout_width="10dp"
             android:id="@+id/btn2"
             android:layout_toRightOf="@id/btn1"
             android:src="@drawable/holo_circle"
@@ -32,6 +36,14 @@
             android:layout_toRightOf="@id/btn2"
             android:src="@drawable/holo_circle"
             android:layout_gravity="center_vertical"/>
+
+
+        <ImageView android:layout_height="10dp" android:layout_width="10dp"
+            android:id="@+id/btn4"
+            android:layout_toRightOf="@id/btn3"
+            android:src="@drawable/holo_circle"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"/>
 
     </LinearLayout>
 

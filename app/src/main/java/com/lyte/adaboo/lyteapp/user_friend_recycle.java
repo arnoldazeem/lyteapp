@@ -48,7 +48,7 @@ public class user_friend_recycle extends RecyclerView.Adapter<RecyclerViewHolder
 
 
         // setting title
-        mainHolder.name.setText(model.getName());
+       // mainHolder.name.setText(model.getName());
 
         //mainHolder.imageview.setImageBitmap(image);
 
