@@ -103,8 +103,6 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             case R.id.client_buy:
                 /** AlerDialog when click on Exit */
 
-
-
                 progressDialog = new ProgressDialog(HomePage.this);
                 progressDialog.setMessage("Loading......");
                 progressDialog.show();

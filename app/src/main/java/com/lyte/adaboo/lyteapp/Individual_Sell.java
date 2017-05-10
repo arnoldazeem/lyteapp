@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +30,7 @@ import com.androidquery.callback.AjaxStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -77,7 +79,9 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     String desc;
     String amt;
     String qtny;
-    String cate;
+    String cate,id,friend_array,user_id;
+    byte[] imgurl;
+    SessionManager session;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,15 +104,22 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
        // android:background="@drawable/editback"
 
+        HashMap<String, String> user = session.getUserDetails();
+
+         id = user.get(SessionManager.KEY_ID);
+        // name
+        String name = user.get(SessionManager.KEY_NAME);
+        // image
+        String imageUrl = user.get(SessionManager.KEY_IMAGEURL);
+
+         friend_array = user.get(SessionManager.KEY_FRIENDS);
+
         String[] years = {"Electronics","Clothing","Accommodation","Stationery","Automobile"};
         ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, years );
         langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         spinner1.setAdapter(langAdapter);
 
         spinner1.setOnItemSelectedListener(this);
-
-
-
 
         aq = new AQuery(this);
         pDialog = new ProgressDialog(this);
@@ -235,13 +246,17 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
                 Log.w("path of image..****..", picturePath+"");
                 prev.setImageBitmap(thumbnail);
+
+                //image converted to file
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                imgurl = bos.toByteArray();
+               // String file = Base64.encodeBytes(data);
+
+
             }
         }
     }
-
-
-
-
 
 
 
@@ -256,7 +271,8 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         aq.progress(pDialog).ajax(
                 StaticVariables.sendItemUrl + "submit&category="
                         + cate + "&description=" + desc + "&price="
-                        + amt+ "&quantity=" + qtny,
+                        + amt+ "&quantity=" + qtny + "&user_id=" + id
+                        +"&objurl=" + imgurl,
 
 
                 params, JSONObject.class, new AjaxCallback<JSONObject>() {
@@ -325,7 +341,6 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
         Toast.makeText(this, "The planet is " +
                 cate, Toast.LENGTH_LONG).show();
-
 
     }
 

@@ -16,7 +16,7 @@ public class MainActivity extends Fragment {
 
     private ViewPager _mViewPager;
     private ViewPagerAdapter _adapter;
-    private ImageView _btn1, _btn2, _btn3;
+    private ImageView _btn1, _btn2, _btn3, _btn4;
 
     public MainActivity() {
     }
@@ -54,6 +54,13 @@ public class MainActivity extends Fragment {
                 _mViewPager.setCurrentItem(2);
             }
         });
+        _btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _btn3.setImageResource(R.drawable.fill_circle);
+                _mViewPager.setCurrentItem(2);
+            }
+        });
     }
     private void setUpView() {
         _mViewPager = (ViewPager) getView().findViewById(R.id.imageviewPager);
@@ -76,6 +83,7 @@ public class MainActivity extends Fragment {
                 _btn1.setImageResource(R.drawable.holo_circle);
                 _btn2.setImageResource(R.drawable.holo_circle);
                 _btn3.setImageResource(R.drawable.holo_circle);
+                _btn4.setImageResource(R.drawable.holo_circle);
                 btnAction(position);
             }
         });
@@ -90,6 +98,9 @@ public class MainActivity extends Fragment {
                 break;
             case 2:
                 _btn3.setImageResource(R.drawable.fill_circle);
+                break;
+            case 3:
+            _btn4.setImageResource(R.drawable.fill_circle);
                 break;
         }
     }

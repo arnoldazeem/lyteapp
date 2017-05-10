@@ -78,8 +78,9 @@ public class BuyPage extends AppCompatActivity {
         String name = user.get(SessionManager.KEY_NAME);
         // image
         String imageUrl = user.get(SessionManager.KEY_IMAGEURL);
-
         String array = user.get(SessionManager.KEY_FRIENDS);
+
+
 
         Picasso.with(this)
                 .load(imageUrl)
