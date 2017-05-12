@@ -58,7 +58,7 @@ public class MainActivity extends Fragment {
             @Override
             public void onClick(View v) {
                 _btn3.setImageResource(R.drawable.fill_circle);
-                _mViewPager.setCurrentItem(2);
+                _mViewPager.setCurrentItem(3);
             }
         });
     }
@@ -109,6 +109,7 @@ public class MainActivity extends Fragment {
         _btn1.setImageResource(R.drawable.fill_circle);
         _btn2 = (ImageView) getView().findViewById(R.id.btn2);
         _btn3 = (ImageView) getView().findViewById(R.id.btn3);
+        _btn4 = (ImageView) getView().findViewById(R.id.btn4);
     }
     private void setButton(Button btn, String text, int h, int w) {
         btn.setWidth(w);

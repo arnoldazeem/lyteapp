@@ -67,7 +67,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
     EditText password, userName, confirmPassword;
     String passwordString, userNameString, confirmPasswordString;
-    Button upload, cancel;
+    Button upload, submit;
     AQuery aq;
     ImageView prev;
     ProgressDialog pDialog;
@@ -82,12 +82,14 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     String cate,id,friend_array,user_id;
     byte[] imgurl;
     SessionManager session;
+    Boolean bild;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check_sell);
-
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
 
        // password = (EditText) findViewById(R.id.etRegisterPassword);
        // userName = (EditText) findViewById(R.id.etRegisterUserName);
@@ -95,6 +97,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
         prev = (ImageView) findViewById(R.id.img_prev);
         upload = (Button) findViewById(R.id.upload);
+        submit = (Button) findViewById(R.id.send);
         spinner1= (Spinner) findViewById(R.id.spinner1);
 
 
@@ -103,16 +106,18 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         qty = (EditText) findViewById(R.id.editText4);
 
        // android:background="@drawable/editback"
-
         HashMap<String, String> user = session.getUserDetails();
 
-         id = user.get(SessionManager.KEY_ID);
+        id = user.get(SessionManager.KEY_ID);
         // name
         String name = user.get(SessionManager.KEY_NAME);
         // image
         String imageUrl = user.get(SessionManager.KEY_IMAGEURL);
 
-         friend_array = user.get(SessionManager.KEY_FRIENDS);
+        friend_array = user.get(SessionManager.KEY_FRIENDS);
+
+
+         bild = false;
 
         String[] years = {"Electronics","Clothing","Accommodation","Stationery","Automobile"};
         ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, years );
@@ -125,6 +130,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         pDialog = new ProgressDialog(this);
       //  cancel.setOnClickListener(this);
         upload.setOnClickListener(this);
+        submit.setOnClickListener(this);
 
     }
 
@@ -136,14 +142,12 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 selectImage();
                 break;
 
+            case R.id.send:
 
-            case R.id.submit:
                 desc = descrip.getText().toString();
                 amt = price.getText().toString();
                 qtny = qty.getText().toString();
               //  passwordString = MD5(password.getText().toString());
-
-
                 if (desc.trim().contentEquals("")) {
                     Toast.makeText(this, "Please provide Decription of Item",
                             Toast.LENGTH_LONG).show();
@@ -153,7 +157,11 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 } else if (qtny.contentEquals("")) {
                     Toast.makeText(this, "Please provide Quantity", Toast.LENGTH_LONG)
                             .show();
-                } else {
+                }else if (bild != true) {
+                    Toast.makeText(this, "Please provide an Image", Toast.LENGTH_LONG)
+                            .show();
+                }
+                else {
                     doStaff();
                 }
                 break;
@@ -188,6 +196,20 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
             }
         });
         builder.show();
+    }
+
+    void checkbit( byte[] arr){
+
+        byte[] array = new byte[4096];
+        for (byte b : array) {
+
+            if (b != 0) {
+                bild = false;
+            }else{
+                bild = true;
+            }
+        }
+
     }
 
 
@@ -253,6 +275,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 imgurl = bos.toByteArray();
                // String file = Base64.encodeBytes(data);
 
+                checkbit(imgurl);
 
             }
         }
