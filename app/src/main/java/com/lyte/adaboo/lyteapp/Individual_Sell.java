@@ -117,9 +117,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         friend_array = user.get(SessionManager.KEY_FRIENDS);
 
 
-         bild = false;
-
-        String[] years = {"Electronics","Clothing","Accommodation","Stationery","Automobile"};
+        String[] years = {"Choose Category","Electronics","Clothing","Accommodation","Stationery","Automobile"};
         ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, years );
         langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         spinner1.setAdapter(langAdapter);
@@ -157,8 +155,11 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 } else if (qtny.contentEquals("")) {
                     Toast.makeText(this, "Please provide Quantity", Toast.LENGTH_LONG)
                             .show();
-                }else if (bild != true) {
+                }else if (imgurl == null) {
                     Toast.makeText(this, "Please provide an Image", Toast.LENGTH_LONG)
+                            .show();
+                }else if (cate == "Choose Category") {
+                    Toast.makeText(this, "Please choose Category", Toast.LENGTH_LONG)
                             .show();
                 }
                 else {
@@ -200,17 +201,13 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
     void checkbit( byte[] arr){
 
-        byte[] array = new byte[4096];
-        for (byte b : array) {
-
-            if (b != 0) {
-                bild = false;
-            }else{
-                bild = true;
+        if (arr == null) {
+            bild = false;
+        }else{
+            bild = true;
             }
         }
 
-    }
 
 
     @Override
@@ -275,8 +272,8 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 imgurl = bos.toByteArray();
                // String file = Base64.encodeBytes(data);
 
-                checkbit(imgurl);
-
+                Toast.makeText(this, imgurl + " ", Toast.LENGTH_LONG)
+                        .show();
             }
         }
     }
