@@ -53,6 +53,11 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
+        <activity android:name=".myProfile"
+
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+
 
         <activity android:name=".HomePage"
             android:configChanges="orientation"

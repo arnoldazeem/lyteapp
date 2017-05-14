@@ -2,12 +2,16 @@ package com.lyte.adaboo.lyteapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -82,7 +87,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     String cate,id,friend_array,user_id;
     byte[] imgurl;
     SessionManager session;
-    Boolean bild;
+    TextView pr,p,q;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,6 +109,11 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         descrip = (EditText) findViewById(R.id.editText2);
         price = (EditText) findViewById(R.id.editText3);
         qty = (EditText) findViewById(R.id.editText4);
+
+        pr = (TextView) findViewById(R.id.prev_product);
+        p = (TextView) findViewById(R.id.prev_price);
+        q = (TextView) findViewById(R.id.prev_qty);
+
 
        // android:background="@drawable/editback"
         HashMap<String, String> user = session.getUserDetails();
@@ -145,7 +155,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 desc = descrip.getText().toString();
                 amt = price.getText().toString();
                 qtny = qty.getText().toString();
-              //  passwordString = MD5(password.getText().toString());
+
                 if (desc.trim().contentEquals("")) {
                     Toast.makeText(this, "Please provide Decription of Item",
                             Toast.LENGTH_LONG).show();
@@ -199,14 +209,15 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         builder.show();
     }
 
-    void checkbit( byte[] arr){
 
-        if (arr == null) {
-            bild = false;
-        }else{
-            bild = true;
-            }
-        }
+
+
+    //called after the user submits his item to the server
+    void dialogShow() {
+        AlertDialogFragment cdd = new AlertDialogFragment(Individual_Sell.this);
+        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        cdd.show();
+    }
 
 
 
@@ -266,14 +277,18 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 Log.w("path of image..****..", picturePath+"");
                 prev.setImageBitmap(thumbnail);
 
-                //image converted to file
+                pr.setText("Product:" + desc);
+                p.setText("Price:" + amt );
+                q.setText("Quantity:" + qtny );
+
+
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                 imgurl = bos.toByteArray();
                // String file = Base64.encodeBytes(data);
 
-                Toast.makeText(this, imgurl + " ", Toast.LENGTH_LONG)
-                        .show();
+
+
             }
         }
     }
@@ -293,8 +308,6 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                         + cate + "&description=" + desc + "&price="
                         + amt+ "&quantity=" + qtny + "&user_id=" + id
                         +"&objurl=" + imgurl,
-
-
                 params, JSONObject.class, new AjaxCallback<JSONObject>() {
                     @Override
                     public void callback(String url, JSONObject json,
@@ -313,6 +326,9 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                                 descrip.setText("");
                                 price.setText("");
                                 qty.setText("");
+                                imgurl = null;
+                                dialogShow();
+
                             } else {
                                 Toast.makeText(
                                         Individual_Sell.this,
@@ -356,16 +372,11 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
         cate = parent.getItemAtPosition(position).toString();
-
         Toast.makeText(this, "The planet is " +
                 cate, Toast.LENGTH_LONG).show();
 
     }
-
-
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 

@@ -9,7 +9,7 @@ public class StaticVariables {
 	public static String busStopUrl = "http://192.168.42.237/yenfabus/retrieve.php?type=";
 	public static String subs_checkUrl = "http://192.168.42.237/yenfabus/subscription_check.php?type=";
 	public static String subscription = "http://192.168.42.237/yenfabus/subscribe.php?type=";
-	public static String requestBus = "http://192.168.42.237/yenfabus/requestBus.php?type=";
+	public static String requestUserData = "http://192.168.42.16/yenfa/requestUserData.php?type=";
 
 
 	

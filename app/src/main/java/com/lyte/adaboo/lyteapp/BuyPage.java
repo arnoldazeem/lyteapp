@@ -78,6 +78,7 @@ public class BuyPage extends AppCompatActivity {
         String name = user.get(SessionManager.KEY_NAME);
         // image
         String imageUrl = user.get(SessionManager.KEY_IMAGEURL);
+
         String array = user.get(SessionManager.KEY_FRIENDS);
 
 
@@ -94,12 +95,8 @@ public class BuyPage extends AppCompatActivity {
 
                 return; // or break, continue, throw
             }else
-
                  newarray = new JSONArray(array);
-
                 friendlist(newarray);
-
-
         }catch (JSONException e){
 
             Log.e("array", array + "");
@@ -135,9 +132,7 @@ public class BuyPage extends AppCompatActivity {
                         // TODO Handle item click
 
                         try {
-
                             String id = newarray.getJSONObject(position).getString("id");
-
                             Toast.makeText(BuyPage.this, id ,Toast.LENGTH_LONG).show();
 
                         }catch (Exception ex){

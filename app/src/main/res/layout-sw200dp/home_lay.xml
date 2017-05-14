@@ -58,9 +58,10 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:clickable="true"
             android:layout_margin="1dp"
             android:layout_width="160dp"
-            android:layout_height="270dp"
+            android:layout_height="220dp"
             android:text="BUY"
             android:id="@+id/buy_lay"
             android:orientation="vertical"
@@ -68,7 +69,7 @@
             android:background="@drawable/round_corner" >
 
 
-            <ImageButton
+            <ImageView
                 android:visibility="visible"
                 android:id="@+id/client_buy"
                 android:background="@drawable/buy"
@@ -111,16 +112,17 @@
 
         <RelativeLayout
             android:layout_margin="1dp"
-            android:id="@+id/buy"
+            android:id="@+id/sell_lay"
             android:layout_width="160dp"
-            android:layout_height="270dp"
+            android:layout_height="220dp"
+            android:clickable="true"
             android:layout_toRightOf="@+id/buy_lay"
             android:orientation="vertical"
             android:textColor="@android:color/holo_red_dark"
             android:background="@drawable/round_corner" >
 
 
-            <ImageButton
+            <ImageView
                 android:visibility="visible"
                 android:id="@+id/client_sell"
                 android:clickable="true"
@@ -139,8 +141,8 @@
                 android:layout_height="wrap_content">
 
 
-                <Button android:id="@+id/sell_ppl_know"
-                    android:text="People you Know"
+                <Button android:id="@+id/sell_know"
+                    android:text="as Individual"
                     android:background="@drawable/round_corner"
                     android:layout_width="145dp"
                     android:layout_height="wrap_content" />
@@ -150,9 +152,9 @@
                     android:layout_height="5dp" />
 
                 <Button android:id="@+id/sell_mall"
-                    android:text="shopping Mall"
+                    android:text="as Company"
                     android:background="@drawable/round_corner"
-                    android:layout_width="1450dp"
+                    android:layout_width="145dp"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
