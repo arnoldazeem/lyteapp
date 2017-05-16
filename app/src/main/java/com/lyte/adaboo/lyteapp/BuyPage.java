@@ -155,7 +155,6 @@ public class BuyPage extends AppCompatActivity {
 
         ArrayList<Friend_List_Bulk> friends = new ArrayList<Friend_List_Bulk>();
 
-
         try {
 
             for (int l=0; l < friendslist.length(); l++) {

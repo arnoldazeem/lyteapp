@@ -85,9 +85,11 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     String amt;
     String qtny;
     String cate,id,friend_array,user_id;
+
     byte[] imgurl;
     SessionManager session;
     TextView pr,p,q;
+    String encodedImage = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -165,7 +167,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 } else if (qtny.contentEquals("")) {
                     Toast.makeText(this, "Please provide Quantity", Toast.LENGTH_LONG)
                             .show();
-                }else if (imgurl == null) {
+                }else if (encodedImage.contentEquals("")) {
                     Toast.makeText(this, "Please provide an Image", Toast.LENGTH_LONG)
                             .show();
                 }else if (cate == "Choose Category") {
@@ -284,9 +286,9 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-                imgurl = bos.toByteArray();
-               // String file = Base64.encodeBytes(data);
-
+                 imgurl = bos.toByteArray();
+                 encodedImage = Base64.encodeToString(imgurl, Base64.DEFAULT);
+                //   String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 
 
             }
@@ -307,7 +309,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 StaticVariables.sendItemUrl + "submit&category="
                         + cate + "&description=" + desc + "&price="
                         + amt+ "&quantity=" + qtny + "&user_id=" + id
-                        +"&objurl=" + imgurl,
+                        +"&objurl=" + encodedImage,
                 params, JSONObject.class, new AjaxCallback<JSONObject>() {
                     @Override
                     public void callback(String url, JSONObject json,
@@ -323,10 +325,11 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                                         Individual_Sell.this,
                                         json.getString(StaticVariables.MESSAGE),
                                         Toast.LENGTH_LONG).show();
+
                                 descrip.setText("");
                                 price.setText("");
                                 qty.setText("");
-                                imgurl = null;
+
                                 dialogShow();
 
                             } else {

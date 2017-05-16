@@ -1,11 +1,16 @@
 package com.lyte.adaboo.lyteapp;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,19 +37,27 @@ public class myProfile extends AppCompatActivity{
     SessionManager session;
     JSONArray products = null;
     CircleImageView image;
+    ImageView images;
     JSONArray newarray;
-    ArrayList<Friend_List_Bulk> aryFriendList;
-    user_friends_adapter adapter;
-    private RecyclerView recyclerView;
+
     TextView username;
     AQuery aq;
     ProgressDialog pDialog;
     String id;
 
+    ArrayList<user_items> aryFriendList;
+    user_items_adapter adapter;
+    private  RecyclerView recyclerView;
+
+    ArrayList<user_items> friends;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myprofile);
+
+
+
 
         pDialog = new ProgressDialog(this);
         aq = new AQuery(this);
@@ -54,6 +67,8 @@ public class myProfile extends AppCompatActivity{
 
         username = (TextView) findViewById(R.id.name);
         image  = ((CircleImageView) findViewById(R.id.profileImage));
+
+        images  = ((ImageView) findViewById(R.id.profile));
 
         HashMap<String, String> user = session.getUserDetails();
         // name
@@ -71,6 +86,16 @@ public class myProfile extends AppCompatActivity{
         username.setText(name);
 
         Request();
+
+
+       // recyclerView = (RecyclerView)findViewById(R.id.list);
+        //recyclerView.setHasFixedSize(true);
+        //recyclerView
+       //         .setLayoutManager(new LinearLayoutManager(myProfile.this, LinearLayoutManager.HORIZONTAL, false));
+       // adapter = new user_items_adapter(friends, getApplicationContext());
+       // user_item_recycle  adapter = new user_item_recycle(myProfile.this, friends);
+       // recyclerView.setAdapter(adapter);// set adapter on recyclerview
+      //  adapter.notifyDataSetChanged();// Notify the adapter
     }
 
 
@@ -93,18 +118,38 @@ public class myProfile extends AppCompatActivity{
 
                         try {
 
+                            friends = new ArrayList<user_items>();
+
                             int success = json.getInt(StaticVariables.SUCCESS);
 
                             products = json.getJSONArray("markers");
 
+
                             // saved in database as String
                             if (success == 1) {
 
-                                Toast.makeText(
-                                        myProfile.this,
-                                        json.getString(StaticVariables.MESSAGE),
-                                        Toast.LENGTH_LONG).show();
+                                for (int i = 0; i <= products.length();  i++) {
 
+                                    JSONObject c = products.getJSONObject(i);
+
+                                    String product = c.getString("product_name");
+                                    String qnty = c.getString("product_price");
+                                    String img = c.getString("product_type");
+                                    String price = c.getString("product_image");
+
+                                    //convert bytearray to Bitmap
+                                    byte[] theByteArray = img.getBytes();
+
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray(theByteArray , 0, theByteArray .length);
+
+
+                                    images.setImageBitmap(bitmap);
+
+                                    // /byte[] decodedString = Base64.decode(encodedImage, Base64.URL_SAFE);
+                                    //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                                    // friends.add(new user_items (product, price,qnty,img));
+
+                                }
 
                             } else {
 
