@@ -5,13 +5,18 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
+import android.media.ThumbnailUtils;
+import android.net.ParseException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,6 +33,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
@@ -41,7 +55,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 /**
@@ -68,6 +85,8 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
+import static android.content.ContentValues.TAG;
+
 public class Individual_Sell extends Activity implements OnClickListener, AdapterView.OnItemSelectedListener {
 
     EditText password, userName, confirmPassword;
@@ -90,6 +109,15 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     SessionManager session;
     TextView pr,p,q;
     String encodedImage = "";
+
+
+    public static final int REQUEST_CAMERA = 110;
+    public static final int SELECT_FILE = 120;
+    String code;
+    File mPhotoFile = null;
+    Bitmap mBitmap = null;
+    String gotten,send;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,7 +177,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.upload:
-                selectImage();
+                picture();
                 break;
 
             case R.id.send:
@@ -175,7 +203,8 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                             .show();
                 }
                 else {
-                    doStaff();
+                    uploadImage();
+                    //doStaff();
                 }
                 break;
         }
@@ -224,76 +253,258 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
-                File f = new File(Environment.getExternalStorageDirectory().toString());
-                for (File temp : f.listFiles()) {
-                    if (temp.getName().equals("temp.jpg")) {
-                        f = temp;
-                        break;
+
+        if (requestCode == REQUEST_CAMERA &&  resultCode == RESULT_OK) {
+
+            if (mPhotoFile != null) {
+                send  =  (mPhotoFile.getAbsolutePath());
+                decodeBitmap(mPhotoFile.getAbsolutePath());
+
+            } else
+                Toast.makeText(this, "Error Retrieving Picture", Toast.LENGTH_SHORT).show();
+
+        } else if (requestCode == SELECT_FILE &&  resultCode == RESULT_OK) {
+            Uri selectedImageUri = data.getData();
+            String[] projection = {MediaStore.MediaColumns.DATA};
+            Cursor cursor = managedQuery(selectedImageUri, projection, null, null,
+                    null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            cursor.moveToFirst();
+            String selectedImagePath = cursor.getString(column_index);
+            Bitmap bm;
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(selectedImagePath, options);
+            final int REQUIRED_SIZE = 200;
+            int scale = 1;
+            while (options.outWidth / scale / 2 >= REQUIRED_SIZE
+                    && options.outHeight / scale / 2 >= REQUIRED_SIZE)
+                scale *= 2;
+            options.inSampleSize = scale;
+
+            options.inJustDecodeBounds = false;
+
+            bm = BitmapFactory.decodeFile(selectedImagePath, options);
+
+            send  = (selectedImagePath);
+            decodeBitmap(selectedImagePath);
+
+        }
+
+
+
+    }
+
+
+
+    //here is where the dialog was created
+
+    void picture(){
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals("Take Photo")) {
+
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    // Ensure that there's a camera activity to handle the intent
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        // Create the File where the photo should go
+                        mPhotoFile = null;
+                        try {
+                            mPhotoFile = createImageFile();
+                        } catch (IOException ex) {
+                            Log.e(TAG, ex.toString());
+                        }
+                        // Continue only if the File was successfully created
+                        if (mPhotoFile != null) {
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                    Uri.fromFile(mPhotoFile));
+                            startActivityForResult(takePictureIntent, REQUEST_CAMERA);
+                        }
                     }
+
+                } else if (items[item].equals("Choose from Library")) {
+                    Intent intent = new Intent(
+                            Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(
+                            Intent.createChooser(intent, "Select File"),
+                            SELECT_FILE);
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
                 }
-                try {
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-
-                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
-                            bitmapOptions);
-
-                    prev.setImageBitmap(bitmap);
-
-                    String path = android.os.Environment
-                            .getExternalStorageDirectory()
-                            + File.separator
-                            + "Phoenix" + File.separator + "default";
-                    f.delete();
-                    OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
-                    try {
-                        outFile = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
-                        outFile.flush();
-                        outFile.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (requestCode == 2) {
-
-                Uri selectedImage = data.getData();
-                String[] filePath = { MediaStore.Images.Media.DATA };
-                Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
-                c.moveToFirst();
-                int columnIndex = c.getColumnIndex(filePath[0]);
-                String picturePath = c.getString(columnIndex);
-                c.close();
-                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Log.w("path of image..****..", picturePath+"");
-                prev.setImageBitmap(thumbnail);
-
-                pr.setText("Product:" + desc);
-                p.setText("Price:" + amt );
-                q.setText("Quantity:" + qtny );
-
-
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-                 imgurl = bos.toByteArray();
-                 encodedImage = Base64.encodeToString(imgurl, Base64.DEFAULT);
-                //   String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-
-
             }
+        });
+        builder.show();
+
+    }
+
+    //where Image is Decoded
+    private void decodeBitmap(String filepath) {
+        Log.i(TAG, "Decoding Bitmap");
+
+        String currentPhotoPath;
+        currentPhotoPath = filepath;
+
+        int targetW = 400;
+        int targetH = 400;
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap resizedBitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+
+        resizedBitmap = ThumbnailUtils.extractThumbnail(resizedBitmap, 400, 400);
+
+        ExifInterface exif;
+        try {
+            exif = new ExifInterface(currentPhotoPath);
+
+            String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+            int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
+            int rotationAngle = 0;
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_90)
+                rotationAngle = 90;
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_180)
+                rotationAngle = 180;
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_270)
+                rotationAngle = 270;
+
+            Matrix matrix = new Matrix();
+            matrix.setRotate(rotationAngle, (float) resizedBitmap.getWidth() / 2, (float) resizedBitmap.getHeight() / 2);
+            mBitmap = Bitmap.createBitmap(resizedBitmap, 0, 0, targetW, targetH, matrix, true);
+
+            //where image is saved
+            prev.setImageBitmap(mBitmap);
+            savebitmap(currentPhotoPath);
+
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
         }
     }
+
+
+    private File savebitmap(String filename) {
+        String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+        OutputStream outStream = null;
+
+        File file = new File(filename + ".png");
+        if (file.exists()) {
+            file.delete();
+            file = new File(extStorageDirectory, filename + ".png");
+            Log.e("file exist", "" + file + ",Bitmap= " + filename);
+        }
+        try {
+            // make a new bitmap from your file
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getName());
+
+            outStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            outStream.flush();
+            outStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.e("file", "" + file);
+        return file;
+
+    }
+
+
+    /**
+     * Shows the progress UI and hides the login form.
+     */
+
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, /* prefix */
+                ".jpg", /* suffix */
+                storageDir /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        //	mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+    private void uploadImage() {
+
+        final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, StaticVariables.sendItemVolUrl,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        loading.dismiss();
+                        // response
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        loading.dismiss();
+                        Log.d("Error.Response", error.getMessage().toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+               // params.put("name", "Alif");
+                //params.put("image", "http://itsalif.info");
+
+                //Adding parameters
+                params.put("photo", "encodedImage");
+                params.put("name", desc);
+                params.put("price", amt);
+                params.put("quantity", qtny);
+
+
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+       //RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        //requestQueue.add(stringRequest);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+       // CustomRequest jsonObjRequest = new CustomRequest(Request.Method.POST, StaticVariables.sendItemVolUrl, params, this., this.createRequestErrorListener());
+         requestQueue.add(postRequest);
+
+
+    }
+
 
 
 
@@ -310,6 +521,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                         + cate + "&description=" + desc + "&price="
                         + amt+ "&quantity=" + qtny + "&user_id=" + id
                         +"&objurl=" + encodedImage,
+
                 params, JSONObject.class, new AjaxCallback<JSONObject>() {
                     @Override
                     public void callback(String url, JSONObject json,
