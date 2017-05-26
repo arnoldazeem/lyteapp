@@ -125,6 +125,12 @@ public class myProfile extends AppCompatActivity{
                             products = json.getJSONArray("markers");
 
 
+                            Toast.makeText(
+                                    myProfile.this,
+                                    json.getString(StaticVariables.MESSAGE),
+                                    Toast.LENGTH_LONG).show();
+
+
                             // saved in database as String
                             if (success == 1) {
 

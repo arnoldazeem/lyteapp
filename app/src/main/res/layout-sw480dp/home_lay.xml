@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="3dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        tools:ignore="ObsoleteLayoutParam">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lyteapp"
+            android:layout_margin="2dp"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/want"
+        android:layout_margin="3dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top">
+
+        <TextView
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text= "I WANT TO"
+            android:id="@+id/want_to"
+            android:textColor="@android:color/white"
+            android:background="@drawable/green_want"
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp">
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="1dp"
+            android:gravity="bottom">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#006600" />
+
+            <include layout="@layout/below_toolbar" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/relativeLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="226dp"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:id="@+id/buy_lay"
+                android:layout_width="160dp"
+                android:layout_height="220dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/round_corner"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:text="BUY"
+                android:textColor="@android:color/holo_red_dark">
+
+
+                <ImageView
+                    android:id="@+id/client_buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/buy"
+                    android:clickable="true"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/appear_buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <Button
+                        android:id="@+id/ppl_know"
+                        android:layout_width="145dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner"
+                        android:gravity="center"
+                        android:text="People you Know" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="5dp" />
+
+                    <Button
+                        android:id="@+id/mall"
+                        android:layout_width="145dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner"
+                        android:text="shopping Mall" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/sell_lay"
+                android:layout_width="160dp"
+                android:layout_height="220dp"
+                android:layout_margin="1dp"
+                android:layout_toRightOf="@+id/buy_lay"
+                android:background="@drawable/round_corner"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:textColor="@android:color/holo_red_dark">
+
+
+                <ImageView
+                    android:id="@+id/client_sell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/sell"
+                    android:clickable="true"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/appear_sell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+
+                    <Button
+                        android:id="@+id/sell_know"
+                        android:layout_width="145dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner"
+                        android:text="as Individual" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="5dp" />
+
+                    <Button
+                        android:id="@+id/sell_mall"
+                        android:layout_width="145dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner"
+                        android:text="as Company" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/just"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/relativeLayout"
+            android:gravity="center"
+            android:layout_marginBottom="115dp"
+            android:text="just family and freinds"
+            android:textAllCaps="true"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

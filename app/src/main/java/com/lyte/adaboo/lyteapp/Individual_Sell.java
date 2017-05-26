@@ -85,6 +85,7 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
+import static android.R.attr.path;
 import static android.content.ContentValues.TAG;
 
 public class Individual_Sell extends Activity implements OnClickListener, AdapterView.OnItemSelectedListener {
@@ -109,7 +110,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     SessionManager session;
     TextView pr,p,q;
     String encodedImage = "";
-
+    File encoded;
 
     public static final int REQUEST_CAMERA = 110;
     public static final int SELECT_FILE = 120;
@@ -125,10 +126,6 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         setContentView(R.layout.check_sell);
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
-
-       // password = (EditText) findViewById(R.id.etRegisterPassword);
-       // userName = (EditText) findViewById(R.id.etRegisterUserName);
-       // confirmPassword = (EditText) findViewById(R.id.etRegisterPasswordConfirm);
 
         prev = (ImageView) findViewById(R.id.img_prev);
         upload = (Button) findViewById(R.id.upload);
@@ -147,7 +144,6 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
        // android:background="@drawable/editback"
         HashMap<String, String> user = session.getUserDetails();
-
         id = user.get(SessionManager.KEY_ID);
         // name
         String name = user.get(SessionManager.KEY_NAME);
@@ -195,16 +191,13 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 } else if (qtny.contentEquals("")) {
                     Toast.makeText(this, "Please provide Quantity", Toast.LENGTH_LONG)
                             .show();
-                }else if (encodedImage.contentEquals("")) {
-                    Toast.makeText(this, "Please provide an Image", Toast.LENGTH_LONG)
-                            .show();
                 }else if (cate == "Choose Category") {
                     Toast.makeText(this, "Please choose Category", Toast.LENGTH_LONG)
                             .show();
                 }
                 else {
-                    uploadImage();
-                    //doStaff();
+                   // uploadImage();
+                    doStaff();
                 }
                 break;
         }
@@ -239,9 +232,6 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         });
         builder.show();
     }
-
-
-
 
     //called after the user submits his item to the server
     void dialogShow() {
@@ -291,12 +281,9 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
             send  = (selectedImagePath);
             decodeBitmap(selectedImagePath);
 
+
         }
-
-
-
     }
-
 
 
     //here is where the dialog was created
@@ -394,7 +381,17 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
             //where image is saved
             prev.setImageBitmap(mBitmap);
-            savebitmap(currentPhotoPath);
+
+            String name = filepath.substring(filepath.lastIndexOf("/")+1);
+            String nameagain = name.substring(0, name.lastIndexOf('.'));
+
+           encoded =  savebitmap(filepath);
+
+
+            //encodedImage =  filepath;
+
+
+            //remember to delete file after or else file stays on user sdcard
 
         } catch (Exception e) {
             Log.e(TAG, e.toString());
@@ -406,28 +403,18 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
         OutputStream outStream = null;
 
-        File file = new File(filename + ".png");
-        if (file.exists()) {
-            file.delete();
-            file = new File(extStorageDirectory, filename + ".png");
-            Log.e("file exist", "" + file + ",Bitmap= " + filename);
-        }
-        try {
-            // make a new bitmap from your file
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getName());
+       // File file = new File(filename + ".png");
+        File file = new File(filename);
 
-            outStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-            outStream.flush();
-            outStream.close();
+        Log.e("file", "" + file);
+
+        try {
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.e("file", "" + file);
         return file;
-
     }
-
 
     /**
      * Shows the progress UI and hides the login form.
@@ -450,78 +437,36 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         return image;
     }
 
-    private void uploadImage() {
-
-        final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
-
-        StringRequest postRequest = new StringRequest(Request.Method.POST, StaticVariables.sendItemVolUrl,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        loading.dismiss();
-                        // response
-                        Log.d("Response", response);
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        loading.dismiss();
-                        Log.d("Error.Response", error.getMessage().toString());
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<String, String>();
-               // params.put("name", "Alif");
-                //params.put("image", "http://itsalif.info");
-
-                //Adding parameters
-                params.put("photo", "encodedImage");
-                params.put("name", desc);
-                params.put("price", amt);
-                params.put("quantity", qtny);
-
-
-                return params;
-            }
-        };
-
-        //Creating a Request Queue
-       //RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        //Adding request to the queue
-        //requestQueue.add(stringRequest);
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-       // CustomRequest jsonObjRequest = new CustomRequest(Request.Method.POST, StaticVariables.sendItemVolUrl, params, this., this.createRequestErrorListener());
-         requestQueue.add(postRequest);
-
-
-    }
-
-
-
-
-
-    private void doStaff() {
+     private void doStaff() {
         // TODO Auto-generated method stub
         pDialog.setMessage("Submitting Item..");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
 
         Map<String, Object> params = new HashMap<String, Object>();
-        aq.progress(pDialog).ajax(
-                StaticVariables.sendItemUrl + "submit&category="
-                        + cate + "&description=" + desc + "&price="
-                        + amt+ "&quantity=" + qtny + "&user_id=" + id
-                        +"&objurl=" + encodedImage,
 
+         params.put("type", "submit");
+         params.put("category", cate);
+         params.put("description", desc);
+         params.put("price", amt);
+         params.put("quantity", qtny);
+         params.put("user_id", id);
+         params.put("objurl", encoded);
+
+
+         /**
+          *
+          *  aq.progress(pDialog).ajax(
+          StaticVariables.sendItemVolUrl + "submit&category="
+          + cate + "&description=" + desc + "&price="
+          + amt+ "&quantity=" + qtny + "&user_id=" + id
+          +"&objurl=" + encoded,
+          *
+          *
+          *
+          */
+         aq.progress(pDialog).ajax(
+                StaticVariables.sendItemVolUrl,
                 params, JSONObject.class, new AjaxCallback<JSONObject>() {
                     @Override
                     public void callback(String url, JSONObject json,
@@ -529,14 +474,17 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
                         try {
 
+                            Toast.makeText(
+                                    Individual_Sell.this,
+                                    json.getInt(StaticVariables.SUCCESS) + "",
+                                    Toast.LENGTH_LONG).show();
+
+
                             System.out.println(json.toString());
                             int success = json.getInt(StaticVariables.SUCCESS);
 
                             if (success == 1) {
-                                Toast.makeText(
-                                        Individual_Sell.this,
-                                        json.getString(StaticVariables.MESSAGE),
-                                        Toast.LENGTH_LONG).show();
+
 
                                 descrip.setText("");
                                 price.setText("");
@@ -559,9 +507,9 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                             ex.printStackTrace();
                             System.out.println("********************* "
                                     + ex.toString());
-                            Toast.makeText(Individual_Sell.this,
-                                    "Server cannot be found", Toast.LENGTH_LONG)
-                                    .show();
+                            //Toast.makeText(Individual_Sell.this,
+                            //        ex.toString(), Toast.LENGTH_LONG)
+                            //        .show();
                         }
 
                     }
