@@ -86,10 +86,10 @@ public class user_items_adapter extends ArrayAdapter<user_items> {
         viewHolder.txtQnty.setText(dataModel.getQnty());
        // viewHolder.info.setText(dataModel.getImg());
 
-        Picasso.with(getContext())
-                .load(dataModel.getImg())
-                .placeholder( R.drawable.progress_animation )
-                .into(viewHolder.info);
+        //Picasso.with(getContext())
+        //        .load(dataModel.getImg())
+        //        .placeholder( R.drawable.progress_animation )
+        //        .into(viewHolder.info);
 
         // Return the completed view to render on screen
         return convertView;

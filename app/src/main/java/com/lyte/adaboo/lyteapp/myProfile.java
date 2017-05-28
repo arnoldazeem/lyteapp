@@ -20,6 +20,7 @@ import com.androidquery.callback.AjaxStatus;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,9 +38,6 @@ public class myProfile extends AppCompatActivity{
     SessionManager session;
     JSONArray products = null;
     CircleImageView image;
-    ImageView images;
-    JSONArray newarray;
-
     TextView username;
     AQuery aq;
     ProgressDialog pDialog;
@@ -48,8 +46,6 @@ public class myProfile extends AppCompatActivity{
     ArrayList<user_items> aryFriendList;
     user_items_adapter adapter;
     private  RecyclerView recyclerView;
-
-    ArrayList<user_items> friends;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +64,6 @@ public class myProfile extends AppCompatActivity{
         username = (TextView) findViewById(R.id.name);
         image  = ((CircleImageView) findViewById(R.id.profileImage));
 
-        images  = ((ImageView) findViewById(R.id.profile));
 
         HashMap<String, String> user = session.getUserDetails();
         // name
@@ -100,6 +95,7 @@ public class myProfile extends AppCompatActivity{
 
 
     private void Request() {
+
         // TODO Auto-generated method stub
         // Showing progress dialog before making http request
         pDialog.setMessage("Loading...");
@@ -107,68 +103,93 @@ public class myProfile extends AppCompatActivity{
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
 
+
+
         Map<String, Object> params = new HashMap<String, Object>();
         aq.progress(pDialog).ajax(
                 StaticVariables.requestUserData + "requestUserData&user_id=" + id, params, JSONObject.class,
 
                 new AjaxCallback<JSONObject>() {
+
                     @Override
                     public void callback(String url, JSONObject json,
                                          AjaxStatus status) {
 
+                        ArrayList<user_items> friends = new ArrayList<user_items>();
+
                         try {
 
-                            friends = new ArrayList<user_items>();
-
                             int success = json.getInt(StaticVariables.SUCCESS);
-
                             products = json.getJSONArray("markers");
-
-
-                            Toast.makeText(
-                                    myProfile.this,
-                                    json.getString(StaticVariables.MESSAGE),
-                                    Toast.LENGTH_LONG).show();
-
 
                             // saved in database as String
                             if (success == 1) {
+
+
 
                                 for (int i = 0; i <= products.length();  i++) {
 
                                     JSONObject c = products.getJSONObject(i);
 
+
                                     String product = c.getString("product_name");
                                     String qnty = c.getString("product_price");
-                                    String img = c.getString("product_type");
-                                    String price = c.getString("product_image");
+                                    String price = c.getString("product_type");
+                                    String img = c.getString("product_image");
 
                                     //convert bytearray to Bitmap
-                                    byte[] theByteArray = img.getBytes();
+                                  //  byte[] theByteArray = img.getBytes();
 
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray(theByteArray , 0, theByteArray .length);
+                                  //  Bitmap bitmap = BitmapFactory.decodeByteArray(theByteArray , 0, theByteArray .length);
 
 
-                                    images.setImageBitmap(bitmap);
+                                   // images.setImageBitmap(bitmap);
 
                                     // /byte[] decodedString = Base64.decode(encodedImage, Base64.URL_SAFE);
                                     //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                                    // friends.add(new user_items (product, price,qnty,img));
+                                     friends.add(new user_items (product, price,qnty,img));
+
 
                                 }
 
+
                             } else {
+                                Toast.makeText(
+                                        myProfile.this,
+                                        json.getString(StaticVariables.MESSAGE),
+                                        Toast.LENGTH_LONG).show();
 
                             }
 
-                            pDialog.dismiss();
-
+                        }catch (JSONException e) {
+                            // TODO: handle exception
+                            e.printStackTrace();
                         } catch (Exception ex) {
                             // TODO: handle exception
                             ex.printStackTrace();
                             System.out.println("********************* "
                                     + ex.toString());
+                            Toast.makeText(myProfile.this,
+                                   ex.toString(), Toast.LENGTH_LONG)
+                                    .show();
                         }
+
+
+                        recyclerView = (RecyclerView)findViewById(R.id.list_them);
+
+                        recyclerView.setHasFixedSize(true);
+
+                        recyclerView
+                                .setLayoutManager(new LinearLayoutManager(myProfile.this, LinearLayoutManager.VERTICAL, false));
+
+                        adapter = new user_items_adapter(friends, getApplicationContext());
+
+                        user_item_recycle  adapter = new user_item_recycle(myProfile.this, friends);
+
+                        recyclerView.setAdapter(adapter);// set adapter on recyclerview
+
+                        adapter.notifyDataSetChanged();// Notify the adapter
+
 
                     }
                 });

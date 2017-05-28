@@ -18,9 +18,10 @@ import java.util.ArrayList;
  * Created by adaboo on 5/5/17.
  */
 
-public class user_item_recycle extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class user_item_recycle extends RecyclerView.Adapter<RecyclerViewHolerItem> {
 
     private ArrayList<user_items> arrayList;
+
     Context mContext;
 
     public LayoutInflater inflater;
@@ -42,41 +43,40 @@ public class user_item_recycle extends RecyclerView.Adapter<RecyclerViewHolder> 
 
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerViewHolerItem holder, int position) {
         final user_items model = arrayList.get(position);
 
-        RecyclerViewHolder mainHolder = (RecyclerViewHolder) holder;// holder
+        RecyclerViewHolerItem mainHolder = (RecyclerViewHolerItem) holder;// holder
 
 
         //mainHolder.txt
 
-        // setting title
-       // mainHolder..setText(model.getProduct());
-       // mainHolder.name.setText(model.getPrice());
-       // mainHolder.name.setText(model.getQnty());
+        //check RecyclerViewHolerItem class
 
-
-
+        mainHolder.product.setText("Product :" + model.getProduct());
+        mainHolder.price.setText("Price :" + model.getPrice());
+        mainHolder.qnty.setText("Quantity :" + model.getQnty());
         //mainHolder.imageview.setImageBitmap(image);
-
 
        /// need to convert array byte back
 
-        Picasso.with(mContext)
-                .load(model.getImg())
-                .placeholder( R.drawable.progress_animation )
-                .into(mainHolder.imageview);
+       // Picasso.with(mContext)
+        //        .load(model.getImg())
+        //        .placeholder( R.drawable.progress_animation )
+       //         .into(mainHolder.imageview);
     }
 
     @Override
-    public RecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public RecyclerViewHolerItem onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         // This method will inflate the custom layout and return as viewholder
         LayoutInflater mInflater = LayoutInflater.from(viewGroup.getContext());
 
         ViewGroup mainGroup = (ViewGroup) mInflater.inflate(
-                R.layout.freinditem, viewGroup, false);
-        RecyclerViewHolder listHolder = new RecyclerViewHolder(mainGroup);
+                R.layout.user_item, viewGroup, false);
+
+        RecyclerViewHolerItem listHolder = new RecyclerViewHolerItem(mainGroup);
+
         return listHolder;
 
     }

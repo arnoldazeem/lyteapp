@@ -15,15 +15,15 @@
         android:layout_alignParentLeft="true"
         android:background="@drawable/image_bg">
 
-<de.hdodenhof.circleimageview.CircleImageView
+        <de.hdodenhof.circleimageview.CircleImageView
 
-    app:civ_border_width="2dp"
-    app:civ_border_color="#FF000000"
-    android:id="@+id/profileImage"
-    android:layout_marginTop="4dp"
-    android:layout_width="80dp"
-    android:layout_height="80dp"
-    android:layout_gravity="center_horizontal"/>
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"
+            android:id="@+id/profileImage"
+            android:layout_marginTop="4dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 

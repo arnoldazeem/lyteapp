@@ -139,9 +139,6 @@ public class BuyPage extends AppCompatActivity {
 
                         }
 
-
-
-
                     }
                 })
         );
@@ -185,6 +182,7 @@ public class BuyPage extends AppCompatActivity {
         adapter = new user_friends_adapter(friends, getApplicationContext());
 
         user_friend_recycle  adapter = new user_friend_recycle(BuyPage.this, friends);
+
         recyclerView.setAdapter(adapter);// set adapter on recyclerview
         adapter.notifyDataSetChanged();// Notify the adapter
     }
