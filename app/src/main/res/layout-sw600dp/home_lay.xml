@@ -6,13 +6,22 @@
     android:background="#ffffff">
 
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:minHeight="?attr/actionBarSize" />
+
+
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:gravity="center"
         android:orientation="horizontal"
         tools:ignore="ObsoleteLayoutParam">
@@ -29,7 +38,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:id="@+id/want"
-        android:layout_margin="10dp"
+        android:layout_margin="3dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_below="@+id/top">
@@ -38,8 +47,7 @@
             android:gravity="center"
             android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textSize="25dp"
+            android:layout_height="40dp"
             android:text= "I WANT TO"
             android:id="@+id/want_to"
             android:textColor="@android:color/white"
@@ -52,17 +60,17 @@
 
 
     <RelativeLayout
-        android:layout_marginTop="100dp"
-        android:layout_gravity="center"
+        android:id="@+id/wraped"
+        android:layout_below="@+id/want"
         android:gravity="center"
-        android:id="@+id/nn"
         android:layout_width="match_parent"
-        android:layout_height="500dp">
+        android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_margin="2dp"
-            android:layout_width="260dp"
-            android:layout_height="380dp"
+            android:clickable="true"
+            android:layout_margin="1dp"
+            android:layout_width="160dp"
+            android:layout_height="220dp"
             android:text="BUY"
             android:id="@+id/buy_lay"
             android:orientation="vertical"
@@ -71,10 +79,11 @@
 
 
             <ImageView
+                android:focusable="false"
                 android:visibility="visible"
                 android:id="@+id/client_buy"
                 android:background="@drawable/buy"
-                android:clickable="true"
+                android:clickable="false"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -92,7 +101,7 @@
                     android:text="People you Know"
                     android:gravity="center"
                     android:background="@drawable/round_corner"
-                    android:layout_width="150dp"
+                    android:layout_width="145dp"
                     android:layout_height="wrap_content" />
 
                 <android.support.v4.widget.Space
@@ -101,7 +110,7 @@
 
                 <Button
                     android:id="@+id/mall"
-                    android:layout_width="150dp"
+                    android:layout_width="145dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/round_corner"
                     android:text="shopping Mall" />
@@ -112,10 +121,11 @@
 
 
         <RelativeLayout
-            android:layout_margin="2dp"
-            android:id="@+id/buy"
-            android:layout_width="260dp"
-            android:layout_height="380dp"
+            android:layout_margin="1dp"
+            android:id="@+id/sell_lay"
+            android:layout_width="160dp"
+            android:layout_height="220dp"
+            android:clickable="true"
             android:layout_toRightOf="@+id/buy_lay"
             android:orientation="vertical"
             android:textColor="@android:color/holo_red_dark"
@@ -125,8 +135,9 @@
             <ImageView
                 android:visibility="visible"
                 android:id="@+id/client_sell"
-                android:clickable="true"
+                android:clickable="false"
                 android:layout_margin="2dp"
+                android:focusable="false"
                 android:layout_centerInParent="true"
                 android:background="@drawable/sell"
                 android:layout_width="wrap_content"
@@ -141,10 +152,10 @@
                 android:layout_height="wrap_content">
 
 
-                <Button android:id="@+id/sell_ppl_know"
-                    android:text="People you Know"
+                <Button android:id="@+id/sell_know"
+                    android:text="as Individual"
                     android:background="@drawable/round_corner"
-                    android:layout_width="150dp"
+                    android:layout_width="145dp"
                     android:layout_height="wrap_content" />
 
                 <android.support.v4.widget.Space
@@ -152,9 +163,9 @@
                     android:layout_height="5dp" />
 
                 <Button android:id="@+id/sell_mall"
-                    android:text="shopping Mall"
+                    android:text="as Company"
                     android:background="@drawable/round_corner"
-                    android:layout_width="150dp"
+                    android:layout_width="145dp"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
@@ -166,57 +177,17 @@
     </RelativeLayout>
 
 
-    <LinearLayout
-        android:layout_below="@+id/nn"
+    <TextView
+        android:layout_above="@id/toolbar"
+        android:layout_marginBottom="9dp"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:gravity="center"
-            android:id="@+id/just"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="just family and freinds"
-            android:textAllCaps="true"
-            android:textColor="#000000"
-            android:textSize="25sp" />
-
-
-    </LinearLayout>
-
-
-    <RelativeLayout
+        android:id="@+id/just"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-
-        <RelativeLayout
-            android:layout_marginTop="2dp"
-            android:gravity="bottom"
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#006600"/>
-
-            <include
-                layout="@layout/below_toolbar"/>
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-
-
+        android:text="just family and freinds"
+        android:textAllCaps="true"
+        android:textColor="#000000"
+        android:textSize="20sp" />
 
 
 </RelativeLayout>
