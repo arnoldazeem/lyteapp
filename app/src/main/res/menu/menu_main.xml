@@ -6,7 +6,7 @@
         android:id="@+id/action_home"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_home_black_48dp"
         android:title="home"/>
 
     <item
@@ -20,21 +20,21 @@
         android:id="@+id/action_star"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:icon="@drawable/ic_star"
+        android:icon="@drawable/ic_star_border_black_48dp"
         android:title="home"/>
 
     <item
         android:id="@+id/action_notificarions"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:icon="@drawable/ic_notifications"
+        android:icon="@drawable/ic_notifications_black_48dp"
         android:title="home"/>
 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/ic_settings_black_48dp"
         android:title="home"/>
 
 

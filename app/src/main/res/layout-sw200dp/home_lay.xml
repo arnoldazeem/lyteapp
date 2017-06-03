@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:background="?attr/colorPrimary"
-        android:layout_alignParentBottom="true"
-        android:minHeight="?attr/actionBarSize" />
-
+   <include layout="@layout/below_toolbar" />
 
     <RelativeLayout
         android:id="@+id/top"
@@ -177,17 +172,29 @@
     </RelativeLayout>
 
 
+
     <TextView
-        android:layout_above="@id/toolbar"
+        android:layout_above="@+id/toolbar"
         android:layout_marginBottom="9dp"
         android:gravity="center"
         android:id="@+id/just"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="just family and freinds"
-        android:textAllCaps="true"
+        android:text="Just Family and Freinds"
         android:textColor="#000000"
         android:textSize="20sp" />
+
+    <View
+        android:layout_below="@+id/just"
+        android:gravity="center"
+        android:id="@+id/viw"
+        android:background="#006600"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:text="Just Family and Freinds" />
+
 
 
 </RelativeLayout>

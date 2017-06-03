@@ -1,8 +1,11 @@
 package com.lyte.adaboo.lyteapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,9 +15,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.lyte.adaboo.lyteapp.R;
 
 /**
  * Created by adaboo on 4/16/17.
@@ -36,18 +43,36 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     private ProgressDialog progressDialog;
     TextView just,want;
 
+    Boolean clicksell = true;
+    Boolean clickbuy = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_lay);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 
-        setSupportActionBar(toolbar);
+        setSupportActionBar(tool);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //getSupportActionBar().setDisplayShowHomeEnabled(false);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setTitle("");
 
+       // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_black_48dp);
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        /**
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.below_toolbar);
+        View view =getSupportActionBar().getCustomView();
+
+        Toolbar parent =(Toolbar) view.getParent();
+        parent.setContentInsetsAbsolute(0,0);
+
+         **/
 
         //four buttons for navigation
         peopleyouknow = ((Button) this.findViewById(R.id.ppl_know));
@@ -70,8 +95,6 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         //relative layout clickable
         buy_layout = ((RelativeLayout) this.findViewById(R.id.buy_lay));
         sell_layout = ((RelativeLayout) this.findViewById(R.id.sell_lay));
-
-
 
 
         just = ((TextView) this.findViewById(R.id.just));
@@ -165,21 +188,31 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 /** Start a new Activity MyCards.java */
 
                 /** AlerDialog when click on Exit */
+                if(clickbuy) {
 
-                progressDialog = new ProgressDialog(HomePage.this);
-                progressDialog.setMessage("Loading......");
-                progressDialog.show();
+                    progressDialog = new ProgressDialog(HomePage.this);
+                    progressDialog.setMessage("Loading......");
+                    progressDialog.show();
 
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
 
-                        buybuttoms.setVisibility(View.VISIBLE);
-                        buy.setVisibility(View.INVISIBLE);
-                        progressDialog.dismiss();
-                    }
-                }, 2000); // 3000 milliseconds delay
 
+                            //check here again
+                            buybuttoms.setVisibility(View.VISIBLE);
+                            buy.setVisibility(View.INVISIBLE);
+                            sellbuttoms.setVisibility(View.INVISIBLE);
+                            sell.setVisibility(View.VISIBLE);
+
+                            progressDialog.dismiss();
+                        }
+                    }, 2000); // 3000 milliseconds delay
+
+
+                    clicksell = true;
+                    clickbuy = false;
+                }
 
                 break;
 
@@ -187,28 +220,34 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 /** Start a new Activity MyCards.java */
                 /** AlerDialog when click on Exit */
 
-                progressDialog = new ProgressDialog(HomePage.this);
-                progressDialog.setMessage("Loading......");
-                progressDialog.show();
+                if(clicksell) {
 
-                Handler handlers = new Handler();
-                handlers.postDelayed(new Runnable() {
-                    public void run() {
+                    progressDialog = new ProgressDialog(HomePage.this);
+                    progressDialog.setMessage("Loading......");
+                    progressDialog.show();
 
-                        sellbuttoms.setVisibility(View.VISIBLE);
-                        sell.setVisibility(View.INVISIBLE);
-                        progressDialog.dismiss();
-                    }
-                }, 2000); // 3000 milliseconds delay
+                    Handler handlers = new Handler();
+                    handlers.postDelayed(new Runnable() {
+                        public void run() {
 
+                            sellbuttoms.setVisibility(View.VISIBLE);
+                            sell.setVisibility(View.INVISIBLE);
+                            buybuttoms.setVisibility(View.INVISIBLE);
+                            buy.setVisibility(View.VISIBLE);
+                            progressDialog.dismiss();
+                        }
+                    }, 2000); // 3000 milliseconds delay
 
+                    clicksell = false;
+                    clickbuy = true;
+                }
                 break;
 
 
 
             case R.id.ppl_know:
                 /** Start a new Activity MyCards.java */
-
+                clickbuy = true;
                 Intent intent = new Intent(HomePage.this,
                         BuyPage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -218,6 +257,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             case R.id.mall:
                 /** AlerDialog when click on Exit */
 
+                clicksell = true;
                 Intent in = new Intent(HomePage.this,
                         Individual_Sell.class);
                 in.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -225,6 +265,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 break;
 
             case R.id.sell_know:
+
 
                 Intent isn = new Intent(HomePage.this,
                         myProfile.class);

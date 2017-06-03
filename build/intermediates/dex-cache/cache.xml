@@ -3,12 +3,12 @@
 
     <item
         is-multidex="false"
-        jar="/home/adaboo/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.19/a8f23f65fc1e522ee4a1a697ee569901a46741fa/library-1.0.19.jar"
+        jar="/home/adaboo/.android/build-cache/4a40909bd62cd33e40b37c31eb9d2a52d1586703/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="a8f23f65fc1e522ee4a1a697ee569901a46741fa">
-        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/library-1.0.19_ade3071db38ed4fd20159e1b71da6aff9a68d8a8.jar" />
+        sha1="c755536e5a100d9c76c8ea0b72f76c018f7a9de2">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_40359441462fe5e7a544922cfa49abc84bf3e250.jar" />
     </item>
 
 </items>

@@ -11,6 +11,8 @@ public class StaticVariables {
 	public static String subscription = "http://192.168.42.237/yenfabus/subscribe.php?type=";
 	//public static String requestUserData = "http://192.168.42.16/yenfa/requestUserData.php?type=";
 
+	//public static String requestUserData = "http://lyteapp.site40.net/requestUserData.php?type=";
+	//public static String sendItemVolUrl = "http://lyteapp.site40.net/submitvolley.php";
 	public static String sendItemUrl = "http://192.168.42.16/yenfa/submit.php?type=";
 	public static String requestUserData = "http://192.168.42.16/yenfa/requestUserData.php?type=";
     public static String sendItemVolUrl = "http://192.168.42.16/yenfa/submitvolley.php";

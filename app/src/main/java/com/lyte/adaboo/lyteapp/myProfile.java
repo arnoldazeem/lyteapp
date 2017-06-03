@@ -104,7 +104,6 @@ public class myProfile extends AppCompatActivity{
         pDialog.setCancelable(false);
 
 
-
         Map<String, Object> params = new HashMap<String, Object>();
         aq.progress(pDialog).ajax(
                 StaticVariables.requestUserData + "requestUserData&user_id=" + id, params, JSONObject.class,
