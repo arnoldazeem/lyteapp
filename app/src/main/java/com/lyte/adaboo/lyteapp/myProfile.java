@@ -53,8 +53,6 @@ public class myProfile extends AppCompatActivity{
         setContentView(R.layout.myprofile);
 
 
-
-
         pDialog = new ProgressDialog(this);
         aq = new AQuery(this);
 

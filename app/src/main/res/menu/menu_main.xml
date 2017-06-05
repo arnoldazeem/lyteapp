@@ -35,8 +35,24 @@
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/ic_settings_black_48dp"
-        android:title="home"/>
+        android:title="home">
 
+    <menu>
+        <item
+            android:id="@+id/myself"
+            android:title="My Shelf" />
+        <item
+            android:id="@+id/menuSortRating"
+            android:title="FAQ" />
+        <item
+            android:id="@+id/menuSortNewest"
+            android:title="Terms and Privacy Policy" />
+        <item
+            android:id="@+id/abt"
+            android:title="About Us" />
+    </menu>
+
+    </item>
 
 </menu>
 

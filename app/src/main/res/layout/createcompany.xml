@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/img"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/lyteapp"/>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_below="@id/img"
+        android:id="@+id/editable"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:text="Company Name"
+                android:textColor="#000000"
+                android:id="@+id/textItem"
+                android:textStyle="bold|italic"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:textSize="16sp" />
+
+
+            <EditText
+                android:maxLines="1"
+                android:textColor="#000000"
+                android:padding="2dp"
+                android:background="@drawable/editback"
+                android:id="@+id/editText3"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:text="Location"
+                android:textStyle="bold|italic"
+                android:id="@+id/textItem2"
+                android:textColor="#000000"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:maxLines="2"
+                android:textColor="#000000"
+                android:padding="2dp"
+                android:background="@drawable/editback"
+                android:id="@+id/editText2"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:text="Product Category"
+                android:textStyle="bold|italic"
+                android:id="@+id/textItem3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+
+            <Spinner
+                android:id="@+id/spinner1"
+                style="@style/spinnerItemStyle"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/editback"
+                android:prompt="@string/category_prompt"/>
+
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:text="Contact #"
+                android:textStyle="bold|italic"
+                android:id="@+id/textItem4"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <EditText
+                android:maxLines="1"
+                android:textColor="#000000"
+                android:padding="2dp"
+                android:inputType="number"
+                android:background="@drawable/editback"
+                android:id="@+id/editText4"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <Button
+
+        android:id="@+id/upload"
+        android:layout_below="@+id/first"
+        android:text="UPLOAD PICTURES"
+        android:textColor="#ffffff"
+        android:layout_margin="3dp"
+        android:layout_gravity="center"
+        android:background="@drawable/green_shape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_margin="2dp"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PREVIEW"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="4dp"
+        android:background="#006600"/>
+
+
+
+    <RelativeLayout
+        android:id="@+id/prev_dem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:background="@drawable/radialblack"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="80dp"
+            android:layout_margin="10dp"
+            android:layout_height="80dp"
+            android:id="@+id/img_prev"/>
+
+        <LinearLayout
+            android:layout_alignTop="@+id/img_prev"
+            android:layout_toRightOf="@id/img_prev"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:textStyle="bold|italic"
+                android:textColor="#000000"
+                android:id="@+id/prev_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product:" />
+
+            <TextView
+                android:textStyle="bold|italic"
+                android:textColor="#000000"
+                android:id="@+id/prev_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:text="Price:" />
+
+            <TextView
+                android:textStyle="bold|italic"
+                android:textColor="#000000"
+                android:id="@+id/prev_cate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:text="category:" />
+
+            <TextView
+                android:textStyle="bold|italic"
+                android:textColor="#000000"
+                android:text="Qty:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/prev_qty"/>
+
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:visibility="invisible"
+            android:layout_weight="1"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/clear"
+            android:text="EDIT"
+            android:textColor="#ffffff"
+            android:layout_margin="8dp"
+            android:layout_gravity="center"
+            android:background="@drawable/back_red"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/prev_them"
+            android:text="PREVIEW"
+            android:textColor="#ffffff"
+            android:layout_margin="8dp"
+            android:layout_gravity="center"
+            android:background="@drawable/back_red"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+
+        <Button
+            android:visibility="invisible"
+            android:layout_weight="1"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/submit"
+            android:text="SUBMIT"
+            android:textColor="#ffffff"
+            android:layout_margin="8dp"
+            android:layout_gravity="center"
+            android:background="@drawable/back_red"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

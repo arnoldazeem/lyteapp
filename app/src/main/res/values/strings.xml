@@ -15,8 +15,8 @@ automatically posted on Facebook</string>
 
 
     <string name="subm">Your product has been submitted. You have 3 more slots left. Want to sell more products?</string>
-
-
+    <string name="submcompany">Your company details have been submitted.
+        Your application is being reviewed.You will be notified when it is approved.</string>
 
 
 </resources>

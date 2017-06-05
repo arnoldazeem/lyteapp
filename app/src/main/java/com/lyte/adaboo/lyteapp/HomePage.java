@@ -60,9 +60,6 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
         //getSupportActionBar().setTitle("");
 
-       // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_black_48dp);
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         /**
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -73,6 +70,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         parent.setContentInsetsAbsolute(0,0);
 
          **/
+
 
         //four buttons for navigation
         peopleyouknow = ((Button) this.findViewById(R.id.ppl_know));
@@ -112,6 +110,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         buy_layout.setOnClickListener(this);
         sell_layout.setOnClickListener(this);
         sell_ppl_know.setOnClickListener(this);
+        sell_mall.setOnClickListener(this);
 
         Bundle extras = getIntent().getExtras();
 
@@ -146,9 +145,31 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
+        if (id == R.id.action_home)
         {
             return true;
+        }
+        else if (id == R.id.action_allfriends)
+        {
+            return true;
+        }else if (id == R.id.action_allfriends)
+        {
+            return true;
+        }else if (id == R.id.action_star)
+        {
+            return true;
+        }else if (id == R.id.action_notificarions)
+        {
+            return true;
+        }else if (id == R.id.action_settings)
+        {
+            Toast.makeText(HomePage.this, "settings", Toast.LENGTH_LONG).show();
+
+        }else if (id == R.id.myself)
+        {
+            Intent sell_mall = new Intent(HomePage.this, myProfile.class);
+            sell_mall.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(sell_mall);
         }
 
         return super.onOptionsItemSelected(item);
@@ -259,7 +280,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
                 clicksell = true;
                 Intent in = new Intent(HomePage.this,
-                        Individual_Sell.class);
+                        myProfile.class);
                 in.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(in);
                 break;
@@ -267,11 +288,23 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             case R.id.sell_know:
 
 
+               // clicksell = true;
                 Intent isn = new Intent(HomePage.this,
-                        myProfile.class);
+                        Individual_Sell.class);
                 isn.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(isn);
 
+                break;
+
+
+            case R.id.sell_mall:
+                /** AlerDialog when click on Exit */
+
+                //clicksell = true;
+                Intent sell_mall = new Intent(HomePage.this,
+                        CreateCompany.class);
+                sell_mall.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(sell_mall);
                 break;
         }
 

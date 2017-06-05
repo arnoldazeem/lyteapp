@@ -2,13 +2,166 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="/home/adaboo/.android/build-cache/4a40909bd62cd33e40b37c31eb9d2a52d1586703/output/jars/classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="c755536e5a100d9c76c8ea0b72f76c018f7a9de2">
-        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/pre-dexed/debug/classes_40359441462fe5e7a544922cfa49abc84bf3e250.jar" />
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_88960b9c3d9e6c1b7ab1eb297dbfbe8bf65984f2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/434bb12ebd99c6d988fbac69dbf649f527177f66/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8bc45ce1f63d1a391fd38b32a201be5a42f9c95d">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a763a814fe2c6b27e6a42734abf0f6599074bf57/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/68308c0a0cf6af55b3f47fad7248cc2d4dd28fa1/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d29714cc76b38157e3cbd034c66e1ec808eb4c19">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7c82221c3fedb9b47e2b7ba21205358fd67a5c43/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/73a92d8e79dbb4bdc60f227aa11d37c52d2cba6a/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="53a420cd4f49274db6bd43475f8006ba67ef6bbd">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d91039572f1d3e8d9781bc8a1bebdec090e3be4a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c4ca8b7b48fd965d34caa6da2d691ff3d06e2181">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_e22556317b5acb0cd06b355117d51f2a5c668330/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/d13a09bd2356447ac5cc8b91a9d3ea8053bdaaa5/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4ccbcda5c72027c7f7c14be9ff8640d9cb0d8da0">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c99156324aea79dc32083852ef2b25a0bf9a2661/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/d13a09bd2356447ac5cc8b91a9d3ea8053bdaaa5/output/jars/libs/internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3b61a70884adaf0be3fc06c70c801e3e6df13133">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.0_31097fc763a390658ab40106bc7737486d510433/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/efeaa92f16f13b0b4a56184be3d529b9fa3faef7/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_97ea405bfc4400afa2153f8e2488c6ce80e5fb8b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.gradle/caches/modules-2/files-2.1/com.github.androidquery/androidquery/0.26.9/3d2eaa5246ebc804631e2b88b206adf9454abcdc/androidquery-0.26.9.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3d2eaa5246ebc804631e2b88b206adf9454abcdc">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/androidquery-0.26.9_ac1e19cf90903dc085863570dee84215203b3f34/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/3412d5bfa11bf86c88399062ecaddbf232e9e60c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="76fb65a4b41ea42dab8a1310ed772a2420c96b52">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_843f292d7fabb6d33b1b185a0afd1457131b3c8c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/2c53bab5ab7493f95155db8a308a932681872692/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0d94c39080a309d1887f50ef68cc96dfe4bc9d01">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2b6a0a1261cbe7ff213e7043114e8f329c9a6857/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/55a1aa73359a35e0cf214ae0ad19b34777dbaf2c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_34e74ed5e9d6953ccba18e85c64781b1835942a2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/5cca60682afbfaa70c1ee640f178034e4068fce3/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="07daa0b6e1d455c82a38422ffe287c18823d339a">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ab2bde5dc6d3c9335d84c5fa4af0cfd178e5294d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/ee54678c886bfb32d8a12b456ade1da9669a2f64/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a2af9c72ccaa4c5c049b500ca6ea664a4ce1f7d4">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2f9fa379792c477024de6900b7eea574f0653dee/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/5cca60682afbfaa70c1ee640f178034e4068fce3/output/jars/libs/internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ee5faf4dee5b6a4364bf51587871047dde7c703a">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.0_9ed806c8ffb76c648f874b66951ed63eb58ed35c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.19/a8f23f65fc1e522ee4a1a697ee569901a46741fa/library-1.0.19.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a8f23f65fc1e522ee4a1a697ee569901a46741fa">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/library-1.0.19_ade3071db38ed4fd20159e1b71da6aff9a68d8a8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.3.3/1262995965440e28ba5c4d480c9c9ab4ccce84cc/picasso-2.3.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1262995965440e28ba5c4d480c9c9ab4ccce84cc">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.3.3_d135aace622665d2f4e66ad76bfc9013aff3eed9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adaboo/.android/build-cache/3412d5bfa11bf86c88399062ecaddbf232e9e60c/output/jars/libs/internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="665d21a8a069c96b4d9e8b434f5096d865b4e261">
+        <dex dex="/home/adaboo/AndroidStudioProjects/lyteapp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.0_2fe53451e0b4afdad4b2b92fb359d522f1ca1d0f/classes.dex" />
     </item>
 
 </items>

@@ -1,11 +1,7 @@
 package com.lyte.adaboo.lyteapp;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,13 +12,13 @@ import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
-import android.net.ParseException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Base64;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,15 +30,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
@@ -50,46 +37,21 @@ import com.androidquery.callback.AjaxStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
-/**
- * Created by adaboo on 5/6/17.
- */
-
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
-
-import static android.R.attr.path;
 import static android.content.ContentValues.TAG;
 
-public class Individual_Sell extends Activity implements OnClickListener, AdapterView.OnItemSelectedListener {
+/**
+ * Created by adaboo on 6/4/17.
+ */
+
+public class CreateCompany extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
     Button upload, submit;
     AQuery aq;
@@ -97,13 +59,22 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     ProgressDialog pDialog;
     String url_all_products = "";
     Spinner spinner1;
-    EditText descrip;
-    EditText price;
-    EditText qty;
-    String desc;
-    String amt;
-    String qtny;
+
+    EditText location;
+    EditText company_name;
+    EditText contact;
+
+    String loc;
+    String name;
+    String conta;
+
+
+    TextView prev_compname,prev_category;
+    TextView prev_loca;
+    TextView prev_contact;
+
     String cate,id,friend_array,user_id;
+
 
     byte[] imgurl;
     SessionManager session;
@@ -124,10 +95,13 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.check_sell);
+        setContentView(R.layout.createcompany);
+
+
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
 
+        spinner1= (Spinner) findViewById(R.id.spinner1);
 
         prev = (ImageView) findViewById(R.id.img_prev);
         upload = (Button) findViewById(R.id.upload);
@@ -138,19 +112,21 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         prevthem = (Button) findViewById(R.id.prev_them);
         submit = (Button) findViewById(R.id.submit);
 
+        location = (EditText) findViewById(R.id.editText2);
+        company_name = (EditText) findViewById(R.id.editText3);
+        contact = (EditText) findViewById(R.id.editText4);
 
-        descrip = (EditText) findViewById(R.id.editText2);
-        price = (EditText) findViewById(R.id.editText3);
-        qty = (EditText) findViewById(R.id.editText4);
 
 
-        pr = (TextView) findViewById(R.id.prev_product);
-        p = (TextView) findViewById(R.id.prev_price);
-        q = (TextView) findViewById(R.id.prev_qty);
+        prev_compname = (TextView) findViewById(R.id.prev_product);
+        prev_loca = (TextView) findViewById(R.id.prev_price);
+        prev_contact = (TextView) findViewById(R.id.prev_qty);
+        prev_category = (TextView) findViewById(R.id.prev_cate);
+
 
         clickable = (LinearLayout) findViewById(R.id.editable);
 
-       // android:background="@drawable/editback"
+        // android:background="@drawable/editback"
         HashMap<String, String> user = session.getUserDetails();
         id = user.get(SessionManager.KEY_ID);
         // name
@@ -158,7 +134,9 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         // image
         String imageUrl = user.get(SessionManager.KEY_IMAGEURL);
 
-        friend_array = user.get(SessionManager.KEY_FRIENDS);
+        //friend_array = user.get(SessionManager.KEY_FRIENDS);
+
+
 
 
         String[] years = {"Choose Category","Electronics","Clothing","Accommodation","Stationery","Automobile"};
@@ -166,20 +144,21 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         spinner1.setAdapter(langAdapter);
 
-        spinner1.setOnItemSelectedListener(this);
 
         aq = new AQuery(this);
         pDialog = new ProgressDialog(this);
 
 
-      //  cancel.setOnClickListener(this);
+        //  cancel.setOnClickListener(this);
         upload.setOnClickListener(this);
         submit.setOnClickListener(this);
         prevthem.setOnClickListener(this);
         edit.setOnClickListener(this);
-
+        spinner1.setOnItemSelectedListener(this);
+        clickable.setOnTouchListener(this);
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -194,17 +173,20 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
             case R.id.prev_them:
 
-                desc = descrip.getText().toString();
-                amt = price.getText().toString();
-                qtny = qty.getText().toString();
 
-                if (desc.trim().contentEquals("")) {
+
+                loc = location.getText().toString();
+                name = company_name.getText().toString();
+                conta = contact.getText().toString();
+
+
+                if (loc.trim().contentEquals("")) {
                     Toast.makeText(this, "Please provide Decription of Item",
                             Toast.LENGTH_LONG).show();
-                } else if (amt.contentEquals("")) {
+                } else if (name.contentEquals("")) {
                     Toast.makeText(this, "Please provide Item Price",
                             Toast.LENGTH_LONG).show();
-                } else if (qtny.contentEquals("")) {
+                } else if (conta.contentEquals("")) {
                     Toast.makeText(this, "Please provide Quantity", Toast.LENGTH_LONG)
                             .show();
                 }else if (cate == "Choose Category") {
@@ -239,75 +221,44 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
             case R.id.submit:
 
-                desc = descrip.getText().toString();
-                amt = price.getText().toString();
-                qtny = qty.getText().toString();
+                loc = location.getText().toString();
+                name = company_name.getText().toString();
+                conta = contact.getText().toString();
 
-                if (desc.trim().contentEquals("")) {
+                if (loc.trim().contentEquals("")) {
                     Toast.makeText(this, "Please provide Decription of Item",
                             Toast.LENGTH_LONG).show();
-                } else if (amt.contentEquals("")) {
+                } else if (name.contentEquals("")) {
                     Toast.makeText(this, "Please provide Item Price",
                             Toast.LENGTH_LONG).show();
-                } else if (qtny.contentEquals("")) {
+                } else if (conta.contentEquals("")) {
                     Toast.makeText(this, "Please provide Quantity", Toast.LENGTH_LONG)
                             .show();
                 }else if (cate == "Choose Category") {
                     Toast.makeText(this, "Please choose Category", Toast.LENGTH_LONG)
                             .show();
+                }else if (mBitmap == null) {
+
+                    Toast.makeText(this, "Please select picture", Toast.LENGTH_LONG)
+                            .show();
                 }
                 else {
 
-                    doStaff();
+               //     dostuff();
+                   // edit.setVisibility(View.VISIBLE);
+                   // submit.setVisibility(View.VISIBLE);
+                   // prevthem.setVisibility(View.INVISIBLE);
+                  //  clickable.setEnabled(false);
                 }
                 break;
         }
 
     }
 
-    private void selectImage() {
-
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
-        AlertDialog.Builder builder = new AlertDialog.Builder(Individual_Sell.this);
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo"))
-                {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
-                }
-                else if (options[item].equals("Choose from Gallery"))
-                {
-                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);
-
-                }
-                else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-
-    //called after the user submits his item to the server
-    void dialogShow() {
-        AlertDialogFragment cdd = new AlertDialogFragment(Individual_Sell.this);
-        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        cdd.show();
 
 
-        //check again
-        submit.setVisibility(View.INVISIBLE);
-        edit.setVisibility(View.INVISIBLE);
-        prevthem.setVisibility(View.VISIBLE);
-        clickable.setClickable(true);
-    }
 
+    //activity results after you go  into the camera
 
 
     @Override
@@ -353,51 +304,6 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         }
     }
 
-
-    //here is where the dialog was created
-    void picture(){
-        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add Photo!");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (items[item].equals("Take Photo")) {
-
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    // Ensure that there's a camera activity to handle the intent
-                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                        // Create the File where the photo should go
-                        mPhotoFile = null;
-                        try {
-                            mPhotoFile = createImageFile();
-                        } catch (IOException ex) {
-                            Log.e(TAG, ex.toString());
-                        }
-                        // Continue only if the File was successfully created
-                        if (mPhotoFile != null) {
-                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                    Uri.fromFile(mPhotoFile));
-                            startActivityForResult(takePictureIntent, REQUEST_CAMERA);
-                        }
-                    }
-
-                } else if (items[item].equals("Choose from Library")) {
-                    Intent intent = new Intent(
-                            Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("image/*");
-                    startActivityForResult(
-                            Intent.createChooser(intent, "Select File"),
-                            SELECT_FILE);
-                } else if (items[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-
-    }
 
     //where Image is Decoded
     private void decodeBitmap(String filepath) {
@@ -447,12 +353,12 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
             mBitmap = Bitmap.createBitmap(resizedBitmap, 0, 0, targetW, targetH, matrix, true);
 
             //where image is saved
-           // prev.setImageBitmap(mBitmap);
+            // prev.setImageBitmap(mBitmap);
 
             String name = filepath.substring(filepath.lastIndexOf("/")+1);
             String nameagain = name.substring(0, name.lastIndexOf('.'));
 
-           encoded =  savebitmap(filepath);
+            encoded =  savebitmap(filepath);
 
             //remember to delete file after or else file stays on user sdcard
 
@@ -462,11 +368,13 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     }
 
 
+
+    //image file is saved to be sent to server later
     private File savebitmap(String filename) {
         String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
         OutputStream outStream = null;
 
-       // File file = new File(filename + ".png");
+        // File file = new File(filename + ".png");
         File file = new File(filename);
 
         Log.e("file", "" + file);
@@ -479,11 +387,59 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         return file;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
 
 
+
+
+
+    //here is where the dialog was created
+    void picture(){
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals("Take Photo")) {
+
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    // Ensure that there's a camera activity to handle the intent
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        // Create the File where the photo should go
+                        mPhotoFile = null;
+                        try {
+                            mPhotoFile = createImageFile();
+                        } catch (IOException ex) {
+                            Log.e(TAG, ex.toString());
+                        }
+                        // Continue only if the File was successfully created
+                        if (mPhotoFile != null) {
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                    Uri.fromFile(mPhotoFile));
+                            startActivityForResult(takePictureIntent, REQUEST_CAMERA);
+                        }
+                    }
+
+                } else if (items[item].equals("Choose from Library")) {
+                    Intent intent = new Intent(
+                            Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(
+                            Intent.createChooser(intent, "Select File"),
+                            SELECT_FILE);
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+
+    }
+
+
+
+    //image file of image is created here
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -502,7 +458,51 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
 
 
-     private void doStaff() {
+
+    //
+
+
+
+    //spinner happens here
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        cate = parent.getItemAtPosition(position).toString();
+        Toast.makeText(this, "The planet is " +
+                cate, Toast.LENGTH_LONG).show();
+
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+
+
+    //preview of input
+    public void preview() {
+
+        try {
+
+            prev_compname.setText("Company Name:" + " "+ name );
+            prev_loca.setText("Location " + " "+ loc);
+            prev_contact.setText("Contact" +" "+ conta);
+            prev_category.setText("Category" + " " + cate);
+            prev.setImageBitmap(mBitmap);
+
+        }
+
+        catch (Exception e) {
+        }
+
+    }
+
+
+
+    //send to server
+
+
+    private void doStaff() {
         // TODO Auto-generated method stub
         pDialog.setMessage("Submitting Item..");
         pDialog.setIndeterminate(false);
@@ -510,28 +510,16 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
         Map<String, Object> params = new HashMap<String, Object>();
 
-         params.put("type", "submit");
-         params.put("category", cate);
-         params.put("description", desc);
-         params.put("price", amt);
-         params.put("quantity", qtny);
-         params.put("user_id", id);
-         params.put("objurl", encoded);
+        params.put("type", "createcomp");
+        params.put("category", cate);
+        params.put("companyname", name);
+        params.put("location", location);
+        params.put("contact", conta);
+        params.put("user_id", id);
+        params.put("objurl", encoded);
 
-
-         /**
-          *
-          *  aq.progress(pDialog).ajax(
-          StaticVariables.sendItemVolUrl + "submit&category="
-          + cate + "&description=" + desc + "&price="
-          + amt+ "&quantity=" + qtny + "&user_id=" + id
-          +"&objurl=" + encoded,
-          *
-          *
-          *
-          */
-         aq.progress(pDialog).ajax(
-                StaticVariables.sendItemVolUrl,
+        aq.progress(pDialog).ajax(
+                StaticVariables.companycreate,
                 params, JSONObject.class, new AjaxCallback<JSONObject>() {
                     @Override
                     public void callback(String url, JSONObject json,
@@ -540,7 +528,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                         try {
 
                             Toast.makeText(
-                                    Individual_Sell.this,
+                                    CreateCompany.this,
                                     json.getInt(StaticVariables.SUCCESS) + "",
                                     Toast.LENGTH_LONG).show();
 
@@ -551,15 +539,15 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                             if (success == 1) {
 
 
-                                descrip.setText("");
-                                price.setText("");
-                                qty.setText("");
+                                location.setText("");
+                                company_name.setText("");
+                                contact.setText("");
 
                                 dialogShow();
 
                             } else {
                                 Toast.makeText(
-                                        Individual_Sell.this,
+                                        CreateCompany.this,
                                         json.getString(StaticVariables.MESSAGE),
                                         Toast.LENGTH_LONG).show();
                             }
@@ -582,35 +570,24 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
     }
 
-    public void preview() {
 
-        try {
 
-            pr.setText("Product:" + desc);
-            p.setText("Price:" + "GHS " + amt);
-            q.setText("Qty:" + qtny);
-            prev.setImageBitmap(mBitmap);
+    //called after the user submits his item to the server
+    void dialogShow() {
+        AlertdialogfragmentComp cdd = new AlertdialogfragmentComp(CreateCompany.this);
+        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        cdd.show();
 
-            }
-
-         catch (Exception e) {
-        }
-        ;
+        //check again
+        submit.setVisibility(View.INVISIBLE);
+        edit.setVisibility(View.INVISIBLE);
+        prevthem.setVisibility(View.VISIBLE);
+        //clickable.setOnTouchListener();
     }
 
 
-
-
-
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        cate = parent.getItemAtPosition(position).toString();
-        Toast.makeText(this, "The planet is " +
-                cate, Toast.LENGTH_LONG).show();
-
-    }
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
     }
 }

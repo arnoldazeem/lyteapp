@@ -16,6 +16,7 @@ public class StaticVariables {
 	public static String sendItemUrl = "http://192.168.42.16/yenfa/submit.php?type=";
 	public static String requestUserData = "http://192.168.42.16/yenfa/requestUserData.php?type=";
     public static String sendItemVolUrl = "http://192.168.42.16/yenfa/submitvolley.php";
+	public static String companycreate = "http://192.168.42.16/yenfa/companycreate.php";
 	
 	public static String SUCCESS = "success";
 	public static String MESSAGE = "message";
