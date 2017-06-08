@@ -244,11 +244,8 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
                 }
                 else {
 
-               //     dostuff();
-                   // edit.setVisibility(View.VISIBLE);
-                   // submit.setVisibility(View.VISIBLE);
-                   // prevthem.setVisibility(View.INVISIBLE);
-                  //  clickable.setEnabled(false);
+                    doStaff();
+
                 }
                 break;
         }
@@ -513,7 +510,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         params.put("type", "createcomp");
         params.put("category", cate);
         params.put("companyname", name);
-        params.put("location", location);
+        params.put("location", loc);
         params.put("contact", conta);
         params.put("user_id", id);
         params.put("objurl", encoded);

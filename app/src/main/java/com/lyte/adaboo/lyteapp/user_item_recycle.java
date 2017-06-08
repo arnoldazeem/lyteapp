@@ -49,13 +49,25 @@ public class user_item_recycle extends RecyclerView.Adapter<RecyclerViewHolerIte
         RecyclerViewHolerItem mainHolder = (RecyclerViewHolerItem) holder;// holder
 
 
-        //mainHolder.txt
-
         //check RecyclerViewHolerItem class
 
         mainHolder.product.setText("Product :" + model.getProduct());
         mainHolder.price.setText("Price :" + model.getPrice());
         mainHolder.qnty.setText("Quantity :" + model.getQnty());
+
+
+       //String url = "http://lyteapp.site40.net" + model.getImg();
+
+        String url = "http://lyteapp.site40.net/uploads/2017-06-08_17_36_5159398b338d5c5.png";
+
+
+        Picasso.with(mContext)
+                .load(url)
+                .placeholder( R.drawable.progress_animation )
+                .into(mainHolder.imageview);
+
+
+
         //mainHolder.imageview.setImageBitmap(image);
 
        /// need to convert array byte back

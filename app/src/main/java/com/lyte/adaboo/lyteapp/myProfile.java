@@ -123,6 +123,11 @@ public class myProfile extends AppCompatActivity{
                             if (success == 1) {
 
 
+                                Toast.makeText(
+                                        myProfile.this,
+                                        products.toString()+ "here",
+                                        Toast.LENGTH_LONG).show();
+
 
                                 for (int i = 0; i <= products.length();  i++) {
 
