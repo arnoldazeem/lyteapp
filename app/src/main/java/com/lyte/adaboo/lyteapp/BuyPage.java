@@ -69,6 +69,7 @@ public class BuyPage extends AppCompatActivity {
     private  RecyclerView recyclerView;
     JSONArray products = null;
     String Id;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +89,8 @@ public class BuyPage extends AppCompatActivity {
 
         String array = user.get(SessionManager.KEY_FRIENDS);
 
+        pDialog = new ProgressDialog(this);
+        aq = new AQuery(this);
 
 
         Picasso.with(this)
@@ -155,6 +158,10 @@ public class BuyPage extends AppCompatActivity {
                     }
                 })
         );
+
+
+
+
     }
 
 
@@ -162,7 +169,6 @@ public class BuyPage extends AppCompatActivity {
 
             //function to load user items on click
             private void loaduserprofile(String id) {
-
 
                 // TODO Auto-generated method stub
                 // Showing progress dialog before making http request

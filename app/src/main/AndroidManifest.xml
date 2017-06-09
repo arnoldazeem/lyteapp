@@ -66,6 +66,13 @@
         </activity>
 
 
+        <activity android:name=".Buy_mall"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
         <activity android:name=".CreateCompany"
             android:configChanges="orientation"
             android:screenOrientation="portrait">

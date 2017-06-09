@@ -265,7 +265,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 break;
 
 
-
+            //buy from people you know
             case R.id.ppl_know:
                 /** Start a new Activity MyCards.java */
                 clickbuy = true;
@@ -275,12 +275,14 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 startActivity(intent);
 
                 break;
+
+            //buy from mall
             case R.id.mall:
                 /** AlerDialog when click on Exit */
 
                 clicksell = true;
                 Intent in = new Intent(HomePage.this,
-                        myProfile.class);
+                        Buy_mall.class);
                 in.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(in);
                 break;
