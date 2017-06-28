@@ -267,10 +267,6 @@ public class BuyPage extends AppCompatActivity {
                         });
 
 
-
-
-
-
             }
 
 
@@ -316,7 +312,7 @@ public class BuyPage extends AppCompatActivity {
         recyclerView
                 .setLayoutManager(new LinearLayoutManager(BuyPage.this, LinearLayoutManager.HORIZONTAL, false));
 
-        adapter = new user_friends_adapter(friends, getApplicationContext());
+        //adapter = new user_friends_adapter(friends, getApplicationContext());
 
         user_friend_recycle  adapter = new user_friend_recycle(BuyPage.this, friends);
 

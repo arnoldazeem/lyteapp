@@ -11,6 +11,10 @@ public class StaticVariables {
 	public static String subscription = "http://192.168.42.237/yenfabus/subscribe.php?type=";
 	//public static String requestUserData = "http://192.168.42.16/yenfa/requestUserData.php?type=";
 
+
+
+
+	//public static String requestCompData = "http://lyteapp.site40.net/requestCompany.php?type=";
 	public static String requestcompData = "http://lyteapp.site40.net/requestCompany.php?type=";
 	public static String companycreate = "http://lyteapp.site40.net/companycreate.php";
 	public static String requestUserData = "http://lyteapp.site40.net/requestUserData.php?type=";
@@ -20,7 +24,8 @@ public class StaticVariables {
     //public static String sendItemVolUrl = "http://192.168.42.16/yenfa/submitvolley.php";
 	//public static String companycreate = "http://192.168.42.16/yenfa/companycreate.php";
 	//public static String requestcompData = "http://192.168.42.16/yenfa/requestCompany.php?type=";
-	
+	public static String requestCompData = "http://192.168.42.16/yenfa/requestCompanyName.php?type=";
+
 	public static String SUCCESS = "success";
 	public static String MESSAGE = "message";
 	public static String SESSION = "session";

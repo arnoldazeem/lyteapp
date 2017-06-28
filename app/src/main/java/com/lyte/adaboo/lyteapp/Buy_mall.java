@@ -93,12 +93,6 @@ public class Buy_mall extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
     //function to load each company on click
     private void LoadEachCompany(String id) {
 
@@ -128,12 +122,6 @@ public class Buy_mall extends AppCompatActivity {
 
                             // saved in database as String
                             if (success == 1) {
-
-
-                                Toast.makeText(Buy_mall.this,
-
-                                        "here", Toast.LENGTH_LONG)
-                                        .show();
 
 
                                 for (int i = 0; i <= products.length();  i++) {
@@ -175,24 +163,17 @@ public class Buy_mall extends AppCompatActivity {
                                     .show();
                         }
 
-
                         recyclerView = (RecyclerView)findViewById(R.id.list);
                         recyclerView.setHasFixedSize(true);
-
                         recyclerView
                                 .setLayoutManager(new LinearLayoutManager(Buy_mall.this, LinearLayoutManager.HORIZONTAL, false));
-
-                        adapter = new companyItemsAdapter(friends, getApplicationContext());
-
+                        //adapter = new companyItemsAdapter(friends, getApplicationContext());
                         comapny_item_recycle  adapter = new comapny_item_recycle(Buy_mall.this, friends);
-
                         recyclerView.setAdapter(adapter);// set adapter on recyclerview
                         adapter.notifyDataSetChanged();// Notify the adapter
 
                     }
                 });
-
-
     }
 
 }

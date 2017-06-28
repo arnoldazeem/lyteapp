@@ -44,7 +44,7 @@ public class companyItemsAdapter extends ArrayAdapter<Friend_List_Bulk> {
     }
 
     public companyItemsAdapter(ArrayList<Friend_List_Bulk> data, Context context) {
-        super(context, R.layout.freinditem, data);
+        super(context, R.layout.comapnyitem, data);
         this.dataSet = data;
         this.mContext = context;
 

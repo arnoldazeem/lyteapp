@@ -21,6 +21,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +49,7 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,6 +60,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -96,7 +100,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     ImageView prev;
     ProgressDialog pDialog;
     String url_all_products = "";
-    Spinner spinner1;
+    Spinner spinner1,spinnercompany;
     EditText descrip;
     EditText price;
     EditText qty;
@@ -121,6 +125,12 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     String gotten,send;
     Button edit, prevthem;
 
+    JSONArray products = null;
+
+    //for the arraylist
+    ArrayList<String> friends = new ArrayList<String>();
+    ArrayList<String> mylist = new ArrayList<String>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +141,8 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
         prev = (ImageView) findViewById(R.id.img_prev);
         upload = (Button) findViewById(R.id.upload);
-        spinner1= (Spinner) findViewById(R.id.spinner1);
+        spinner1 = (Spinner) findViewById(R.id.spinner1);
+        spinnercompany = (Spinner) findViewById(R.id.spinnercompany);
 
 
         edit = (Button) findViewById(R.id.clear);
@@ -152,6 +163,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
        // android:background="@drawable/editback"
         HashMap<String, String> user = session.getUserDetails();
+
         id = user.get(SessionManager.KEY_ID);
         // name
         String name = user.get(SessionManager.KEY_NAME);
@@ -161,16 +173,21 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         friend_array = user.get(SessionManager.KEY_FRIENDS);
 
 
+
         String[] years = {"Choose Category","Electronics","Clothing","Accommodation","Stationery","Automobile"};
         ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, years );
         langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+
+
         spinner1.setAdapter(langAdapter);
 
         spinner1.setOnItemSelectedListener(this);
 
+        spinnercompany.setOnItemSelectedListener(this);
+
+
         aq = new AQuery(this);
         pDialog = new ProgressDialog(this);
-
 
       //  cancel.setOnClickListener(this);
         upload.setOnClickListener(this);
@@ -178,8 +195,11 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
         prevthem.setOnClickListener(this);
         edit.setOnClickListener(this);
 
-
+        //load the spinner with company
+        getCompany(id);
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -596,6 +616,89 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
          catch (Exception e) {
         }
         ;
+    }
+
+
+
+    //function to load each company to spinner
+    private void getCompany(String id) {
+
+        // TODO Auto-generated method stub
+        // Showing progress dialog before making http request
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        aq.progress(pDialog).ajax(
+                StaticVariables.requestcompData + "requestcompData&user_id=" + id, params, JSONObject.class,
+
+                new AjaxCallback<JSONObject>() {
+
+                    @Override
+                    public void callback(String url, JSONObject json,
+                                         AjaxStatus status) {
+
+
+
+                        try {
+
+                            int success = json.getInt(StaticVariables.SUCCESS);
+                            products = json.getJSONArray("markers");
+
+                            // saved in database as String
+                            if (success == 1) {
+
+
+                                for (int i = 0; i <= products.length();  i++) {
+
+                                    JSONObject c = products.getJSONObject(i);
+
+                                    String product = c.getString("company_name");
+                                    String qnty = c.getString("location");
+                                    String price = c.getString("contact");
+                                    String img = c.getString("company_image");
+
+
+                                    mylist.add(product);
+                                    //friends.add(new user_items (product, price,qnty,img));
+
+                                }
+
+
+                            } else {
+                                Toast.makeText(
+                                        Individual_Sell.this,
+                                        json.getString(StaticVariables.MESSAGE),
+                                        Toast.LENGTH_LONG).show();
+
+                            }
+
+                        }catch (JSONException e) {
+                            // TODO: handle exception
+                            e.printStackTrace();
+                        } catch (Exception ex) {
+                            // TODO: handle exception
+                            ex.printStackTrace();
+                            System.out.println("********************* "
+                                    + ex.toString());
+                            Toast.makeText(Individual_Sell.this,
+                                    ex.toString(), Toast.LENGTH_LONG)
+                                    .show();
+                        }
+
+
+                    }
+                });
+
+        String[] arr = mylist.toArray(new String[mylist.size()]);
+
+       // String[] year = {"Choose Category","Electronics","Clothing","Accommodation","Stationery","Automobile"};
+        ArrayAdapter<CharSequence> langAdapters = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text2, arr);
+        langAdapters.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spinnercompany.setAdapter(langAdapters);
+
     }
 
 

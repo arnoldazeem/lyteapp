@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ public class comapny_item_recycle extends RecyclerView.Adapter<RecyclerViewHolde
         this.arrayList = arrayList;
         this.mContext = context;
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+
     }
 
 
@@ -46,19 +51,31 @@ public class comapny_item_recycle extends RecyclerView.Adapter<RecyclerViewHolde
 
 
         // setting title
-        //mainHolder.name.setText(model.getName());
+        mainHolder.name.setText(model.getName());
+
+        //String url = "http://lyteapp.site40.net/uploads/2017-06-09_18_10_07593ae47fd399f.jpg";
 
         String url = "http://lyteapp.site40.net"+ model.getImageUrl();
         //mainHolder.imageview.setImageBitmap(image);
 
-      //correct url
+        //System.out.println("url"+ url);
+
+       // Toast.makeText(this.mContext,
+       //         url, Toast.LENGTH_LONG)
+       //         .show();
+
+
+
+        //correct url
         //  http://lyteapp.site40.net /uploads/2017-06-08_17_36_5159398b338d5c5.png
 
         Picasso.with(mContext)
                 .load(url)
+                .memoryPolicy(MemoryPolicy.NO_CACHE )
+                //.networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder( R.drawable.progress_animation )
+                .noFade()
                 .into(mainHolder.imageview);
-
 
     }
 

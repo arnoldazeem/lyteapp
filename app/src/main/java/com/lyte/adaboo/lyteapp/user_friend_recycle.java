@@ -47,12 +47,6 @@ public class user_friend_recycle extends RecyclerView.Adapter<RecyclerViewHolder
         RecyclerViewHolder mainHolder = (RecyclerViewHolder) holder;// holder
 
 
-        // setting title
-       //mainHolder.name.setText(model.getName());
-
-
-        //mainHolder.imageview.setImageBitmap(image);
-
         Picasso.with(mContext)
                 .load(model.getImageUrl())
                 .placeholder( R.drawable.progress_animation )

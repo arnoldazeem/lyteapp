@@ -52,9 +52,10 @@ public class user_friends_adapter extends ArrayAdapter<Friend_List_Bulk> {
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
+
             convertView = inflater.inflate(R.layout.freinditem, parent, false);
 
-            viewHolder.txtName = (TextView) convertView.findViewById(R.id.name);
+            //viewHolder.txtName = (TextView) convertView.findViewById(R.id.name);
 
             viewHolder.info = (CircleImageView) convertView.findViewById(R.id.profileImage);
 
