@@ -37,7 +37,7 @@ import com.lyte.adaboo.lyteapp.R;
 public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
     Button shoppingmall,peopleyouknow,sell_ppl_know,sell_mall;
-    ImageView buy,sell;
+    ImageView tour,manage;
     LinearLayout buybuttoms,sellbuttoms;
     RelativeLayout buy_layout,sell_layout;
     private ProgressDialog progressDialog;
@@ -49,7 +49,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_lay);
+        setContentView(R.layout.want_to_layout);
 
         Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 
@@ -72,16 +72,17 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
          **/
 
 
+        /**
         //four buttons for navigation
         peopleyouknow = ((Button) this.findViewById(R.id.ppl_know));
         shoppingmall = ((Button) this.findViewById(R.id.mall));
         sell_ppl_know = ((Button) this.findViewById(R.id.sell_know));
         sell_mall = ((Button) this.findViewById(R.id.sell_mall));
-
+         **/
 
         //buy and sell images
-        sell = ((ImageView) this.findViewById(R.id.client_sell));
-        buy = ((ImageView) this.findViewById(R.id.client_buy));
+        tour = ((ImageView) this.findViewById(R.id.take_tour));
+        manage = ((ImageView) this.findViewById(R.id.manage_shop));
 
 
 
@@ -205,10 +206,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
 
+            /**
             case R.id.buy_lay:
-                /** Start a new Activity MyCards.java */
+                 Start a new Activity MyCards.java */
 
-                /** AlerDialog when click on Exit */
+                /** AlerDialog when click on Exit
                 if(clickbuy) {
 
                     progressDialog = new ProgressDialog(HomePage.this);
@@ -238,8 +240,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 break;
 
             case R.id.sell_lay:
-                /** Start a new Activity MyCards.java */
-                /** AlerDialog when click on Exit */
+
 
                 if(clicksell) {
 
@@ -264,9 +265,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 }
                 break;
 
-
+                */
             //buy from people you know
-            case R.id.ppl_know:
+            case R.id.take_tour:
                 /** Start a new Activity MyCards.java */
                 clickbuy = true;
                 Intent intent = new Intent(HomePage.this,
@@ -277,7 +278,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 break;
 
             //buy from mall
-            case R.id.mall:
+            case R.id.manage_shop:
                 /** AlerDialog when click on Exit */
 
                 clicksell = true;
@@ -287,27 +288,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 startActivity(in);
                 break;
 
-            case R.id.sell_know:
 
-
-               // clicksell = true;
-                Intent isn = new Intent(HomePage.this,
-                        Individual_Sell.class);
-                isn.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(isn);
-
-                break;
-
-
-            case R.id.sell_mall:
-                /** AlerDialog when click on Exit */
-
-                //clicksell = true;
-                Intent sell_mall = new Intent(HomePage.this,
-                        CreateCompany.class);
-                sell_mall.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(sell_mall);
-                break;
         }
 
 

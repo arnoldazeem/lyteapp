@@ -10,9 +10,9 @@
         android:topRightRadius="5dp"/>
 
     <solid
-        android:color="#006600"/>
+        android:color="@color/com_facebook_blue"/>
 
     <stroke android:width="2dip"
-        android:color="#006600"/>
+        android:color="@color/com_facebook_blue"/>
 
 </shape>

@@ -61,6 +61,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -107,7 +108,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
     String desc;
     String amt;
     String qtny;
-    String cate,id,friend_array,user_id;
+    String cate,id,friend_array,comp;
 
     byte[] imgurl;
     SessionManager session;
@@ -278,7 +279,16 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                 }
                 else {
 
-                    doStaff();
+                    if (comp == "NONE"){
+
+                      //  Toast.makeText(this, comp, Toast.LENGTH_LONG).show();
+                        // sendToCompany();
+
+                    }else
+                    Toast.makeText(this, comp, Toast.LENGTH_LONG).show();
+
+                    donormalStaff();
+
                 }
                 break;
         }
@@ -522,7 +532,9 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
 
 
-     private void doStaff() {
+
+    //send to company
+    private void sendToCompany() {
         // TODO Auto-generated method stub
         pDialog.setMessage("Submitting Item..");
         pDialog.setIndeterminate(false);
@@ -530,6 +542,87 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
 
         Map<String, Object> params = new HashMap<String, Object>();
 
+        params.put("company", comp);
+        params.put("type", "submit");
+        params.put("category", cate);
+        params.put("description", desc);
+        params.put("price", amt);
+        params.put("quantity", qtny);
+        params.put("user_id", id);
+        params.put("objurl", encoded);
+
+
+        /**
+         *
+         *  aq.progress(pDialog).ajax(
+         StaticVariables.sendItemVolUrl + "submit&category="
+         + cate + "&description=" + desc + "&price="
+         + amt+ "&quantity=" + qtny + "&user_id=" + id
+         +"&objurl=" + encoded,
+         *
+         *
+         *
+         */
+        aq.progress(pDialog).ajax(
+                StaticVariables.sendCompData,
+                params, JSONObject.class, new AjaxCallback<JSONObject>() {
+                    @Override
+                    public void callback(String url, JSONObject json,
+                                         AjaxStatus status) {
+
+                        try {
+
+                            Toast.makeText(
+                                    Individual_Sell.this,
+                                    json.getInt(StaticVariables.SUCCESS) + "",
+                                    Toast.LENGTH_LONG).show();
+
+
+                            System.out.println(json.toString());
+                            int success = json.getInt(StaticVariables.SUCCESS);
+
+                            if (success == 1) {
+
+
+                                descrip.setText("");
+                                price.setText("");
+                                qty.setText("");
+
+                                dialogShow();
+
+                            } else {
+                                Toast.makeText(
+                                        Individual_Sell.this,
+                                        json.getString(StaticVariables.MESSAGE),
+                                        Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+                            // TODO: handle exception
+                            e.printStackTrace();
+                        } catch (Exception ex) {
+                            // TODO: handle exception
+                            ex.printStackTrace();
+                            System.out.println("********************* "
+                                    + ex.toString());
+
+                        }
+
+                    }
+                });
+
+    }
+
+     //send to items without comapny
+     private void donormalStaff() {
+        // TODO Auto-generated method stub
+        pDialog.setMessage("Submitting Item..");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+
+        Map<String, Object> params = new HashMap<String, Object>();
+
+        // params.put("company", comp);
          params.put("type", "submit");
          params.put("category", cate);
          params.put("description", desc);
@@ -650,7 +743,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                             // saved in database as String
                             if (success == 1) {
 
-
+                                mylist.add("NONE");
                                 for (int i = 0; i <= products.length();  i++) {
 
                                     JSONObject c = products.getJSONObject(i);
@@ -665,6 +758,8 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                                     //friends.add(new user_items (product, price,qnty,img));
 
                                 }
+
+
 
 
                             } else {
@@ -689,27 +784,43 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                         }
 
 
+                        String[] arr =  mylist.toArray(new String[mylist.size()]);
+
+                        //Toast.makeText(Individual_Sell.this,
+                        //        mylist + "", Toast.LENGTH_LONG).show();
+
+                            ArrayAdapter<CharSequence> langAdapters = new ArrayAdapter<CharSequence>(getApplicationContext(), R.layout.spinner_text2, arr);
+                            langAdapters.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+                            spinnercompany.setAdapter(langAdapters);
+
+
+
+                        //String[] years = {"Choose Category","Electronics","Clothing","Stationery","Automobile"};
+
+
+
                     }
                 });
-
-        String[] arr = mylist.toArray(new String[mylist.size()]);
-
-       // String[] year = {"Choose Category","Electronics","Clothing","Accommodation","Stationery","Automobile"};
-        ArrayAdapter<CharSequence> langAdapters = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text2, arr);
-        langAdapters.setDropDownViewResource(R.layout.simple_spinner_dropdown);
-        spinnercompany.setAdapter(langAdapters);
 
     }
 
 
 
-
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        cate = parent.getItemAtPosition(position).toString();
-        Toast.makeText(this, "The planet is " +
-                cate, Toast.LENGTH_LONG).show();
+
+
+
+        switch (parent.getId()){
+            case R.id.spinner1:
+                cate = parent.getItemAtPosition(position).toString();
+                break;
+            case R.id.spinnercompany:
+
+                comp = parent.getItemAtPosition(position).toString();
+                //Toast.makeText(this, comp, Toast.LENGTH_LONG).show();
+                break;
+        }
 
     }
     @Override

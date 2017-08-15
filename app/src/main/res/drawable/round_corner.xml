@@ -13,6 +13,6 @@ android:shape="rectangle" android:padding="10dp">>
         android:color="@android:color/white"/>
 
     <stroke android:width="2dip"
-            android:color="#006600"/>
+            android:color="@color/com_facebook_blue"/>
 
 </shape>
