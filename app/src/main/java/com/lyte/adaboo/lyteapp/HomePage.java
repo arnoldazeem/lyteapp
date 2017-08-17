@@ -86,16 +86,6 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
 
 
-        //layout here because the hide and show the hidden buttons
-        buybuttoms = ((LinearLayout) this.findViewById(R.id.appear_buy));
-        sellbuttoms = ((LinearLayout) this.findViewById(R.id.appear_sell));
-
-
-        //relative layout clickable
-        buy_layout = ((RelativeLayout) this.findViewById(R.id.buy_lay));
-        sell_layout = ((RelativeLayout) this.findViewById(R.id.sell_lay));
-
-
         just = ((TextView) this.findViewById(R.id.just));
 
         want = ((TextView) this.findViewById(R.id.want_to));
@@ -105,13 +95,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         just.setTypeface(custom_font2);
         want.setTypeface(custom_font2);
 
-        peopleyouknow.setOnClickListener(this);
-        shoppingmall.setOnClickListener(this);
 
-        buy_layout.setOnClickListener(this);
-        sell_layout.setOnClickListener(this);
-        sell_ppl_know.setOnClickListener(this);
-        sell_mall.setOnClickListener(this);
+        tour.setOnClickListener(this);
+        manage.setOnClickListener(this);
 
         Bundle extras = getIntent().getExtras();
 
@@ -283,7 +269,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
                 clicksell = true;
                 Intent in = new Intent(HomePage.this,
-                        Buy_mall.class);
+                        Manage_Shop.class);
                 in.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(in);
                 break;

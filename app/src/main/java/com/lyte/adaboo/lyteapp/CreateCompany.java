@@ -58,15 +58,15 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     ImageView prev;
     ProgressDialog pDialog;
     String url_all_products = "";
-    Spinner spinner1;
+
 
     EditText location;
     EditText company_name;
     EditText contact;
 
-    String loc;
-    String name;
-    String conta;
+    String fname,nation;
+    String lname;
+    String dobb;
 
 
     TextView prev_compname,prev_category;
@@ -74,6 +74,10 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     TextView prev_contact;
 
     String cate,id,friend_array,user_id;
+
+    EditText firstname,lastname,dob,nationality,idnum,spinnerid;
+    Spinner idtype;
+
 
 
     byte[] imgurl;
@@ -90,7 +94,9 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     File mPhotoFile = null;
     Bitmap mBitmap = null;
     String gotten,send;
-    Button edit, prevthem;
+
+
+    Button edit, browseID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,23 +107,36 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
 
-        spinner1= (Spinner) findViewById(R.id.spinner1);
+        firstname = (EditText) findViewById(R.id.firstname);
+        lastname = (EditText) findViewById(R.id.lastname);
+        dob = (EditText) findViewById(R.id.dob);
+        nationality = (EditText) findViewById(R.id.nationality);
+        dob = (EditText) findViewById(R.id.idnumber);
+        idtype = (Spinner) findViewById(R.id.spinidtype);
 
-        prev = (ImageView) findViewById(R.id.img_prev);
-        upload = (Button) findViewById(R.id.upload);
-        spinner1= (Spinner) findViewById(R.id.spinner1);
 
-
-        edit = (Button) findViewById(R.id.clear);
-        prevthem = (Button) findViewById(R.id.prev_them);
+        browseID = (Button) findViewById(R.id.uploadID);
         submit = (Button) findViewById(R.id.submit);
+
+
+
+        String[] years = {"Choose Type","Passport","Driver's License","Nationl Id","National Health Insurance"};
+        ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, years );
+        langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        idtype.setAdapter(langAdapter);
+
+
+        aq = new AQuery(this);
+        pDialog = new ProgressDialog(this);
+
+        idtype.setOnItemSelectedListener(this);
+        browseID.setOnClickListener(this);
+
+        /**
 
         location = (EditText) findViewById(R.id.editText2);
         company_name = (EditText) findViewById(R.id.editText3);
         contact = (EditText) findViewById(R.id.editText4);
-
-
-
         prev_compname = (TextView) findViewById(R.id.prev_product);
         prev_loca = (TextView) findViewById(R.id.prev_price);
         prev_contact = (TextView) findViewById(R.id.prev_qty);
@@ -137,40 +156,29 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         //friend_array = user.get(SessionManager.KEY_FRIENDS);
 
 
-
-
-        String[] years = {"Choose Category","Electronics","Clothing","Accommodation","Stationery","Automobile"};
-        ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, years );
-        langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
-        spinner1.setAdapter(langAdapter);
-
-
-        aq = new AQuery(this);
-        pDialog = new ProgressDialog(this);
-
-
         //  cancel.setOnClickListener(this);
         upload.setOnClickListener(this);
         submit.setOnClickListener(this);
         prevthem.setOnClickListener(this);
         edit.setOnClickListener(this);
-        spinner1.setOnItemSelectedListener(this);
+
         clickable.setOnTouchListener(this);
 
+         */
     }
+
 
 
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
         switch (v.getId()) {
-            case R.id.upload:
-
-                picture();
-
-                break;
+            case R.id.uploadID:
+               picture();
+              break;
 
 
+            /*
             case R.id.prev_them:
 
 
@@ -199,7 +207,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
                 }
                 else {
 
-                    preview();
+                    //preview();
                     edit.setVisibility(View.VISIBLE);
                     submit.setVisibility(View.VISIBLE);
                     prevthem.setVisibility(View.INVISIBLE);
@@ -210,32 +218,28 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
                 break;
 
+             */
 
-            case R.id.clear:
-                submit.setVisibility(View.INVISIBLE);
-                edit.setVisibility(View.INVISIBLE);
-                prevthem.setVisibility(View.VISIBLE);
-                clickable.setEnabled(true);
-
-                break;
 
             case R.id.submit:
 
-                loc = location.getText().toString();
-                name = company_name.getText().toString();
-                conta = contact.getText().toString();
+                //check all editboxes
+                fname = firstname.getText().toString();
+                lname = lastname.getText().toString();
+                dobb = dob.getText().toString();
+                nation = nationality.getText().toString();
 
-                if (loc.trim().contentEquals("")) {
-                    Toast.makeText(this, "Please provide Decription of Item",
+                if (fname.trim().contentEquals("")) {
+                    Toast.makeText(this, "Please provide your First name",
                             Toast.LENGTH_LONG).show();
-                } else if (name.contentEquals("")) {
-                    Toast.makeText(this, "Please provide Item Price",
+                } else if (lname.contentEquals("")) {
+                    Toast.makeText(this, "Please provide your Last name",
                             Toast.LENGTH_LONG).show();
-                } else if (conta.contentEquals("")) {
-                    Toast.makeText(this, "Please provide Quantity", Toast.LENGTH_LONG)
+                } else if (dobb.contentEquals("")) {
+                    Toast.makeText(this, "Please provide Date of Birth", Toast.LENGTH_LONG)
                             .show();
-                }else if (cate == "Choose Category") {
-                    Toast.makeText(this, "Please choose Category", Toast.LENGTH_LONG)
+                }else if (nation == "Choose Category") {
+                    Toast.makeText(this, "Please provide Nationality", Toast.LENGTH_LONG)
                             .show();
                 }else if (mBitmap == null) {
 
@@ -386,9 +390,6 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
 
 
-
-
-
     //here is where the dialog was created
     void picture(){
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
@@ -455,13 +456,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
 
 
-
-    //
-
-
-
     //spinner happens here
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         cate = parent.getItemAtPosition(position).toString();
@@ -475,7 +470,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     }
 
 
-
+/*
     //preview of input
     public void preview() {
 
@@ -494,7 +489,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
     }
 
-
+*/
 
     //send to server
 
@@ -509,11 +504,12 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
         params.put("type", "createcomp");
         params.put("category", cate);
-        params.put("companyname", name);
-        params.put("location", loc);
-        params.put("contact", conta);
+        params.put("fname", fname);
+        params.put("dobb", dobb);
+        params.put("nationality", nation);
         params.put("user_id", id);
         params.put("objurl", encoded);
+
 
         aq.progress(pDialog).ajax(
                 StaticVariables.companycreate,
@@ -578,7 +574,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         //check again
         submit.setVisibility(View.INVISIBLE);
         edit.setVisibility(View.INVISIBLE);
-        prevthem.setVisibility(View.VISIBLE);
+        //prevthem.setVisibility(View.VISIBLE);
         //clickable.setOnTouchListener();
     }
 

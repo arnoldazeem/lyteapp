@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="3dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        tools:ignore="ObsoleteLayoutParam">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lyteapp"
+            android:layout_margin="2dp"/>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+
+            <EditText
+                android:hint="Shop Name"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:padding="1dp"
+                android:textSize="18dp"
+                android:layout_gravity="center"
+                android:background="@drawable/editback"
+                android:id="@+id/shop_name"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_weight="1"/>
+
+
+
+        <EditText
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:hint="Password"
+            android:textColor="#000000"
+            android:padding="1dp"
+            android:background="@drawable/editback"
+            android:id="@+id/password"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text= "Sign In"
+            android:id="@+id/want_to"
+            android:textColor="@android:color/white"
+            android:background="@drawable/green_want" />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:clickable="true"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text= "Create and Manage New Shop"
+            android:id="@+id/create"
+            android:textColor="@android:color/holo_red_dark"
+             />
+
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text= "find shops around you"
+            android:id="@+id/nk"
+            android:textColor="@android:color/black"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</RelativeLayout>
