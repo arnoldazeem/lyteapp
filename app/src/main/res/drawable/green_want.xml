@@ -1,18 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle" android:padding="10dp">>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+<item android:state_pressed="true" android:state_focused="true">
+    <shape>
+        <stroke
+            android:width="2.3dp"
+            android:color="#3127B0" />
+        <corners
+            android:radius="5dp" />
+    </shape>
+</item>
 
-    <corners
-        android:bottomRightRadius="5dp"
-        android:bottomLeftRadius="5dp"
-        android:topLeftRadius="5dp"
-        android:topRightRadius="5dp"/>
+<item android:state_pressed="true" android:state_focused="false">
+    <shape>
+        <stroke
+            android:width="2.3dp"
+            android:color="#F6EBC9" />
+        <corners
+            android:radius="5dp" />
+    </shape>
+</item>
 
-    <solid
-        android:color="@color/com_facebook_blue"/>
+<item android:state_pressed="false" android:state_focused="true">
+    <shape>
+        <stroke
+            android:width="0.7dp"
+            android:color="#FFFFFF" />
+        <corners
+            android:radius="5dp" />
+    </shape>
+</item>
 
-    <stroke android:width="2dip"
-        android:color="@color/com_facebook_blue"/>
+<item android:state_pressed="false" android:state_focused="false">
+    <shape>
+        <gradient
+            android:startColor="#160BA0"
+            android:centerColor="#150B97"
+            android:endColor="#150B91"
+            android:angle="270"
+            />
+        <stroke
+            android:width="0.7dp"
+            android:color="#FFFFFF" />
+        <corners
+            android:radius="5dp" />
+    </shape>
+</item>
 
-</shape>
+<item android:state_enabled="true">
+    <shape>
+        <padding
+            android:left="4dp"
+            android:top="4dp"
+            android:right="4dp"
+            android:bottom="4dp"
+            />
+    </shape>
+</item>
+
+</selector>

@@ -64,7 +64,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     EditText company_name;
     EditText contact;
 
-    String fname,nation;
+    String fname,nation,locat,addre,conta1,conta2;
     String lname;
     String dobb;
 
@@ -75,8 +75,8 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
     String cate,id,friend_array,user_id;
 
-    EditText firstname,lastname,dob,nationality,idnum,spinnerid;
-    Spinner idtype;
+    EditText firstname,lastname,dob,nationality,businame,idnum,spinnerid,locate,address,cont1,cont2;
+    Spinner idtype,country,state;
 
 
 
@@ -112,7 +112,16 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         dob = (EditText) findViewById(R.id.dob);
         nationality = (EditText) findViewById(R.id.nationality);
         dob = (EditText) findViewById(R.id.idnumber);
+        businame = (EditText) findViewById(R.id.businame);
+        locate = (EditText) findViewById(R.id.location);
+        address = (EditText) findViewById(R.id.address);
+        cont1 = (EditText) findViewById(R.id.contact1);
+        cont2 = (EditText) findViewById(R.id.contact2);
         idtype = (Spinner) findViewById(R.id.spinidtype);
+        country = (Spinner) findViewById(R.id.countryspinner);
+        state = (Spinner) findViewById(R.id.statespinner);
+
+
 
 
         browseID = (Button) findViewById(R.id.uploadID);
@@ -228,6 +237,10 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
                 lname = lastname.getText().toString();
                 dobb = dob.getText().toString();
                 nation = nationality.getText().toString();
+                locat = locate.getText().toString();
+                addre = address.getText().toString();
+                conta1 = cont1.getText().toString();
+                conta2 = cont2.getText().toString();
 
                 if (fname.trim().contentEquals("")) {
                     Toast.makeText(this, "Please provide your First name",
