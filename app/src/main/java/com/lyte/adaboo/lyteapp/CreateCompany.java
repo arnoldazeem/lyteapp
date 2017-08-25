@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,16 +34,18 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-
+import com.mvc.imagepicker.ImagePicker;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
@@ -75,9 +78,10 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
     String cate,id,friend_array,user_id;
 
-    EditText firstname,lastname,dob,nationality,businame,idnum,spinnerid,locate,address,cont1,cont2;
-    Spinner idtype,country,state;
+    EditText firstname,lastname,dob,nationality,businame,confirmpass,passw,emailadd,idnum,spinnerid,locate,address,cont1,cont2;
+    Spinner idtype,country,state,industry;
 
+    CheckBox checkyes,checkno;
 
 
     byte[] imgurl;
@@ -88,20 +92,17 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
     LinearLayout clickable;
 
-    public static final int REQUEST_CAMERA = 110;
-    public static final int SELECT_FILE = 120;
-    String code;
-    File mPhotoFile = null;
+
     Bitmap mBitmap = null;
-    String gotten,send;
 
-
-    Button edit, browseID;
-
+    Button edit, browseID,uploadBusiness,uploadcover;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.createcompany);
+
+        // width and height will be at least 600px long (optional).
+        ImagePicker.setMinQuality(600, 600);
 
 
         session = new SessionManager(getApplicationContext());
@@ -120,13 +121,21 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         idtype = (Spinner) findViewById(R.id.spinidtype);
         country = (Spinner) findViewById(R.id.countryspinner);
         state = (Spinner) findViewById(R.id.statespinner);
+        industry = (Spinner) findViewById(R.id.industrypinner);
 
+        emailadd = (EditText) findViewById(R.id.emailaddress);
+        passw = (EditText) findViewById(R.id.passww);
+        confirmpass = (EditText) findViewById(R.id.confirmpass);
 
+        checkyes  = (CheckBox) findViewById(R.id.checkyes);
+        checkno  = (CheckBox) findViewById(R.id.checkno);
 
 
         browseID = (Button) findViewById(R.id.uploadID);
-        submit = (Button) findViewById(R.id.submit);
+        uploadBusiness = (Button) findViewById(R.id.uploadBussinespic);
+        uploadcover = (Button) findViewById(R.id.uploadCoverPic);
 
+        submit = (Button) findViewById(R.id.submit);
 
 
         String[] years = {"Choose Type","Passport","Driver's License","Nationl Id","National Health Insurance"};
@@ -135,45 +144,53 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         idtype.setAdapter(langAdapter);
 
 
+        Clothing,Food,Electronics,Beauty Products,Automobile & Parts,Books & Stationery
+        Entertainment, Education,Accommodation,Others;
+
+
         aq = new AQuery(this);
         pDialog = new ProgressDialog(this);
 
         idtype.setOnItemSelectedListener(this);
         browseID.setOnClickListener(this);
+        uploadBusiness.setOnClickListener(this);
+        uploadcover.setOnClickListener(this);
 
-        /**
-
-        location = (EditText) findViewById(R.id.editText2);
-        company_name = (EditText) findViewById(R.id.editText3);
-        contact = (EditText) findViewById(R.id.editText4);
-        prev_compname = (TextView) findViewById(R.id.prev_product);
-        prev_loca = (TextView) findViewById(R.id.prev_price);
-        prev_contact = (TextView) findViewById(R.id.prev_qty);
-        prev_category = (TextView) findViewById(R.id.prev_cate);
+    }
 
 
-        clickable = (LinearLayout) findViewById(R.id.editable);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        // android:background="@drawable/editback"
-        HashMap<String, String> user = session.getUserDetails();
-        id = user.get(SessionManager.KEY_ID);
-        // name
-        String name = user.get(SessionManager.KEY_NAME);
-        // image
-        String imageUrl = user.get(SessionManager.KEY_IMAGEURL);
+        switch(requestCode){
+            case 0: // Do your stuff here...
+                Bitmap bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
 
-        //friend_array = user.get(SessionManager.KEY_FRIENDS);
+                if (bitmap != null) {
+
+                    //  imageView.setImageBitmap(bitmap);
+                }
+                InputStream is = ImagePicker.getInputStreamFromResult(this, requestCode, resultCode, data);
+                if (is != null) {
+                    //textView.setText("Got input stream!");
+                    try {
+                        is.close();
+                    } catch (IOException ex) {
+                        // ignore
+                    }
+                } else {
+                    // textView.setText("Failed to get input stream!");
+                }
+
+                break;
+            case 1: // Do your other stuff here...
+                break;
+            case 2:
+                break;
+        }
 
 
-        //  cancel.setOnClickListener(this);
-        upload.setOnClickListener(this);
-        submit.setOnClickListener(this);
-        prevthem.setOnClickListener(this);
-        edit.setOnClickListener(this);
-
-        clickable.setOnTouchListener(this);
-
-         */
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -183,52 +200,23 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.uploadID:
-               picture();
+
+                ImagePicker.pickImage(this, 0);
+               // ImagePicker.pickImage(this, "Select your image:");
               break;
 
+            case R.id.uploadBussinespic:
 
-            /*
-            case R.id.prev_them:
-
-
-
-                loc = location.getText().toString();
-                name = company_name.getText().toString();
-                conta = contact.getText().toString();
-
-
-                if (loc.trim().contentEquals("")) {
-                    Toast.makeText(this, "Please provide Decription of Item",
-                            Toast.LENGTH_LONG).show();
-                } else if (name.contentEquals("")) {
-                    Toast.makeText(this, "Please provide Item Price",
-                            Toast.LENGTH_LONG).show();
-                } else if (conta.contentEquals("")) {
-                    Toast.makeText(this, "Please provide Quantity", Toast.LENGTH_LONG)
-                            .show();
-                }else if (cate == "Choose Category") {
-                    Toast.makeText(this, "Please choose Category", Toast.LENGTH_LONG)
-                            .show();
-                }else if (mBitmap == null) {
-
-                    Toast.makeText(this, "Please select picture", Toast.LENGTH_LONG)
-                            .show();
-                }
-                else {
-
-                    //preview();
-                    edit.setVisibility(View.VISIBLE);
-                    submit.setVisibility(View.VISIBLE);
-                    prevthem.setVisibility(View.INVISIBLE);
-                    clickable.setEnabled(false);
-                }
-
-
-
+                ImagePicker.pickImage(this, 1);
+                // ImagePicker.pickImage(this, "Select your image:");
                 break;
 
-             */
 
+            case R.id.uploadCoverPic:
+
+                ImagePicker.pickImage(this, 2);
+                // ImagePicker.pickImage(this, "Select your image:");
+                break;
 
             case R.id.submit:
 
@@ -269,116 +257,9 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void uploadIdPic() {
 
 
-
-    //activity results after you go  into the camera
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CAMERA &&  resultCode == RESULT_OK) {
-
-            if (mPhotoFile != null) {
-                send  =  (mPhotoFile.getAbsolutePath());
-                decodeBitmap(mPhotoFile.getAbsolutePath());
-
-            } else
-                Toast.makeText(this, "Error Retrieving Picture", Toast.LENGTH_SHORT).show();
-
-        } else if (requestCode == SELECT_FILE &&  resultCode == RESULT_OK) {
-            Uri selectedImageUri = data.getData();
-            String[] projection = {MediaStore.MediaColumns.DATA};
-            Cursor cursor = managedQuery(selectedImageUri, projection, null, null,
-                    null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-            cursor.moveToFirst();
-            String selectedImagePath = cursor.getString(column_index);
-            Bitmap bm;
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(selectedImagePath, options);
-            final int REQUIRED_SIZE = 200;
-            int scale = 1;
-            while (options.outWidth / scale / 2 >= REQUIRED_SIZE
-                    && options.outHeight / scale / 2 >= REQUIRED_SIZE)
-                scale *= 2;
-            options.inSampleSize = scale;
-
-            options.inJustDecodeBounds = false;
-
-            bm = BitmapFactory.decodeFile(selectedImagePath, options);
-
-            send  = (selectedImagePath);
-            decodeBitmap(selectedImagePath);
-
-
-        }
-    }
-
-
-    //where Image is Decoded
-    private void decodeBitmap(String filepath) {
-        Log.i(TAG, "Decoding Bitmap");
-
-        String currentPhotoPath;
-        currentPhotoPath = filepath;
-
-        int targetW = 400;
-        int targetH = 400;
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap resizedBitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-
-        resizedBitmap = ThumbnailUtils.extractThumbnail(resizedBitmap, 400, 400);
-
-        ExifInterface exif;
-        try {
-            exif = new ExifInterface(currentPhotoPath);
-
-            String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-            int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
-            int rotationAngle = 0;
-            if (orientation == ExifInterface.ORIENTATION_ROTATE_90)
-                rotationAngle = 90;
-            if (orientation == ExifInterface.ORIENTATION_ROTATE_180)
-                rotationAngle = 180;
-            if (orientation == ExifInterface.ORIENTATION_ROTATE_270)
-                rotationAngle = 270;
-
-            Matrix matrix = new Matrix();
-            matrix.setRotate(rotationAngle, (float) resizedBitmap.getWidth() / 2, (float) resizedBitmap.getHeight() / 2);
-            mBitmap = Bitmap.createBitmap(resizedBitmap, 0, 0, targetW, targetH, matrix, true);
-
-            //where image is saved
-            // prev.setImageBitmap(mBitmap);
-
-            String name = filepath.substring(filepath.lastIndexOf("/")+1);
-            String nameagain = name.substring(0, name.lastIndexOf('.'));
-
-            encoded =  savebitmap(filepath);
-
-            //remember to delete file after or else file stays on user sdcard
-
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }
     }
 
 
@@ -403,50 +284,6 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
 
 
-    //here is where the dialog was created
-    void picture(){
-        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add Photo!");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (items[item].equals("Take Photo")) {
-
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    // Ensure that there's a camera activity to handle the intent
-                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                        // Create the File where the photo should go
-                        mPhotoFile = null;
-                        try {
-                            mPhotoFile = createImageFile();
-                        } catch (IOException ex) {
-                            Log.e(TAG, ex.toString());
-                        }
-                        // Continue only if the File was successfully created
-                        if (mPhotoFile != null) {
-                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                    Uri.fromFile(mPhotoFile));
-                            startActivityForResult(takePictureIntent, REQUEST_CAMERA);
-                        }
-                    }
-
-                } else if (items[item].equals("Choose from Library")) {
-                    Intent intent = new Intent(
-                            Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("image/*");
-                    startActivityForResult(
-                            Intent.createChooser(intent, "Select File"),
-                            SELECT_FILE);
-                } else if (items[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-
-    }
 
 
 
@@ -481,30 +318,6 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-
-/*
-    //preview of input
-    public void preview() {
-
-        try {
-
-            prev_compname.setText("Company Name:" + " "+ name );
-            prev_loca.setText("Location " + " "+ loc);
-            prev_contact.setText("Contact" +" "+ conta);
-            prev_category.setText("Category" + " " + cate);
-            prev.setImageBitmap(mBitmap);
-
-        }
-
-        catch (Exception e) {
-        }
-
-    }
-
-*/
-
-    //send to server
 
 
     private void doStaff() {
