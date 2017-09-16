@@ -2,6 +2,7 @@ package com.lyte.adaboo.lyteapp;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,23 +40,30 @@ import com.mvc.imagepicker.ImagePicker;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
+import static com.lyte.adaboo.lyteapp.R.id.imageView;
 
 /**
  * Created by adaboo on 6/4/17.
  */
 
-public class CreateCompany extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, View.OnTouchListener {
+public class CreateCompany extends AppCompatActivity implements View.OnClickListener,View.OnTouchListener {
 
     Button upload, submit;
     AQuery aq;
@@ -71,18 +80,21 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     String lname;
     String dobb;
 
+    Context context;
 
     TextView prev_compname,prev_category;
     TextView prev_loca;
     TextView prev_contact;
 
     String cate,id,friend_array,user_id;
+    String item1,item2,item3;
 
     EditText firstname,lastname,dob,nationality,businame,confirmpass,passw,emailadd,idnum,spinnerid,locate,address,cont1,cont2;
-    Spinner idtype,country,state,industry;
+    Spinner idtype,countryspin,state,industry;
 
     CheckBox checkyes,checkno;
 
+    String encodedstring;
 
     byte[] imgurl;
     SessionManager session;
@@ -93,7 +105,9 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     LinearLayout clickable;
 
 
-    Bitmap mBitmap = null;
+    Bitmap  bitmapprofile, bitmapid, bitmapcover= null;
+
+    ImageView imageView;
 
     Button edit, browseID,uploadBusiness,uploadcover;
     @Override
@@ -101,9 +115,13 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.createcompany);
 
+
+        //context = getApplicationContext();
         // width and height will be at least 600px long (optional).
         ImagePicker.setMinQuality(600, 600);
 
+
+        //imageView = (ImageView) findViewById(R.id.image);
 
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
@@ -119,10 +137,8 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         cont1 = (EditText) findViewById(R.id.contact1);
         cont2 = (EditText) findViewById(R.id.contact2);
         idtype = (Spinner) findViewById(R.id.spinidtype);
-        country = (Spinner) findViewById(R.id.countryspinner);
-        state = (Spinner) findViewById(R.id.statespinner);
+        countryspin = (Spinner) findViewById(R.id.countryspinner);
         industry = (Spinner) findViewById(R.id.industrypinner);
-
         emailadd = (EditText) findViewById(R.id.emailaddress);
         passw = (EditText) findViewById(R.id.passww);
         confirmpass = (EditText) findViewById(R.id.confirmpass);
@@ -138,20 +154,84 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         submit = (Button) findViewById(R.id.submit);
 
 
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.countries, R.layout.spinner_text);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        countryspin.setAdapter(adapter);
+
+
+
+        countryspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String item1 = parent.getItemAtPosition(position).toString();
+
+                Toast.makeText(parent.getContext(), "Android Simple Spinner Example Output..." + item1, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+        //for id cards
         String[] years = {"Choose Type","Passport","Driver's License","Nationl Id","National Health Insurance"};
         ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, years );
         langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         idtype.setAdapter(langAdapter);
 
+        idtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        Clothing,Food,Electronics,Beauty Products,Automobile & Parts,Books & Stationery
-        Entertainment, Education,Accommodation,Others;
+                String item2 = parent.getItemAtPosition(position).toString();
+
+                Toast.makeText(parent.getContext(), "Android Simple Spinner Example Output..." + item2, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
+
+        //for id cards
+        String[] indus = {"Choose Category","Clothing","Food","Electronics","Beauty Products"," Automobile & Parts",
+                " Books & Stationery","Entertainment","Education","Accommodation","Others"};
+
+        ArrayAdapter<CharSequence> langAdapters = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, indus );
+        langAdapters.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        industry.setAdapter(langAdapters);
+
+        industry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String item3 = parent.getItemAtPosition(position).toString();
+                Toast.makeText(parent.getContext(), "Android Simple Spinner Example Output..." + item3, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        //Clothing,Food,Electronics,Beauty Products,Automobile & Parts,Books & Stationery
+        //Entertainment, Education,Accommodation,Others;
         aq = new AQuery(this);
         pDialog = new ProgressDialog(this);
 
-        idtype.setOnItemSelectedListener(this);
+        //idtype.setOnItemSelectedListener(this);
         browseID.setOnClickListener(this);
         uploadBusiness.setOnClickListener(this);
         uploadcover.setOnClickListener(this);
@@ -159,18 +239,41 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     }
 
 
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch(requestCode){
             case 0: // Do your stuff here...
-                Bitmap bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
+                 bitmapid = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
 
-                if (bitmap != null) {
+                String path = ImagePicker.getImagePathFromResult(this, requestCode, resultCode, data);
+                String filename = path.substring(path.lastIndexOf("/")+1);
 
-                    //  imageView.setImageBitmap(bitmap);
-                }
-                InputStream is = ImagePicker.getInputStreamFromResult(this, requestCode, resultCode, data);
+                if (bitmapid != null) {
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+                    bitmapid.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+
+                    byte [] imagebyte = byteArrayOutputStream.toByteArray();
+
+                    encodedstring = Base64.encodeToString(imagebyte, Base64.DEFAULT);
+
+
+
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+                    String imageFileName =  timeStamp + filename;
+
+                    persistImage(bitmapid,imageFileName);
+
+                    Toast.makeText(this, filename, Toast.LENGTH_LONG)
+                           .show();
+                  //  Log.d(TAG, ConvertImage );
+                } InputStream is = ImagePicker.getInputStreamFromResult(this, requestCode, resultCode, data);
                 if (is != null) {
                     //textView.setText("Got input stream!");
                     try {
@@ -184,14 +287,72 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
                 break;
             case 1: // Do your other stuff here...
+                 bitmapprofile = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
+                if (bitmapprofile != null) {
+
+                   // imageView.setImageBitmap(bitmap2);
+                }
+                InputStream is2 = ImagePicker.getInputStreamFromResult(this, requestCode, resultCode, data);
+                if (is2 != null) {
+                    //textView.setText("Got input stream!");
+                    try {
+                        is2.close();
+                    } catch (IOException ex) {
+                        // ignore
+                    }
+                } else {
+                    // textView.setText("Failed to get input stream!");
+                }
                 break;
             case 2:
+
+                 bitmapcover = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
+
+                if (bitmapprofile != null) {
+
+                   // imageView.setImageBitmap(bitmap3);
+                }
+                InputStream is3 = ImagePicker.getInputStreamFromResult(this, requestCode, resultCode, data);
+                if (is3 != null) {
+                    //textView.setText("Got input stream!");
+                    try {
+                        is3.close();
+                    } catch (IOException ex) {
+                        // ignore
+                    }
+                } else {
+                    // textView.setText("Failed to get input stream!");
+                }
                 break;
         }
 
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+
+    private  void persistImage(Bitmap bitmap, String name) {
+
+        File filesDir = getApplicationContext().getFilesDir();
+
+        File imageFile = new File(filesDir, name + ".jpg");
+
+        OutputStream os;
+        try {
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            //Log.e(this.getSimpleName(), "Error writing bitmap", e);
+        }
+    }
+
+
+
+
+
 
 
 
@@ -239,12 +400,29 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
                 } else if (dobb.contentEquals("")) {
                     Toast.makeText(this, "Please provide Date of Birth", Toast.LENGTH_LONG)
                             .show();
-                }else if (nation == "Choose Category") {
+                }else if (dobb.contentEquals("")){
                     Toast.makeText(this, "Please provide Nationality", Toast.LENGTH_LONG)
                             .show();
-                }else if (mBitmap == null) {
+                } else if (item1 == "Choose Country") {
+                    Toast.makeText(this, "Please provide Country", Toast.LENGTH_LONG)
+                            .show();
+                } else if (item2 == "Choose Type") {
+            Toast.makeText(this, "Please provide Id Type", Toast.LENGTH_LONG)
+                    .show();
+                }else if (item3 == "Choose Category") {
+                    Toast.makeText(this, "Please provide Industry", Toast.LENGTH_LONG)
+                            .show();
+                }else if (bitmapid == null) {
 
-                    Toast.makeText(this, "Please select picture", Toast.LENGTH_LONG)
+                    Toast.makeText(this, "Please select Id picture", Toast.LENGTH_LONG)
+                            .show();
+                }else if (bitmapcover == null) {
+
+                    Toast.makeText(this, "Please select Cover picture", Toast.LENGTH_LONG)
+                            .show();
+                }else if (bitmapprofile == null) {
+
+                    Toast.makeText(this, "Please select Profile picture", Toast.LENGTH_LONG)
                             .show();
                 }
                 else {
@@ -284,42 +462,6 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
 
 
-
-
-
-    //image file of image is created here
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment
-                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, /* prefix */
-                ".jpg", /* suffix */
-                storageDir /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        //	mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        return image;
-    }
-
-
-
-    //spinner happens here
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        cate = parent.getItemAtPosition(position).toString();
-        Toast.makeText(this, "The planet is " +
-                cate, Toast.LENGTH_LONG).show();
-
-    }
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-
     private void doStaff() {
         // TODO Auto-generated method stub
         pDialog.setMessage("Submitting Item..");
@@ -334,7 +476,11 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         params.put("dobb", dobb);
         params.put("nationality", nation);
         params.put("user_id", id);
-        params.put("objurl", encoded);
+        params.put("objurl", encodedstring);
+        params.put("country", item1);
+        params.put("idtype", item2);
+        params.put("industry", item3);
+        //params.put("objurl", encoded);
 
 
         aq.progress(pDialog).ajax(

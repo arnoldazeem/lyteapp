@@ -789,7 +789,7 @@ public class Individual_Sell extends Activity implements OnClickListener, Adapte
                         //Toast.makeText(Individual_Sell.this,
                         //        mylist + "", Toast.LENGTH_LONG).show();
 
-                            ArrayAdapter<CharSequence> langAdapters = new ArrayAdapter<CharSequence>(getApplicationContext(), R.layout.spinner_text2, arr);
+                            ArrayAdapter<CharSequence> langAdapters = new ArrayAdapter<CharSequence>(getApplicationContext(), R.layout.spinner_text, arr);
                             langAdapters.setDropDownViewResource(R.layout.simple_spinner_dropdown);
                             spinnercompany.setAdapter(langAdapters);
 
