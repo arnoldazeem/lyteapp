@@ -95,6 +95,7 @@ android:layout_height="match_parent">
                 android:maxLines="1"
                 android:layout_weight="1"
                 android:hint="Date of Birth"
+                android:inputType="date"
                 android:textColor="#000000"
                 android:gravity="center"
                 android:layout_gravity="center"
@@ -207,6 +208,15 @@ android:layout_height="match_parent">
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/pic1"
+            android:textColor="@color/com_facebook_blue"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="picture not uploaded"/>
 
         <TextView
             android:id="@+id/busidetial"
@@ -394,6 +404,7 @@ android:layout_height="match_parent">
                 android:layout_weight=".2" />
 
             <EditText
+                android:inputType="phone"
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:gravity="center"
@@ -436,6 +447,7 @@ android:layout_height="match_parent">
                 android:background="@drawable/editback"
                 android:layout_width="0dp"
                 android:id="@+id/contact2"
+                android:inputType="phone"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
@@ -544,6 +556,7 @@ android:layout_height="match_parent">
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:gravity="center"
+                android:inputType="textEmailAddress"
                 android:layout_gravity="center"
                 android:background="@drawable/editback"
                 android:layout_width="0dp"
@@ -577,6 +590,7 @@ android:layout_height="match_parent">
                 android:layout_weight=".2" />
 
             <EditText
+                android:inputType="textPassword"
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:gravity="center"
@@ -593,8 +607,6 @@ android:layout_height="match_parent">
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
 
             <TextView
                 android:text="Confirm Password"
@@ -615,6 +627,7 @@ android:layout_height="match_parent">
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:gravity="center"
+                android:inputType="textPassword"
                 android:layout_gravity="center"
                 android:background="@drawable/editback"
                 android:layout_width="0dp"
@@ -658,6 +671,16 @@ android:layout_height="match_parent">
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/pic2"
+            android:textColor="@color/com_facebook_blue"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="picture not uploaded"/>
 
         <TextView
             android:layout_weight="1"
@@ -705,6 +728,16 @@ android:layout_height="match_parent">
 
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/pic3"
+            android:textColor="@color/com_facebook_blue"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="picture not uploaded"/>
 
         <TextView
             android:layout_weight="1"

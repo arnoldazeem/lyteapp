@@ -33,6 +33,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
@@ -52,6 +66,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -72,21 +87,24 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     String url_all_products = "";
 
 
+    File imgFile;
+    File imgFile1;
+    File imgFile2;
     EditText location;
     EditText company_name;
     EditText contact;
 
     String fname,nation,locat,addre,conta1,conta2;
-    String lname;
+    String lname,pass1,comfirmpass;
     String dobb;
 
     Context context;
 
     TextView prev_compname,prev_category;
     TextView prev_loca;
-    TextView prev_contact;
+    TextView pics1,pics2,pics3;
 
-    String cate,id,friend_array,user_id;
+    String cate,friend_array,user_id;
     String item1,item2,item3;
 
     EditText firstname,lastname,dob,nationality,businame,confirmpass,passw,emailadd,idnum,spinnerid,locate,address,cont1,cont2;
@@ -101,13 +119,8 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
     TextView pr,p,q;
     String encodedImage = "";
     File encoded;
-
-    LinearLayout clickable;
-
-
+    RequestQueue requestQueue;
     Bitmap  bitmapprofile, bitmapid, bitmapcover= null;
-
-    ImageView imageView;
 
     Button edit, browseID,uploadBusiness,uploadcover;
     @Override
@@ -119,9 +132,6 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         //context = getApplicationContext();
         // width and height will be at least 600px long (optional).
         ImagePicker.setMinQuality(600, 600);
-
-
-        //imageView = (ImageView) findViewById(R.id.image);
 
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
@@ -143,6 +153,11 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         passw = (EditText) findViewById(R.id.passww);
         confirmpass = (EditText) findViewById(R.id.confirmpass);
 
+
+        pics1 = (TextView) findViewById(R.id.pic1);
+        pics2 = (TextView) findViewById(R.id.pic2);
+        pics3 = (TextView) findViewById(R.id.pic3);
+
         checkyes  = (CheckBox) findViewById(R.id.checkyes);
         checkno  = (CheckBox) findViewById(R.id.checkno);
 
@@ -150,16 +165,13 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         browseID = (Button) findViewById(R.id.uploadID);
         uploadBusiness = (Button) findViewById(R.id.uploadBussinespic);
         uploadcover = (Button) findViewById(R.id.uploadCoverPic);
-
         submit = (Button) findViewById(R.id.submit);
-
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.countries, R.layout.spinner_text);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         countryspin.setAdapter(adapter);
-
 
 
         countryspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -205,7 +217,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
         //for id cards
         String[] indus = {"Choose Category","Clothing","Food","Electronics","Beauty Products"," Automobile & Parts",
-                " Books & Stationery","Entertainment","Education","Accommodation","Others"};
+                "Books & Stationery","Entertainment","Education","Accommodation","Others"};
 
         ArrayAdapter<CharSequence> langAdapters = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, indus );
         langAdapters.setDropDownViewResource(R.layout.simple_spinner_dropdown);
@@ -216,7 +228,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 String item3 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(parent.getContext(), "Android Simple Spinner Example Output..." + item3, Toast.LENGTH_LONG).show();
+               // Toast.makeText(parent.getContext(), "Android Simple Spinner Example Output..." + item3, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -235,6 +247,7 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
         browseID.setOnClickListener(this);
         uploadBusiness.setOnClickListener(this);
         uploadcover.setOnClickListener(this);
+        submit.setOnClickListener(this);
 
     }
 
@@ -254,23 +267,16 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
                 if (bitmapid != null) {
 
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                     imgFile = new  File(path);
 
-                    bitmapid.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+                    if(imgFile.exists()){
 
-                    byte [] imagebyte = byteArrayOutputStream.toByteArray();
+                    pics1.setText("Picture Uploaded!");
 
-                    encodedstring = Base64.encodeToString(imagebyte, Base64.DEFAULT);
+                    }
 
 
-
-                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-                    String imageFileName =  timeStamp + filename;
-
-                    persistImage(bitmapid,imageFileName);
-
-                    Toast.makeText(this, filename, Toast.LENGTH_LONG)
+                    Toast.makeText(this, path, Toast.LENGTH_LONG)
                            .show();
                   //  Log.d(TAG, ConvertImage );
                 } InputStream is = ImagePicker.getInputStreamFromResult(this, requestCode, resultCode, data);
@@ -288,9 +294,18 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
                 break;
             case 1: // Do your other stuff here...
                  bitmapprofile = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
+                String path1 = ImagePicker.getImagePathFromResult(this, requestCode, resultCode, data);
+               // String filename1 = path1.substring(path1.lastIndexOf("/")+1);
                 if (bitmapprofile != null) {
 
-                   // imageView.setImageBitmap(bitmap2);
+                    imgFile1 = new  File(path1);
+
+                    if(imgFile1.exists()){
+
+                        pics2.setText("Picture Uploaded!");
+
+                    }
+                    // imageView.setImageBitmap(bitmap2);
                 }
                 InputStream is2 = ImagePicker.getInputStreamFromResult(this, requestCode, resultCode, data);
                 if (is2 != null) {
@@ -308,9 +323,13 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
                  bitmapcover = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
 
-                if (bitmapprofile != null) {
+                String path2 = ImagePicker.getImagePathFromResult(this, requestCode, resultCode, data);
+                String filename2 = path2.substring(path2.lastIndexOf("/")+1);
 
-                   // imageView.setImageBitmap(bitmap3);
+                if (bitmapcover != null) {
+
+                    imgFile2 = new  File(path2);
+                    pics3.setText("Picture Uploaded!");
                 }
                 InputStream is3 = ImagePicker.getInputStreamFromResult(this, requestCode, resultCode, data);
                 if (is3 != null) {
@@ -329,30 +348,6 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
-
-    private  void persistImage(Bitmap bitmap, String name) {
-
-        File filesDir = getApplicationContext().getFilesDir();
-
-        File imageFile = new File(filesDir, name + ".jpg");
-
-        OutputStream os;
-        try {
-            os = new FileOutputStream(imageFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            //Log.e(this.getSimpleName(), "Error writing bitmap", e);
-        }
-    }
-
-
-
-
-
 
 
 
@@ -390,6 +385,8 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
                 addre = address.getText().toString();
                 conta1 = cont1.getText().toString();
                 conta2 = cont2.getText().toString();
+                pass1 = passw.getText().toString();
+                comfirmpass = confirmpass.getText().toString();
 
                 if (fname.trim().contentEquals("")) {
                     Toast.makeText(this, "Please provide your First name",
@@ -424,10 +421,20 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
                     Toast.makeText(this, "Please select Profile picture", Toast.LENGTH_LONG)
                             .show();
-                }
+                }// Check if both password should be equal
+                else if (!pass1.equals(comfirmpass)) {
+                    Toast.makeText(this, "Passwords dont match", Toast.LENGTH_LONG)
+                            .show();
+                }else if (!checkyes.isChecked() ||!checkno.isChecked() )
+                    Toast.makeText(this, "Please check delivery or no delivery", Toast.LENGTH_LONG)
+                            .show();
                 else {
 
-                    doStaff();
+                    try {
+                        signupRequest();
+                    }catch (Exception E){
+                        E.printStackTrace();
+                    }
 
                 }
                 break;
@@ -435,120 +442,84 @@ public class CreateCompany extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void uploadIdPic() {
+    private void signupRequest() {
 
+            // TODO Auto-generated method stub
+            pDialog.setMessage("Submitting Item..");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
 
-    }
-
-
-
-    //image file is saved to be sent to server later
-    private File savebitmap(String filename) {
-        String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-        OutputStream outStream = null;
-
-        // File file = new File(filename + ".png");
-        File file = new File(filename);
-
-        Log.e("file", "" + file);
-
-        try {
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
+            Map<String, Object> params = new HashMap<String, Object>();
 
 
 
-    private void doStaff() {
-        // TODO Auto-generated method stub
-        pDialog.setMessage("Submitting Item..");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
+            params.put("type", "submit");
+            params.put("category", locat);
+            params.put("description", addre);
+            params.put("price", conta1);
+            params.put("quantity", conta1);
+            params.put("user_id", conta1);
+            params.put("objurl", imgFile);
+            params.put("objurl1", imgFile1);
+            params.put("objurl2", imgFile2);
 
-        Map<String, Object> params = new HashMap<String, Object>();
+            /**
+             *
+             *  aq.progress(pDialog).ajax(
+             StaticVariables.sendItemVolUrl + "submit&category="
+             + cate + "&description=" + desc + "&price="
+             + amt+ "&quantity=" + qtny + "&user_id=" + id
+             +"&objurl=" + encoded,
+             *
+             *
+             *
+             */
+            aq.progress(pDialog).ajax(
+                    StaticVariables.sendItemVolUrl,
+                    params, JSONObject.class, new AjaxCallback<JSONObject>() {
+                        @Override
+                        public void callback(String url, JSONObject json,
+                                             AjaxStatus status) {
 
-        params.put("type", "createcomp");
-        params.put("category", cate);
-        params.put("fname", fname);
-        params.put("dobb", dobb);
-        params.put("nationality", nation);
-        params.put("user_id", id);
-        params.put("objurl", encodedstring);
-        params.put("country", item1);
-        params.put("idtype", item2);
-        params.put("industry", item3);
-        //params.put("objurl", encoded);
+                            try {
 
-
-        aq.progress(pDialog).ajax(
-                StaticVariables.companycreate,
-                params, JSONObject.class, new AjaxCallback<JSONObject>() {
-                    @Override
-                    public void callback(String url, JSONObject json,
-                                         AjaxStatus status) {
-
-                        try {
-
-                            Toast.makeText(
-                                    CreateCompany.this,
-                                    json.getInt(StaticVariables.SUCCESS) + "",
-                                    Toast.LENGTH_LONG).show();
-
-
-                            System.out.println(json.toString());
-                            int success = json.getInt(StaticVariables.SUCCESS);
-
-                            if (success == 1) {
-
-
-                                location.setText("");
-                                company_name.setText("");
-                                contact.setText("");
-
-                                dialogShow();
-
-                            } else {
                                 Toast.makeText(
                                         CreateCompany.this,
-                                        json.getString(StaticVariables.MESSAGE),
+                                        json.toString() + "",
                                         Toast.LENGTH_LONG).show();
+
+
+                                System.out.println(json.toString());
+                                int success = json.getInt(StaticVariables.SUCCESS);
+
+                                if (success == 1) {
+                                    Toast.makeText(
+                                            CreateCompany.this,
+                                            "work",
+                                            Toast.LENGTH_LONG).show();
+
+                                } else {
+                                    Toast.makeText(
+                                            CreateCompany.this,
+                                            json.getString(StaticVariables.MESSAGE),
+                                            Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (JSONException e) {
+                                // TODO: handle exception
+                                e.printStackTrace();
+                            } catch (Exception ex) {
+                                // TODO: handle exception
+                                ex.printStackTrace();
+                                System.out.println("********************* "
+                                        + ex.toString());
+
                             }
 
-                        } catch (JSONException e) {
-                            // TODO: handle exception
-                            e.printStackTrace();
-                        } catch (Exception ex) {
-                            // TODO: handle exception
-                            ex.printStackTrace();
-                            System.out.println("********************* "
-                                    + ex.toString());
-                            //Toast.makeText(Individual_Sell.this,
-                            //        ex.toString(), Toast.LENGTH_LONG)
-                            //        .show();
                         }
+                    });
 
-                    }
-                });
-
-    }
-
-
-
-    //called after the user submits his item to the server
-    void dialogShow() {
-        AlertdialogfragmentComp cdd = new AlertdialogfragmentComp(CreateCompany.this);
-        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        cdd.show();
-
-        //check again
-        submit.setVisibility(View.INVISIBLE);
-        edit.setVisibility(View.INVISIBLE);
-        //prevthem.setVisibility(View.VISIBLE);
-        //clickable.setOnTouchListener();
-    }
+        }
 
 
     @Override
